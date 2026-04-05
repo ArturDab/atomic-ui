@@ -28,7 +28,7 @@ export default function AllPreviewPage() {
                   {items.map(comp => (
                     <div key={comp.slug} className="border rounded-xl overflow-hidden">
                       <div className="px-6 py-8 flex items-center justify-center min-h-24 bg-muted/10 border-b">
-                        {comp.examples[0] ? <comp.examples[0].render /> : null}
+                        {(() => { const Ex = comp.examples[0]?.render; return Ex ? <Ex /> : null })()}
                       </div>
                       <div className="px-4 py-3">
                         <p className="font-medium text-sm">{comp.title}</p>

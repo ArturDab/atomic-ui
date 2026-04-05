@@ -44,9 +44,10 @@ export default function AllComponents() {
                     className="border rounded-xl bg-white hover:border-foreground/30 hover:shadow-sm transition-all overflow-hidden"
                   >
                     <div className="px-6 py-6 flex items-center justify-center min-h-24 bg-muted/10 border-b">
-                      {comp.examples[0] ? <comp.examples[0].render /> : (
-                        <span className="text-xs text-muted-foreground">Brak podglądu</span>
-                      )}
+                      {(() => {
+                    const Ex = comp.examples[0]?.render
+                    return Ex ? <Ex /> : <span className="text-xs text-muted-foreground">Brak podglądu</span>
+                  })()}
                     </div>
                     <div className="px-4 py-3">
                       <p className="font-medium text-sm">{comp.title}</p>
