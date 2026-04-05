@@ -9,7 +9,6 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, For
 import { useForm as useFormHook } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import type { Date as DateType } from 'react-day-picker'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
