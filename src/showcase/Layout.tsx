@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import Sidebar from './Sidebar'
 import { Search } from 'lucide-react'
+import { Toaster } from '@/components/ui/toaster'
 
 export default function Layout() {
   const [query, setQuery] = useState('')
@@ -28,6 +29,7 @@ export default function Layout() {
           <Outlet context={{ query }} />
         </main>
       </div>
+      <Toaster />
     </div>
   )
 }

@@ -7,30 +7,25 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Separator } from '@/components/ui/separator'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
-import {
-  AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader,
-  AlertDialogFooter, AlertDialogTitle, AlertDialogDescription,
-  AlertDialogAction, AlertDialogCancel,
-} from '@/components/ui/alert-dialog'
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from '@/components/ui/alert-dialog'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
-import {
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter,
-  DialogTitle, DialogDescription,
-} from '@/components/ui/dialog'
-import {
-  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
-  DropdownMenuLabel, DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu'
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandSeparator } from '@/components/ui/command'
+import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator } from '@/components/ui/context-menu'
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from '@/components/ui/dialog'
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card'
+import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSeparator } from '@/components/ui/menubar'
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from '@/components/ui/pagination'
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 import { Progress } from '@/components/ui/progress'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel,
-} from '@/components/ui/select'
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel } from '@/components/ui/select'
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Slider } from '@/components/ui/slider'
@@ -40,7 +35,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Toggle } from '@/components/ui/toggle'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip'
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Info, Terminal, ChevronDown } from 'lucide-react'
+import { toast } from '@/hooks/use-toast'
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Info, Terminal, ChevronDown, File, Settings, User } from 'lucide-react'
 import type { RegistryEntry } from './types'
 
 export const registry: RegistryEntry[] = [
@@ -50,13 +46,13 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'button',
     title: 'Button',
-    description: 'Klikalny element do wywolywania akcji.',
+    description: 'Klikalny element do wywoływania akcji. Obsługuje warianty wizualne, rozmiary i stan wyłączenia.',
     category: 'Atoms',
     props: [
-      { name: 'variant', type: 'string', default: 'default', options: ['default','destructive','outline','secondary','ghost','link'] },
-      { name: 'size', type: 'string', default: 'default', options: ['default','sm','lg','icon'] },
-      { name: 'disabled', type: 'boolean', default: 'false' },
-      { name: 'asChild', type: 'boolean', default: 'false' },
+      { name: 'variant', type: 'string', default: 'default', options: ['default','destructive','outline','secondary','ghost','link'], description: 'Wariant wizualny' },
+      { name: 'size', type: 'string', default: 'default', options: ['default','sm','lg','icon'], description: 'Rozmiar przycisku' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Wyłącza interakcję' },
+      { name: 'asChild', type: 'boolean', default: 'false', description: 'Renderuje jako Radix Slot' },
     ],
     examples: [
       {
@@ -82,16 +78,25 @@ export const registry: RegistryEntry[] = [
           </div>
         ),
       },
+      {
+        title: 'Wyłączony',
+        render: () => (
+          <div className="flex gap-3">
+            <Button disabled>Wyłączony</Button>
+            <Button variant="outline" disabled>Wyłączony outline</Button>
+          </div>
+        ),
+      },
     ],
   },
 
   {
     slug: 'badge',
     title: 'Badge',
-    description: 'Etykieta statusu, kategorii lub liczby.',
+    description: 'Etykieta statusu, kategorii lub liczby. Używana do oznaczania stanów i tagowania treści.',
     category: 'Atoms',
     props: [
-      { name: 'variant', type: 'string', default: 'default', options: ['default','secondary','destructive','outline'] },
+      { name: 'variant', type: 'string', default: 'default', options: ['default','secondary','destructive','outline'], description: 'Wariant wizualny' },
     ],
     examples: [
       {
@@ -111,10 +116,11 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'separator',
     title: 'Separator',
-    description: 'Pozioma lub pionowa linia oddzielajaca sekcje.',
+    description: 'Pozioma lub pionowa linia oddzielająca sekcje treści.',
     category: 'Atoms',
     props: [
-      { name: 'orientation', type: 'string', default: 'horizontal', options: ['horizontal','vertical'] },
+      { name: 'orientation', type: 'string', default: 'horizontal', options: ['horizontal','vertical'], description: 'Orientacja' },
+      { name: 'decorative', type: 'boolean', default: 'true', description: 'Czy element ma charakter dekoracyjny' },
     ],
     examples: [
       {
@@ -127,13 +133,23 @@ export const registry: RegistryEntry[] = [
           </div>
         ),
       },
+      {
+        title: 'Pionowy',
+        render: () => (
+          <div className="flex items-center gap-4 h-8">
+            <span className="text-sm">Lewo</span>
+            <Separator orientation="vertical" />
+            <span className="text-sm">Prawo</span>
+          </div>
+        ),
+      },
     ],
   },
 
   {
     slug: 'avatar',
     title: 'Avatar',
-    description: 'Awatar uzytkownika ze zdjeciem lub inicjalami jako fallback.',
+    description: 'Awatar użytkownika ze zdjęciem lub inicjałami jako fallback.',
     category: 'Atoms',
     props: [
       { name: 'src', type: 'string', description: 'URL obrazka (AvatarImage)' },
@@ -141,7 +157,7 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Ze zdjeciem i fallback',
+        title: 'Ze zdjęciem i fallback',
         render: () => (
           <div className="flex gap-4 items-center">
             <Avatar>
@@ -163,11 +179,9 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'skeleton',
     title: 'Skeleton',
-    description: 'Placeholder podczas ladowania tresci.',
+    description: 'Placeholder podczas ładowania treści.',
     category: 'Atoms',
-    props: [
-      { name: 'className', type: 'string', description: 'Wymiary i ksztalt przez klasy CSS' },
-    ],
+    props: [{ name: 'className', type: 'string', description: 'Wymiary i kształt przez klasy CSS' }],
     examples: [
       {
         title: 'Karta',
@@ -187,10 +201,10 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'alert',
     title: 'Alert',
-    description: 'Komunikat informacyjny lub o bledzie.',
+    description: 'Komunikat informacyjny lub o błędzie.',
     category: 'Atoms',
     props: [
-      { name: 'variant', type: 'string', default: 'default', options: ['default','destructive'] },
+      { name: 'variant', type: 'string', default: 'default', options: ['default','destructive'], description: 'Wariant wizualny' },
     ],
     examples: [
       {
@@ -200,13 +214,33 @@ export const registry: RegistryEntry[] = [
             <Alert>
               <Terminal className="h-4 w-4" />
               <AlertTitle>Informacja</AlertTitle>
-              <AlertDescription>Operacja zostala wykonana pomyslnie.</AlertDescription>
+              <AlertDescription>Operacja została wykonana pomyślnie.</AlertDescription>
             </Alert>
             <Alert variant="destructive">
               <Info className="h-4 w-4" />
-              <AlertTitle>Blad</AlertTitle>
-              <AlertDescription>Nie mozna polaczyc z serwerem.</AlertDescription>
+              <AlertTitle>Błąd</AlertTitle>
+              <AlertDescription>Nie można połączyć z serwerem.</AlertDescription>
             </Alert>
+          </div>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'aspect-ratio',
+    title: 'Aspect Ratio',
+    description: 'Kontener wymuszający określony stosunek szerokości do wysokości.',
+    category: 'Atoms',
+    props: [{ name: 'ratio', type: 'number', default: '1', description: 'Stosunek szerokość/wysokość (np. 16/9)' }],
+    examples: [
+      {
+        title: '16/9',
+        render: () => (
+          <div className="w-72">
+            <AspectRatio ratio={16 / 9} className="bg-muted rounded-lg overflow-hidden">
+              <div className="flex items-center justify-center h-full text-sm text-muted-foreground">16 / 9</div>
+            </AspectRatio>
           </div>
         ),
       },
@@ -218,7 +252,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'input',
     title: 'Input',
-    description: 'Pole tekstowe do wprowadzania danych.',
+    description: 'Pole tekstowe do wprowadzania danych. Bazuje na natywnym input HTML.',
     category: 'Forms',
     props: [
       { name: 'type', type: 'string', default: 'text', options: ['text','email','password','number','search'] },
@@ -227,11 +261,11 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Domyslny',
-        render: () => <Input placeholder="Wpisz cos..." className="max-w-xs" />,
+        title: 'Domyślny',
+        render: () => <Input placeholder="Wpisz coś..." className="max-w-xs" />,
       },
       {
-        title: 'Z labelka',
+        title: 'Z labelką',
         render: () => (
           <div className="grid gap-1.5 max-w-xs">
             <Label htmlFor="ex-email">Adres e-mail</Label>
@@ -239,21 +273,25 @@ export const registry: RegistryEntry[] = [
           </div>
         ),
       },
+      {
+        title: 'Wyłączony',
+        render: () => <Input disabled placeholder="Wyłączony" className="max-w-xs" />,
+      },
     ],
   },
 
   {
     slug: 'label',
     title: 'Label',
-    description: 'Etykieta powiazana z polem formularza.',
+    description: 'Etykieta powiązana z polem formularza. Obsługuje stany peer-disabled.',
     category: 'Forms',
-    props: [{ name: 'htmlFor', type: 'string', description: 'ID powiazanego elementu' }],
+    props: [{ name: 'htmlFor', type: 'string', description: 'ID powiązanego elementu' }],
     examples: [
       {
         title: 'Podstawowy',
         render: () => (
           <div className="grid gap-1.5">
-            <Label htmlFor="ex-name">Imie i nazwisko</Label>
+            <Label htmlFor="ex-name">Imię i nazwisko</Label>
             <Input id="ex-name" placeholder="Jan Kowalski" className="max-w-xs" />
           </div>
         ),
@@ -273,15 +311,15 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Domyslny',
-        render: () => <Textarea placeholder="Wpisz wiadomosc..." className="max-w-xs" />,
+        title: 'Domyślny',
+        render: () => <Textarea placeholder="Wpisz wiadomość..." className="max-w-xs" />,
       },
       {
-        title: 'Z labelka',
+        title: 'Z labelką',
         render: () => (
           <div className="grid gap-1.5 max-w-xs">
-            <Label htmlFor="ex-msg">Wiadomosc</Label>
-            <Textarea id="ex-msg" placeholder="Twoja wiadomosc..." rows={4} />
+            <Label htmlFor="ex-msg">Wiadomość</Label>
+            <Textarea id="ex-msg" placeholder="Twoja wiadomość..." rows={4} />
           </div>
         ),
       },
@@ -300,12 +338,12 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Z labelka',
+        title: 'Z labelką',
         render: () => (
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Checkbox id="ex-terms" />
-              <Label htmlFor="ex-terms">Akceptuje regulamin</Label>
+              <Label htmlFor="ex-terms">Akceptuję regulamin</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Checkbox id="ex-newsletter" defaultChecked />
@@ -313,7 +351,7 @@ export const registry: RegistryEntry[] = [
             </div>
             <div className="flex items-center space-x-2 opacity-50">
               <Checkbox id="ex-disabled" disabled />
-              <Label htmlFor="ex-disabled">Wylaczona opcja</Label>
+              <Label htmlFor="ex-disabled">Wyłączona opcja</Label>
             </div>
           </div>
         ),
@@ -324,7 +362,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'radio-group',
     title: 'Radio Group',
-    description: 'Grupa przyciskow radiowych – wybor jednej opcji.',
+    description: 'Grupa przycisków radiowych – wybór jednej opcji.',
     category: 'Forms',
     props: [
       { name: 'defaultValue', type: 'string' },
@@ -359,18 +397,18 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Domyslny',
+        title: 'Domyślny',
         render: () => (
           <Select>
             <SelectTrigger className="w-52">
-              <SelectValue placeholder="Wybierz opcje" />
+              <SelectValue placeholder="Wybierz opcję" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Owoce</SelectLabel>
-                <SelectItem value="apple">Jablko</SelectItem>
+                <SelectItem value="apple">Jabłko</SelectItem>
                 <SelectItem value="banana">Banan</SelectItem>
-                <SelectItem value="orange">Pomarancza</SelectItem>
+                <SelectItem value="orange">Pomarańcza</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -382,7 +420,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'switch',
     title: 'Switch',
-    description: 'Przelacznik wl./wyl. do ustawien binarnych.',
+    description: 'Przełącznik wł./wył. do ustawień binarnych.',
     category: 'Forms',
     props: [
       { name: 'checked', type: 'boolean' },
@@ -411,7 +449,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'slider',
     title: 'Slider',
-    description: 'Suwak do wyboru wartosci z zakresu.',
+    description: 'Suwak do wyboru wartości z zakresu.',
     category: 'Forms',
     props: [
       { name: 'defaultValue', type: 'number[]' },
@@ -421,7 +459,7 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Domyslny',
+        title: 'Domyślny',
         render: () => <Slider defaultValue={[40]} max={100} step={1} className="w-64" />,
       },
     ],
@@ -430,7 +468,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'toggle',
     title: 'Toggle',
-    description: 'Przelacznik z dwoma stanami – wcisniety / niewcisniety.',
+    description: 'Przełącznik z dwoma stanami – wciśnięty / niewciśnięty.',
     category: 'Forms',
     props: [
       { name: 'variant', type: 'string', default: 'default', options: ['default','outline'] },
@@ -454,7 +492,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'toggle-group',
     title: 'Toggle Group',
-    description: 'Grupa przyciskow Toggle z wyborem pojedynczym lub wielokrotnym.',
+    description: 'Grupa przycisków Toggle z wyborem pojedynczym lub wielokrotnym.',
     category: 'Forms',
     props: [
       { name: 'type', type: 'string', options: ['single','multiple'], description: 'Tryb wyboru' },
@@ -462,12 +500,12 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Wyrownanie tekstu',
+        title: 'Wyrównanie tekstu',
         render: () => (
           <ToggleGroup type="single" defaultValue="left" variant="outline">
-            <ToggleGroupItem value="left" aria-label="Lewo"><AlignLeft className="h-4 w-4" /></ToggleGroupItem>
-            <ToggleGroupItem value="center" aria-label="Centrum"><AlignCenter className="h-4 w-4" /></ToggleGroupItem>
-            <ToggleGroupItem value="right" aria-label="Prawo"><AlignRight className="h-4 w-4" /></ToggleGroupItem>
+            <ToggleGroupItem value="left"><AlignLeft className="h-4 w-4" /></ToggleGroupItem>
+            <ToggleGroupItem value="center"><AlignCenter className="h-4 w-4" /></ToggleGroupItem>
+            <ToggleGroupItem value="right"><AlignRight className="h-4 w-4" /></ToggleGroupItem>
           </ToggleGroup>
         ),
       },
@@ -479,7 +517,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'accordion',
     title: 'Accordion',
-    description: 'Rozwijane sekcje tresci. Obsluguje tryb pojedynczy i wielokrotny.',
+    description: 'Rozwijane sekcje treści. Obsługuje tryb pojedynczy i wielokrotny.',
     category: 'Feedback',
     props: [
       { name: 'type', type: 'string', options: ['single','multiple'], description: 'Tryb otwierania' },
@@ -487,12 +525,13 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Domyslny',
+        title: 'Domyślny',
         render: () => (
           <Accordion type="single" collapsible className="w-72">
-            {[['Czym jest Atomic UI?', 'Centralna biblioteka komponentow React.'],
-              ['Jak dodac komponent?', 'Skopiuj plik z src/components/ui/.'],
-              ['Czy jest TypeScript?', 'Tak, kazdy komponent jest w pelni typowany.']
+            {[
+              ['Czym jest Atomic UI?', 'Centralna biblioteka komponentów React.'],
+              ['Jak dodać komponent?', 'Skopiuj plik z src/components/ui/.'],
+              ['Czy jest TypeScript?', 'Tak, każdy komponent jest w pełni typowany.']
             ].map(([q, a], i) => (
               <AccordionItem key={i} value={`item-${i}`}>
                 <AccordionTrigger>{q}</AccordionTrigger>
@@ -508,11 +547,9 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'progress',
     title: 'Progress',
-    description: 'Pasek postepu operacji.',
+    description: 'Pasek postępu operacji.',
     category: 'Feedback',
-    props: [
-      { name: 'value', type: 'number', description: 'Wartosc 0-100' },
-    ],
+    props: [{ name: 'value', type: 'number', description: 'Wartość 0-100' }],
     examples: [
       {
         title: 'Stany',
@@ -531,7 +568,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'dialog',
     title: 'Dialog',
-    description: 'Modalne okno dialogowe z tlem i fokusem.',
+    description: 'Modalne okno dialogowe z tłem i focusem.',
     category: 'Feedback',
     props: [
       { name: 'open', type: 'boolean' },
@@ -543,16 +580,16 @@ export const registry: RegistryEntry[] = [
         render: () => (
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Otworz dialog</Button>
+              <Button variant="outline">Otwórz dialog</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Potwierdz operacje</DialogTitle>
-                <DialogDescription>Czy na pewno chcesz wykonac te akcje?</DialogDescription>
+                <DialogTitle>Potwierdź operację</DialogTitle>
+                <DialogDescription>Czy na pewno chcesz wykonać tę akcję?</DialogDescription>
               </DialogHeader>
               <DialogFooter>
                 <Button variant="outline">Anuluj</Button>
-                <Button>Potwierdz</Button>
+                <Button>Potwierdź</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -576,18 +613,16 @@ export const registry: RegistryEntry[] = [
         render: () => (
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive">Usun konto</Button>
+              <Button variant="destructive">Usuń konto</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Czy jestes pewny?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Tej akcji nie mozna cofnac. Konto zostanie trwale usuniete.
-                </AlertDialogDescription>
+                <AlertDialogTitle>Czy jesteś pewny?</AlertDialogTitle>
+                <AlertDialogDescription>Tej akcji nie można cofnąć. Konto zostanie trwale usunięte.</AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Anuluj</AlertDialogCancel>
-                <AlertDialogAction>Usun</AlertDialogAction>
+                <AlertDialogAction>Usuń</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -599,11 +634,9 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'tooltip',
     title: 'Tooltip',
-    description: 'Krotki opis pojawiajacy sie po najechaniu kursorem.',
+    description: 'Krótki opis pojawiający się po najechaniu kursorem.',
     category: 'Feedback',
-    props: [
-      { name: 'delayDuration', type: 'number', default: '700' },
-    ],
+    props: [{ name: 'delayDuration', type: 'number', default: '700' }],
     examples: [
       {
         title: 'Podstawowy',
@@ -615,7 +648,7 @@ export const registry: RegistryEntry[] = [
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="sm">{label}</Button>
                   </TooltipTrigger>
-                  <TooltipContent><p>Tooltip dla: {label}</p></TooltipContent>
+                  <TooltipContent><p>Tooltip: {label}</p></TooltipContent>
                 </Tooltip>
               ))}
             </div>
@@ -628,7 +661,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'hover-card',
     title: 'Hover Card',
-    description: 'Karta z informacjami pojawiajaca sie po najechaniu.',
+    description: 'Karta z informacjami pojawiająca się po najechaniu.',
     category: 'Feedback',
     props: [
       { name: 'openDelay', type: 'number', default: '700' },
@@ -644,11 +677,9 @@ export const registry: RegistryEntry[] = [
             </HoverCardTrigger>
             <HoverCardContent className="w-64">
               <div className="flex gap-3">
-                <Avatar>
-                  <AvatarFallback>AD</AvatarFallback>
-                </Avatar>
+                <Avatar><AvatarFallback>AD</AvatarFallback></Avatar>
                 <div>
-                  <p className="text-sm font-semibold">Artur Dab</p>
+                  <p className="text-sm font-semibold">Artur Dąb</p>
                   <p className="text-xs text-muted-foreground">AI &amp; Marketing Consultant</p>
                 </div>
               </div>
@@ -662,7 +693,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'popover',
     title: 'Popover',
-    description: 'Pływajacy kontener do dodatkowych akcji lub tresci.',
+    description: 'Pływający kontener do dodatkowych akcji lub treści.',
     category: 'Feedback',
     props: [
       { name: 'open', type: 'boolean' },
@@ -670,11 +701,11 @@ export const registry: RegistryEntry[] = [
     ],
     examples: [
       {
-        title: 'Domyslny',
+        title: 'Domyślny',
         render: () => (
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline">Otworz popover</Button>
+              <Button variant="outline">Otwórz popover</Button>
             </PopoverTrigger>
             <PopoverContent className="w-64">
               <div className="space-y-2">
@@ -691,12 +722,39 @@ export const registry: RegistryEntry[] = [
     ],
   },
 
+  {
+    slug: 'toast',
+    title: 'Toast',
+    description: 'Krótkotrwałe powiadomienie wyświetlane w rogu ekranu.',
+    category: 'Feedback',
+    props: [
+      { name: 'variant', type: 'string', default: 'default', options: ['default','destructive'] },
+      { name: 'title', type: 'string' },
+      { name: 'description', type: 'string' },
+    ],
+    examples: [
+      {
+        title: 'Warianty',
+        render: () => {
+          const handleDefault = () => toast({ title: 'Sukces', description: 'Operacja zakończona pomyślnie.' })
+          const handleDestructive = () => toast({ variant: 'destructive', title: 'Błąd', description: 'Coś poszło nie tak.' })
+          return (
+            <div className="flex gap-3">
+              <Button variant="outline" onClick={handleDefault}>Pokaż toast</Button>
+              <Button variant="destructive" onClick={handleDestructive}>Błąd</Button>
+            </div>
+          )
+        },
+      },
+    ],
+  },
+
   // ── NAVIGATION ─────────────────────────────────────────────────────
 
   {
     slug: 'dropdown-menu',
     title: 'Dropdown Menu',
-    description: 'Menu kontekstowe z lista opcji.',
+    description: 'Menu kontekstowe z listą opcji.',
     category: 'Navigation',
     props: [
       { name: 'open', type: 'boolean' },
@@ -713,12 +771,176 @@ export const registry: RegistryEntry[] = [
             <DropdownMenuContent className="w-48">
               <DropdownMenuLabel>Konto</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profil</DropdownMenuItem>
-              <DropdownMenuItem>Ustawienia</DropdownMenuItem>
+              <DropdownMenuItem><User className="mr-2 h-4 w-4" />Profil</DropdownMenuItem>
+              <DropdownMenuItem><Settings className="mr-2 h-4 w-4" />Ustawienia</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive">Wyloguj</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'context-menu',
+    title: 'Context Menu',
+    description: 'Menu kontekstowe otwierane prawym przyciskiem myszy.',
+    category: 'Navigation',
+    props: [],
+    examples: [
+      {
+        title: 'Kliknij prawym przyciskiem',
+        render: () => (
+          <ContextMenu>
+            <ContextMenuTrigger className="flex items-center justify-center w-64 h-24 rounded-lg border-2 border-dashed text-sm text-muted-foreground">
+              Kliknij prawym przyciskiem
+            </ContextMenuTrigger>
+            <ContextMenuContent className="w-48">
+              <ContextMenuLabel>Akcje</ContextMenuLabel>
+              <ContextMenuSeparator />
+              <ContextMenuItem><File className="mr-2 h-4 w-4" />Nowy plik</ContextMenuItem>
+              <ContextMenuItem><Settings className="mr-2 h-4 w-4" />Właściwości</ContextMenuItem>
+              <ContextMenuSeparator />
+              <ContextMenuItem className="text-destructive">Usuń</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'menubar',
+    title: 'Menubar',
+    description: 'Pasek menu aplikacji z zagnieżdżonymi podmenu.',
+    category: 'Navigation',
+    props: [],
+    examples: [
+      {
+        title: 'Podstawowy',
+        render: () => (
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger>Plik</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Nowy <span className="ml-auto text-xs text-muted-foreground">⌘N</span></MenubarItem>
+                <MenubarItem>Otwórz</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>Zapisz <span className="ml-auto text-xs text-muted-foreground">⌘S</span></MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Edycja</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Cofnij <span className="ml-auto text-xs text-muted-foreground">⌘Z</span></MenubarItem>
+                <MenubarItem>Ponów <span className="ml-auto text-xs text-muted-foreground">⌘Y</span></MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>Kopiuj</MenubarItem>
+                <MenubarItem>Wklej</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Widok</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Pełny ekran</MenubarItem>
+                <MenubarItem>Powiększ</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'navigation-menu',
+    title: 'Navigation Menu',
+    description: 'Rozbudowane menu nawigacyjne z panelami treści.',
+    category: 'Navigation',
+    props: [],
+    examples: [
+      {
+        title: 'Podstawowe',
+        render: () => (
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Komponenty</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-2 p-4 w-48">
+                    {['Button', 'Input', 'Card', 'Dialog'].map(name => (
+                      <li key={name}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle() + " w-full justify-start h-auto py-2 px-3"}>
+                          {name}
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Dokumentacja
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'breadcrumb',
+    title: 'Breadcrumb',
+    description: 'Nawigacja okruszkowa pokazująca ścieżkę do bieżącej strony.',
+    category: 'Navigation',
+    props: [],
+    examples: [
+      {
+        title: 'Podstawowy',
+        render: () => (
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="#">Strona główna</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="#">Komponenty</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'pagination',
+    title: 'Pagination',
+    description: 'Nawigacja stronicowania z przyciskami poprzednia/następna.',
+    category: 'Navigation',
+    props: [],
+    examples: [
+      {
+        title: 'Podstawowa',
+        render: () => (
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+              <PaginationItem><PaginationLink href="#">1</PaginationLink></PaginationItem>
+              <PaginationItem><PaginationLink href="#" isActive>2</PaginationLink></PaginationItem>
+              <PaginationItem><PaginationLink href="#">3</PaginationLink></PaginationItem>
+              <PaginationItem><PaginationEllipsis /></PaginationItem>
+              <PaginationItem><PaginationNext href="#" /></PaginationItem>
+            </PaginationContent>
+          </Pagination>
         ),
       },
     ],
@@ -742,7 +964,7 @@ export const registry: RegistryEntry[] = [
           return (
             <Collapsible open={open} onOpenChange={setOpen} className="w-64 space-y-2">
               <div className="flex items-center justify-between">
-                <p className="text-sm font-medium">Lista plikow</p>
+                <p className="text-sm font-medium">Lista plików</p>
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" size="sm">
                     <ChevronDown className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`} />
@@ -762,20 +984,51 @@ export const registry: RegistryEntry[] = [
   },
 
   {
+    slug: 'command',
+    title: 'Command',
+    description: 'Pole wyszukiwania z listą poleceń – baza dla command palette.',
+    category: 'Navigation',
+    props: [],
+    examples: [
+      {
+        title: 'Wbudowane',
+        render: () => (
+          <div className="border rounded-lg overflow-hidden w-72">
+            <Command>
+              <CommandInput placeholder="Wyszukaj..." />
+              <CommandList>
+                <CommandEmpty>Brak wyników.</CommandEmpty>
+                <CommandGroup heading="Sugestie">
+                  <CommandItem><User className="mr-2 h-4 w-4" />Profil</CommandItem>
+                  <CommandItem><Settings className="mr-2 h-4 w-4" />Ustawienia</CommandItem>
+                  <CommandItem><File className="mr-2 h-4 w-4" />Nowy plik</CommandItem>
+                </CommandGroup>
+                <CommandSeparator />
+                <CommandGroup heading="Ostatnie">
+                  <CommandItem>Dokument 1</CommandItem>
+                  <CommandItem>Dokument 2</CommandItem>
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </div>
+        ),
+      },
+    ],
+  },
+
+  {
     slug: 'sheet',
     title: 'Sheet',
-    description: 'Panel wysuwany z krawedzi ekranu (drawer).',
+    description: 'Panel wysuwany z krawędzi ekranu (drawer).',
     category: 'Navigation',
-    props: [
-      { name: 'side', type: 'string', default: 'right', options: ['top','right','bottom','left'] },
-    ],
+    props: [{ name: 'side', type: 'string', default: 'right', options: ['top','right','bottom','left'] }],
     examples: [
       {
         title: 'Prawa strona',
         render: () => (
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline">Otworz panel</Button>
+              <Button variant="outline">Otwórz panel</Button>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
@@ -804,19 +1057,17 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'card',
     title: 'Card',
-    description: 'Kontener grupujacy powiazane tresci.',
+    description: 'Kontener grupujący powiązane treści.',
     category: 'Layout',
-    props: [
-      { name: 'className', type: 'string' },
-    ],
+    props: [{ name: 'className', type: 'string' }],
     examples: [
       {
-        title: 'Pelna karta',
+        title: 'Pełna karta',
         render: () => (
           <Card className="w-72">
             <CardHeader>
-              <CardTitle>Tytul karty</CardTitle>
-              <CardDescription>Krotki opis zawartosci.</CardDescription>
+              <CardTitle>Tytuł karty</CardTitle>
+              <CardDescription>Krótki opis zawartości.</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">Tu umieszczasz dowolne komponenty.</p>
@@ -834,7 +1085,7 @@ export const registry: RegistryEntry[] = [
   {
     slug: 'table',
     title: 'Table',
-    description: 'Tabela danych z naglowkami i wierszami.',
+    description: 'Tabela danych z nagłówkami i wierszami.',
     category: 'Layout',
     props: [],
     examples: [
@@ -850,9 +1101,9 @@ export const registry: RegistryEntry[] = [
               </TableRow>
             </TableHeader>
             <TableBody>
-              {[['Faktura #001', 'Oplacona', '1 200 zl'],
-                ['Faktura #002', 'Oczekujaca', '850 zl'],
-                ['Faktura #003', 'Anulowana', '320 zl']].map(([name, status, amount]) => (
+              {[['Faktura #001', 'Opłacona', '1 200 zł'],
+                ['Faktura #002', 'Oczekująca', '850 zł'],
+                ['Faktura #003', 'Anulowana', '320 zł']].map(([name, status, amount]) => (
                 <TableRow key={name}>
                   <TableCell className="font-medium">{name}</TableCell>
                   <TableCell>{status}</TableCell>
@@ -871,18 +1122,14 @@ export const registry: RegistryEntry[] = [
     title: 'Scroll Area',
     description: 'Obszar przewijania ze stylizowanym scrollbarem.',
     category: 'Layout',
-    props: [
-      { name: 'className', type: 'string', description: 'Wymiary kontenera' },
-    ],
+    props: [{ name: 'className', type: 'string', description: 'Wymiary kontenera' }],
     examples: [
       {
         title: 'Lista',
         render: () => (
           <ScrollArea className="h-40 w-48 rounded-md border p-3">
             {Array.from({ length: 15 }, (_, i) => (
-              <div key={i} className="py-1 text-sm border-b last:border-0">
-                Element {i + 1}
-              </div>
+              <div key={i} className="py-1 text-sm border-b last:border-0">Element {i + 1}</div>
             ))}
           </ScrollArea>
         ),
