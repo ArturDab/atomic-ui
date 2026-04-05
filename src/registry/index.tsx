@@ -1,3 +1,4 @@
+import { blockRegistry } from './blocks'
 import { sources } from './sources'
 import { useState } from 'react'
 import { Calendar } from '@/components/ui/calendar'
@@ -1317,5 +1318,5 @@ const _base: RegistryEntry[] = [
 
 ]
 
-export const registry = _base.map(e => ({ ...e, source: sources[e.slug] }))
+export const registry = [..._base, ...blockRegistry].map(e => ({ ...e, source: sources[e.slug] }))
 export type { RegistryEntry } from './types'
