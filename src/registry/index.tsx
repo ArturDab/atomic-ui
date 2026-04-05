@@ -1,4 +1,15 @@
+import { sources } from './sources'
 import { useState } from 'react'
+import { Calendar } from '@/components/ui/calendar'
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel'
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
+import { BarChart as RechartBar, Bar, CartesianGrid, XAxis } from 'recharts'
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from '@/components/ui/drawer'
+import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form'
+import { useForm as useFormHook } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import type { Date as DateType } from 'react-day-picker'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -39,7 +50,7 @@ import { toast } from '@/hooks/use-toast'
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Info, Terminal, ChevronDown, File, Settings, User } from 'lucide-react'
 import type { RegistryEntry } from './types'
 
-export const registry: RegistryEntry[] = [
+const _base: RegistryEntry[] = [
 
   // ── ATOMS ──────────────────────────────────────────────────────────
 
@@ -1139,4 +1150,174 @@ export const registry: RegistryEntry[] = [
 
 ]
 
+  // ── BLOCKS ─────────────────────────────────────────────────────────
+
+  {
+    slug: 'calendar',
+    title: 'Calendar',
+    description: 'Picker daty oparty na react-day-picker. Obsługuje tryb single, range i multiple.',
+    category: 'Forms',
+    props: [
+      { name: 'mode', type: 'string', default: 'single', options: ['single','range','multiple'] },
+      { name: 'selected', type: 'Date | DateRange | Date[]' },
+      { name: 'onSelect', type: 'function' },
+      { name: 'disabled', type: 'Matcher | Matcher[]' },
+    ],
+    examples: [
+      {
+        title: 'Pojedyncza data',
+        render: () => {
+          const [date, setDate] = useState<Date | undefined>(new Date())
+          return <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
+        },
+      },
+    ],
+  },
+
+  {
+    slug: 'carousel',
+    title: 'Carousel',
+    description: 'Karuzela slajdów oparta na Embla Carousel. Obsługuje touch, drag i accessibility.',
+    category: 'Layout',
+    props: [
+      { name: 'opts', type: 'CarouselOptions', description: 'Opcje Embla (loop, align, itp.)' },
+      { name: 'orientation', type: 'string', default: 'horizontal', options: ['horizontal','vertical'] },
+    ],
+    examples: [
+      {
+        title: 'Podstawowa',
+        render: () => (
+          <Carousel className="w-64">
+            <CarouselContent>
+              {Array.from({ length: 5 }, (_, i) => (
+                <CarouselItem key={i}>
+                  <div className="flex items-center justify-center h-32 bg-muted rounded-lg text-2xl font-bold text-muted-foreground">
+                    {i + 1}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'chart',
+    title: 'Chart',
+    description: 'Wrapper Recharts z kontekstem konfiguracji, tooltipem i legendą.',
+    category: 'Blocks',
+    props: [
+      { name: 'config', type: 'ChartConfig', description: 'Mapowanie kluczy na kolory i etykiety' },
+    ],
+    examples: [
+      {
+        title: 'Bar Chart',
+        render: () => {
+          const data = [
+            { month: 'Sty', value: 186 },
+            { month: 'Lut', value: 305 },
+            { month: 'Mar', value: 237 },
+            { month: 'Kwi', value: 73 },
+            { month: 'Maj', value: 209 },
+            { month: 'Cze', value: 214 },
+          ]
+          const config = { value: { label: 'Wartość', color: 'hsl(var(--primary))' } }
+          return (
+            <ChartContainer config={config} className="h-48 w-72">
+              <RechartBar data={data} margin={{ left: 0, right: 0 }}>
+                <CartesianGrid vertical={false} />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Bar dataKey="value" fill="var(--color-value)" radius={4} />
+              </RechartBar>
+            </ChartContainer>
+          )
+        },
+      },
+    ],
+  },
+
+  {
+    slug: 'drawer',
+    title: 'Drawer',
+    description: 'Panel wysuwany z dołu ekranu oparty na Vaul. Obsługuje drag-to-close.',
+    category: 'Navigation',
+    props: [
+      { name: 'shouldScaleBackground', type: 'boolean', default: 'true' },
+    ],
+    examples: [
+      {
+        title: 'Z dołu',
+        render: () => (
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button variant="outline">Otwórz Drawer</Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>Edytuj profil</DrawerTitle>
+                <DrawerDescription>Przeciągnij w dół, aby zamknąć.</DrawerDescription>
+              </DrawerHeader>
+              <div className="p-4 space-y-3">
+                <Label>Imię</Label>
+                <Input placeholder="Jan Kowalski" />
+              </div>
+              <DrawerFooter>
+                <Button>Zapisz</Button>
+                <DrawerClose asChild>
+                  <Button variant="outline">Anuluj</Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        ),
+      },
+    ],
+  },
+
+  {
+    slug: 'form',
+    title: 'Form',
+    description: 'Wrapper react-hook-form z kontekstem walidacji, labelkami i komunikatami błędów.',
+    category: 'Forms',
+    props: [
+      { name: 'control', type: 'Control<TFieldValues>', description: 'Kontroler z useForm()' },
+      { name: 'name', type: 'string', description: 'Nazwa pola z schematu' },
+    ],
+    examples: [
+      {
+        title: 'Z walidacją Zod',
+        render: () => {
+          const form = useFormHook({ resolver: zodResolver(z.object({ email: z.string().email('Nieprawidłowy email') })), defaultValues: { email: '' } })
+          return (
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(() => {})} className="space-y-4 w-72">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl><Input placeholder="jan@example.com" {...field} /></FormControl>
+                      <FormDescription>Twój służbowy adres email.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full">Wyślij</Button>
+              </form>
+            </Form>
+          )
+        },
+      },
+    ],
+  },
+
+]
+
+export const registry = _base.map(e => ({ ...e, source: sources[e.slug] }))
 export type { RegistryEntry } from './types'

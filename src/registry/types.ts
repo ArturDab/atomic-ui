@@ -21,4 +21,5 @@ export interface RegistryEntry {
   category: 'Atoms' | 'Forms' | 'Feedback' | 'Navigation' | 'Layout' | 'Blocks'
   props: PropDef[]
   examples: ComponentExample[]
+  source?: string
 }
