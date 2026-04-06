@@ -46,7 +46,7 @@ function FormattedText({ text }: { text: string }) {
           return part
         })
         return (
-          <p key={i} className={cn('leading-relaxed', i > 0 && 'mt-3')}>
+          <p key={i} className={cn('text-base leading-relaxed', i > 0 && 'mt-3')}>
             {rendered}
           </p>
         )
@@ -139,7 +139,7 @@ export function ChatMessage({ msg }: { msg: Message }) {
 
         {/* Bubble */}
         <div className={cn(
-          'rounded-lg px-4 py-3 text-sm border',
+          'rounded-lg px-4 py-3 text-base border',
           msg.isSummary ? 'bg-muted/60' : 'bg-muted/40'
         )}>
           <FormattedText text={msg.text} />
