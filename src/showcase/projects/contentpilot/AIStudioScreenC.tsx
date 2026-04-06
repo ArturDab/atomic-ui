@@ -1,18 +1,18 @@
-// Layout C: Wyróżnione + siatka
-// Filozofia: hierarchia ważności – trzy polecane na górze jako duże karty,
-// reszta jako kompaktowa siatka poniżej
-
-import { useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import { CPSidebar } from './_Sidebar'
 import { TopBar } from './_TopBar'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
 import {
   FileText, ShoppingBag, Mail, Share2, AlignLeft,
   Languages, SpellCheck2, HelpCircle, Search as SearchIcon,
-  ArrowRight, Sparkles,
+  ArrowRight, Clock, Copy,
 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 const FEATURED = [
   {
@@ -47,8 +47,40 @@ const SECONDARY = [
   { slug: 'seo',       icon: SearchIcon,  name: 'SEO meta tagi' },
 ]
 
+const HISTORY = [
+  { id: '1', type: 'Artykuł blogowy',    topic: 'Jak stworzyć skuteczny zespół agentów AI?',         date: 'dzisiaj',      words: 980 },
+  { id: '2', type: 'Post social media',  topic: 'Launch Animails – nowa aplikacja dla miłośników zwierząt', date: 'dzisiaj', words: 220 },
+  { id: '3', type: 'Email marketingowy', topic: 'Newsletter Q1 – podsumowanie wyników',               date: 'wczoraj',      words: 540 },
+  { id: '4', type: 'Artykuł blogowy',    topic: 'Jak skutecznie pracować na home office?',            date: 'wczoraj',      words: 1240 },
+  { id: '5', type: 'SEO meta tagi',      topic: 'Strona główna Beezu.pl',                             date: '18.03',        words: 160 },
+  { id: '6', type: 'Opis produktu',      topic: 'Kolczyki złote z cyrkonem – Beezu kolekcja wiosna', date: '18.03',        words: 310 },
+  { id: '7', type: 'Streszczenie',       topic: 'Raport: AI w marketingu 2025 – McKinsey',            date: '17.03',        words: 430 },
+  { id: '8', type: 'Tłumaczenie',        topic: 'Privacy Policy – EN → PL',                          date: '15.03',        words: 1800 },
+  { id: '9', type: 'Generator FAQ',      topic: 'Najczęstsze pytania o sklep Beezu.pl',               date: '14.03',        words: 620 },
+]
+
+const TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  'Artykuł blogowy':    FileText,
+  'Post social media':  Share2,
+  'Email marketingowy': Mail,
+  'SEO meta tagi':      SearchIcon,
+  'Opis produktu':      ShoppingBag,
+  'Streszczenie':       AlignLeft,
+  'Tłumaczenie':        Languages,
+  'Generator FAQ':      HelpCircle,
+  'Korekta i redakcja': SpellCheck2,
+}
+
 export default function AIStudioScreenC() {
   const { projectSlug } = useParams<{ projectSlug: string }>()
+  const [search, setSearch] = useState('')
+
+  const allGenerators = [...FEATURED, ...SECONDARY]
+  const isSearching = search.trim().length > 0
+
+  const searchResults = isSearching
+    ? allGenerators.filter(g => g.name.toLowerCase().includes(search.toLowerCase()))
+    : []
 
   return (
     <div className="flex h-full bg-background">
@@ -57,73 +89,163 @@ export default function AIStudioScreenC() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar crumbs={[{ label: 'Strona główna' }, { label: 'AI Studio' }]} />
 
-        <ScrollArea className="flex-1 bg-[#fafafa]">
-          <div className="max-w-4xl mx-auto px-8 py-8">
+        <div className="flex flex-1 overflow-hidden">
 
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h1 className="text-xl font-semibold tracking-tight mb-1">AI Studio</h1>
-                <p className="text-sm text-muted-foreground">Wybierz generator i zacznij tworzyć</p>
-              </div>
-              <Button variant="outline" size="sm" className="gap-1.5">
-                <Sparkles className="w-4 h-4" />
-                Historia generacji
-              </Button>
-            </div>
+          {/* Główna strefa – generatory */}
+          <div className="flex-1 overflow-hidden flex flex-col">
+            <ScrollArea className="flex-1 bg-[#fafafa]">
+              <div className="px-8 py-8 max-w-3xl">
 
-            {/* Featured – 3 duże karty */}
-            <div className="mb-8">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
-                Polecane
-              </p>
-              <div className="grid grid-cols-3 gap-4">
-                {FEATURED.map(gen => (
-                  <button
-                    key={gen.slug}
-                    className="flex flex-col text-left border rounded-xl bg-white p-5 hover:border-foreground/25 hover:shadow-sm transition-all group"
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                        <gen.icon className="w-5 h-5 text-foreground" />
+                {/* Header z wyszukiwarką */}
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  <div>
+                    <h1 className="text-xl font-semibold tracking-tight mb-1">AI Studio</h1>
+                    <p className="text-sm text-muted-foreground">Wybierz generator i zacznij tworzyć</p>
+                  </div>
+                  <div className="relative w-56 shrink-0">
+                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Szukaj generatora..."
+                      value={search}
+                      onChange={e => setSearch(e.target.value)}
+                      className="pl-9 h-9 text-sm bg-white"
+                    />
+                  </div>
+                </div>
+
+                {/* Wyniki wyszukiwania */}
+                {isSearching && (
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-3">
+                      {searchResults.length === 0 ? 'Brak wyników' : `${searchResults.length} generatorów`}
+                    </p>
+                    <div className="grid grid-cols-2 gap-3">
+                      {searchResults.map(gen => (
+                        <Link
+                          key={gen.slug}
+                          to={`/projects/${projectSlug}/ai-studio/${gen.slug}`}
+                          className="flex items-center gap-3 bg-white border rounded-xl px-4 py-3 hover:border-foreground/25 hover:shadow-sm transition-all group"
+                        >
+                          <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                            <gen.icon className="w-4 h-4 text-muted-foreground" />
+                          </div>
+                          <p className="font-medium text-sm">{gen.name}</p>
+                          <ArrowRight className="w-3.5 h-3.5 text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Polecane */}
+                {!isSearching && (
+                  <>
+                    <div className="mb-6">
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
+                        Polecane
+                      </p>
+                      <div className="grid grid-cols-3 gap-4">
+                        {FEATURED.map(gen => (
+                          <Link
+                            key={gen.slug}
+                            to={`/projects/${projectSlug}/ai-studio/${gen.slug}`}
+                            className="flex flex-col text-left border rounded-xl bg-white p-5 hover:border-foreground/25 hover:shadow-sm transition-all group"
+                          >
+                            <div className="flex items-start justify-between mb-4">
+                              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                                <gen.icon className="w-5 h-5 text-foreground" />
+                              </div>
+                              {gen.badge && (
+                                <Badge variant="secondary" className="text-xs">{gen.badge}</Badge>
+                              )}
+                            </div>
+                            <p className="font-semibold text-sm mb-1.5">{gen.name}</p>
+                            <p className="text-xs text-muted-foreground leading-relaxed flex-1">{gen.desc}</p>
+                            <div className="flex items-center gap-1 mt-4 text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                              Użyj <ArrowRight className="w-3.5 h-3.5" />
+                            </div>
+                          </Link>
+                        ))}
                       </div>
-                      {gen.badge && (
-                        <Badge variant="secondary" className="text-xs">{gen.badge}</Badge>
-                      )}
                     </div>
-                    <p className="font-semibold text-sm mb-1.5">{gen.name}</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed flex-1">{gen.desc}</p>
-                    <div className="flex items-center gap-1 mt-4 text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                      Użyj <ArrowRight className="w-3.5 h-3.5" />
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
 
-            {/* Secondary – kompaktowa siatka */}
-            <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
-                Pozostałe generatory
-              </p>
-              <div className="grid grid-cols-3 gap-3">
-                {SECONDARY.map(gen => (
-                  <button
-                    key={gen.slug}
-                    className="flex items-center gap-3 text-left border rounded-xl bg-white px-4 py-3 hover:border-foreground/25 hover:shadow-sm transition-all group"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                      <gen.icon className="w-4 h-4 text-muted-foreground" />
+                    {/* Pozostałe */}
+                    <div>
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
+                        Pozostałe generatory
+                      </p>
+                      <div className="grid grid-cols-3 gap-3">
+                        {SECONDARY.map(gen => (
+                          <Link
+                            key={gen.slug}
+                            to={`/projects/${projectSlug}/ai-studio/${gen.slug}`}
+                            className="flex items-center gap-3 text-left border rounded-xl bg-white px-4 py-3 hover:border-foreground/25 hover:shadow-sm transition-all group"
+                          >
+                            <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                              <gen.icon className="w-4 h-4 text-muted-foreground" />
+                            </div>
+                            <p className="font-medium text-sm flex-1">{gen.name}</p>
+                            <ArrowRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                    <p className="font-medium text-sm">{gen.name}</p>
-                    <ArrowRight className="w-3.5 h-3.5 text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
-                  </button>
-                ))}
-              </div>
-            </div>
+                  </>
+                )}
 
+              </div>
+            </ScrollArea>
           </div>
-        </ScrollArea>
+
+          {/* Prawa kolumna – historia generacji */}
+          <div className="w-72 border-l flex flex-col shrink-0 bg-background">
+            <div className="h-12 border-b flex items-center justify-between px-4 shrink-0">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Historia generacji
+              </span>
+              <span className="text-xs text-muted-foreground tabular-nums">{HISTORY.length}</span>
+            </div>
+
+            <ScrollArea className="flex-1">
+              {HISTORY.map((item, i) => {
+                const Icon = TYPE_ICONS[item.type] ?? FileText
+                return (
+                  <div key={item.id}>
+                    <button className="w-full text-left px-4 py-3 hover:bg-muted/40 transition-colors group">
+                      <div className="flex items-start gap-2.5">
+                        <div className="w-6 h-6 rounded-md bg-muted flex items-center justify-center shrink-0 mt-0.5">
+                          <Icon className="w-3.5 h-3.5 text-muted-foreground" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-medium text-muted-foreground mb-0.5">{item.type}</p>
+                          <p className="text-sm leading-snug line-clamp-2">{item.topic}</p>
+                          <div className="flex items-center gap-2 mt-1.5">
+                            <span className="text-xs text-muted-foreground flex items-center gap-1">
+                              <Clock className="w-3 h-3" /> {item.date}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {item.words.toLocaleString()} słów
+                            </span>
+                          </div>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                          onClick={e => e.stopPropagation()}
+                        >
+                          <Copy className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </button>
+                    {i < HISTORY.length - 1 && <Separator />}
+                  </div>
+                )
+              })}
+            </ScrollArea>
+          </div>
+
+        </div>
       </div>
     </div>
   )
