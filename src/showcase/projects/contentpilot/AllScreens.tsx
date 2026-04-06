@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import AIChatScreen from './AIChatScreen'
 import AITeamsScreen from './AITeamsScreen'
-import AIStudioScreen from './AIStudioScreen'
 import AIStudioScreenC from './AIStudioScreenC'
 import AIStudioEditorScreen from './AIStudioEditorScreen'
 import AIStudioEditorEmptyScreen from './AIStudioEditorEmptyScreen'
@@ -9,8 +8,7 @@ import AIStudioEditorEmptyScreen from './AIStudioEditorEmptyScreen'
 const SCREENS = [
   { path: 'ai-chat',              label: 'AI Chat',                Component: AIChatScreen },
   { path: 'ai-teams',             label: 'AI Teams',               Component: AITeamsScreen },
-  { path: 'ai-studio',            label: 'AI Studio – galeria A',  Component: AIStudioScreen },
-  { path: 'ai-studio-c',          label: 'AI Studio – galeria C',  Component: AIStudioScreenC },
+  { path: 'ai-studio',            label: 'AI Studio – galeria',    Component: AIStudioScreenC },
   { path: 'ai-studio-editor-empty', label: 'Edytor – pusty',       Component: AIStudioEditorEmptyScreen },
   { path: 'ai-studio/article',    label: 'Edytor – z treścią',     Component: AIStudioEditorScreen },
 ]

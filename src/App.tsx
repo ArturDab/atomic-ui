@@ -14,7 +14,6 @@ import ProjectLayout from './showcase/projects/ProjectLayout'
 import AllScreens from './showcase/projects/contentpilot/AllScreens'
 import AIChatScreen from './showcase/projects/contentpilot/AIChatScreen'
 import AITeamsScreen from './showcase/projects/contentpilot/AITeamsScreen'
-import AIStudioScreen from './showcase/projects/contentpilot/AIStudioScreen'
 import AIStudioScreenC from './showcase/projects/contentpilot/AIStudioScreenC'
 import AIStudioEditorScreen from './showcase/projects/contentpilot/AIStudioEditorScreen'
 import AIStudioEditorEmptyScreen from './showcase/projects/contentpilot/AIStudioEditorEmptyScreen'
@@ -39,8 +38,7 @@ export default function App() {
           <Route path="all"                    element={<AllScreens />} />
           <Route path="ai-chat"                element={<AIChatScreen />} />
           <Route path="ai-teams"               element={<AITeamsScreen />} />
-          <Route path="ai-studio"              element={<AIStudioScreen />} />
-          <Route path="ai-studio-c"            element={<AIStudioScreenC />} />
+          <Route path="ai-studio"              element={<AIStudioScreenC />} />
           <Route path="ai-studio-editor-empty" element={<AIStudioEditorEmptyScreen />} />
           <Route path="ai-studio/:genSlug"     element={<AIStudioEditorScreen />} />
         </Route>

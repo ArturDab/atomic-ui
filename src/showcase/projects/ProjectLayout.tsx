@@ -33,7 +33,6 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
           { path: 'ai-studio',              label: 'Galeria' },
           { path: 'ai-studio-editor-empty', label: 'Edytor – pusty' },
           { path: 'ai-studio/article',      label: 'Edytor – z treścią' },
-          { path: 'ai-studio-c',            label: 'Studio C' },
         ],
       },
     ],
@@ -107,7 +106,7 @@ export default function ProjectLayout() {
 
       {/* Secondary nav – shown when inside a group */}
       {activeGroup && (
-        <div className="h-9 border-b bg-muted/30 flex items-center px-4 gap-1 shrink-0">
+        <div className="h-9 bg-neutral-800 flex items-center px-4 gap-1 shrink-0">
           {activeGroup.children.map(child => {
             const isActive = currentPath === child.path || currentPath.startsWith(child.path + '/')
             return (
@@ -117,8 +116,8 @@ export default function ProjectLayout() {
                 className={cn(
                   'px-3 py-1 rounded-md text-xs font-medium transition-colors',
                   isActive
-                    ? 'bg-foreground text-background'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    ? 'bg-white/15 text-white font-medium'
+                    : 'text-white/50 hover:text-white hover:bg-white/10'
                 )}
               >
                 {child.label}
