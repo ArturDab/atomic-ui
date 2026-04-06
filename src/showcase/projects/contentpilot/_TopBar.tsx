@@ -1,9 +1,7 @@
-import { ChevronRight, X } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-interface Crumb {
-  label: string
-}
+interface Crumb { label: string }
 
 interface TopBarProps {
   crumbs: Crumb[]
@@ -12,7 +10,7 @@ interface TopBarProps {
 
 export function TopBar({ crumbs, className }: TopBarProps) {
   return (
-    <div className={cn('h-10 border-b flex items-center justify-between px-5 shrink-0 bg-background', className)}>
+    <div className={cn('h-10 border-b flex items-center px-5 shrink-0 bg-background', className)}>
       <nav className="flex items-center gap-1.5">
         {crumbs.map((crumb, i) => (
           <span key={i} className="flex items-center gap-1.5">
@@ -28,10 +26,6 @@ export function TopBar({ crumbs, className }: TopBarProps) {
           </span>
         ))}
       </nav>
-      <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
-        <X className="w-3.5 h-3.5" />
-        Zamknij
-      </button>
     </div>
   )
 }
