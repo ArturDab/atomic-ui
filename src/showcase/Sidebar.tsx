@@ -1,16 +1,18 @@
 import { NavLink } from 'react-router-dom'
 import { registry } from '../registry'
-import { Layers, LayoutGrid, Monitor } from 'lucide-react'
+import { Layers, LayoutGrid, Blocks, FolderKanban } from 'lucide-react'
 import { cn } from '../lib/utils'
 
-const CATEGORY_ORDER = ['Atoms', 'Forms', 'Feedback', 'Navigation', 'Layout', 'Blocks'] as const
+const CATEGORY_ORDER = ['Atoms', 'Forms', 'Feedback', 'Navigation', 'Layout'] as const
 
 interface SidebarProps { query: string }
 
 export default function Sidebar({ query }: SidebarProps) {
+  const baseComponents = registry.filter(c => c.category !== 'Blocks')
+
   const filtered = query.trim()
-    ? registry.filter(c => c.title.toLowerCase().includes(query.toLowerCase()))
-    : registry
+    ? baseComponents.filter(c => c.title.toLowerCase().includes(query.toLowerCase()))
+    : baseComponents
 
   const grouped = filtered.reduce((acc, comp) => {
     if (!acc[comp.category]) acc[comp.category] = []
@@ -18,39 +20,42 @@ export default function Sidebar({ query }: SidebarProps) {
     return acc
   }, {} as Record<string, typeof registry>)
 
+  const topLinks = [
+    { to: '/all',      icon: LayoutGrid,    label: 'Wszystkie' },
+    { to: '/blocks',   icon: Blocks,        label: 'Bloki' },
+    { to: '/projects', icon: FolderKanban,  label: 'Projekty' },
+  ]
+
   return (
     <aside className="w-56 border-r flex flex-col shrink-0 bg-white">
       <div className="h-13 border-b flex items-center px-4 gap-2.5 shrink-0">
         <Layers className="w-4 h-4 text-foreground" strokeWidth={1.75} />
         <span className="font-semibold text-sm tracking-tight">Atomic UI</span>
       </div>
+
       <nav className="flex-1 overflow-y-auto py-3 px-2">
+        {/* Top nav */}
         <div className="mb-4 space-y-0.5">
-          <NavLink
-            to="/all"
-            className={({ isActive }) => cn(
-              "flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors",
-              isActive
-                ? "bg-foreground text-background font-medium"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted"
-            )}
-          >
-            <LayoutGrid className="w-3.5 h-3.5" />
-            Wszystkie komponenty
-          </NavLink>
-          <NavLink
-            to="/screens"
-            className={({ isActive }) => cn(
-              "flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors",
-              isActive
-                ? "bg-foreground text-background font-medium"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted"
-            )}
-          >
-            <Monitor className="w-3.5 h-3.5" />
-            Widoki aplikacji
-          </NavLink>
+          {topLinks.map(({ to, icon: Icon, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) => cn(
+                'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors',
+                isActive
+                  ? 'bg-foreground text-background font-medium'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              )}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              {label}
+            </NavLink>
+          ))}
         </div>
+
+        <div className="h-px bg-border mx-2 mb-4" />
+
+        {/* Components by category */}
         {query.trim() && filtered.length === 0 && (
           <p className="text-xs text-muted-foreground px-2 py-2">Brak wyników</p>
         )}
@@ -68,10 +73,10 @@ export default function Sidebar({ query }: SidebarProps) {
                     <NavLink
                       to={`/components/${comp.slug}`}
                       className={({ isActive }) => cn(
-                        "block px-2.5 py-1.5 rounded-md text-sm transition-colors",
+                        'block px-2.5 py-1.5 rounded-md text-sm transition-colors',
                         isActive
-                          ? "bg-foreground text-background font-medium"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          ? 'bg-foreground text-background font-medium'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                       )}
                     >
                       {comp.title}
@@ -83,8 +88,9 @@ export default function Sidebar({ query }: SidebarProps) {
           )
         })}
       </nav>
+
       <div className="border-t px-4 py-2.5">
-        <p className="text-xs text-muted-foreground">{registry.length} komponentów</p>
+        <p className="text-xs text-muted-foreground">{baseComponents.length} komponentów</p>
       </div>
     </aside>
   )
