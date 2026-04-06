@@ -7,12 +7,8 @@ const PROJECT_META: Record<string, { name: string; screens: Array<{ path: string
   contentpilot: {
     name: 'ContentPilot',
     screens: [
-      { path: 'all',       label: 'Wszystkie widoki' },
-      { path: 'dashboard', label: 'Dashboard' },
-      { path: 'documents', label: 'Dokumenty' },
-      { path: 'editor',    label: 'Edytor' },
-      { path: 'prompts',   label: 'Prompty' },
-      { path: 'settings',  label: 'Ustawienia' },
+      { path: 'all',      label: 'Wszystkie widoki' },
+      { path: 'ai-chat',  label: 'AI Chat' },
     ],
   },
 }
