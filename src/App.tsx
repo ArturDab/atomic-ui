@@ -14,6 +14,8 @@ import ProjectLayout from './showcase/projects/ProjectLayout'
 import AllScreens from './showcase/projects/contentpilot/AllScreens'
 import AIChatScreen from './showcase/projects/contentpilot/AIChatScreen'
 import AITeamsScreen from './showcase/projects/contentpilot/AITeamsScreen'
+import AIStudioScreen from './showcase/projects/contentpilot/AIStudioScreen'
+import AIStudioEditorScreen from './showcase/projects/contentpilot/AIStudioEditorScreen'
 
 export default function App() {
   return (
@@ -34,7 +36,9 @@ export default function App() {
           <Route index element={<Navigate to="all" replace />} />
           <Route path="all"     element={<AllScreens />} />
           <Route path="ai-chat"  element={<AIChatScreen />} />
-          <Route path="ai-teams" element={<AITeamsScreen />} />
+          <Route path="ai-teams"          element={<AITeamsScreen />} />
+          <Route path="ai-studio"          element={<AIStudioScreen />} />
+          <Route path="ai-studio/:genSlug" element={<AIStudioEditorScreen />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

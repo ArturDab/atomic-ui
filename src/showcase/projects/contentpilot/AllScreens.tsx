@@ -1,10 +1,14 @@
 import { Link, useParams } from 'react-router-dom'
 import AIChatScreen from './AIChatScreen'
 import AITeamsScreen from './AITeamsScreen'
+import AIStudioScreen from './AIStudioScreen'
+import AIStudioEditorScreen from './AIStudioEditorScreen'
 
 const SCREENS = [
   { path: 'ai-chat',  label: 'AI Chat',   Component: AIChatScreen },
-  { path: 'ai-teams', label: 'AI Teams',  Component: AITeamsScreen },
+  { path: 'ai-teams',  label: 'AI Teams',         Component: AITeamsScreen },
+  { path: 'ai-studio', label: 'AI Studio – galeria',  Component: AIStudioScreen },
+  { path: 'ai-studio/article', label: 'AI Studio – edytor', Component: AIStudioEditorScreen },
 ]
 
 export default function AllScreens() {

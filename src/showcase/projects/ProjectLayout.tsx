@@ -9,7 +9,9 @@ const PROJECT_META: Record<string, { name: string; screens: Array<{ path: string
     screens: [
       { path: 'all',      label: 'Wszystkie widoki' },
       { path: 'ai-chat',  label: 'AI Chat' },
-      { path: 'ai-teams', label: 'AI Teams' },
+      { path: 'ai-teams',  label: 'AI Teams' },
+      { path: 'ai-studio', label: 'AI Studio' },
+      { path: 'ai-studio/article', label: 'AI Studio – Edytor' },
     ],
   },
 }
