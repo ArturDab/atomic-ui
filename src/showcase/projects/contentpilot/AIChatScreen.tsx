@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { CPSidebar } from './_Sidebar'
+import { ModelPicker } from './_ModelPicker'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -9,7 +10,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Slider } from '@/components/ui/slider'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Plus, CheckSquare, ChevronDown, ChevronUp,
@@ -77,8 +77,8 @@ function ParamsPopover() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 gap-2 text-sm">
-          <SlidersHorizontal className="w-3.5 h-3.5" />
+        <Button variant="outline" size="sm" className="h-9 gap-2 text-sm">
+          <SlidersHorizontal className="w-4 h-4" />
           Parametry
         </Button>
       </PopoverTrigger>
@@ -92,7 +92,7 @@ function ParamsPopover() {
               <span className="text-sm font-mono text-muted-foreground">{temp[0]}</span>
             </div>
             <Slider value={temp} onValueChange={setTemp} min={0} max={2} step={0.1} />
-            <p className="text-xs text-muted-foreground">Kreatywność odpowiedzi. 0 = deterministyczne, 2 = bardzo losowe.</p>
+            <p className="text-xs text-muted-foreground">0 = deterministyczne · 2 = bardzo losowe</p>
           </div>
 
           <Separator />
@@ -123,6 +123,7 @@ function ParamsPopover() {
 export default function AIChatScreen() {
   const [systemPromptOpen, setSystemPromptOpen] = React.useState(false)
   const [input, setInput] = React.useState('')
+  const [model, setModel] = React.useState('OPENAI/GPT-4O')
 
   return (
     <div className="flex h-full bg-background">
@@ -207,7 +208,6 @@ export default function AIChatScreen() {
                     <Badge variant="outline" className="font-mono text-xs">GPT-4o</Badge>
                     <span className="text-xs text-muted-foreground">13:24</span>
                   </div>
-
                   <div className="rounded-md border overflow-hidden mb-4">
                     <div className="flex items-center justify-between px-4 py-2.5 border-b bg-muted/40">
                       <span className="text-xs font-mono text-muted-foreground">html</span>
@@ -217,11 +217,9 @@ export default function AIChatScreen() {
                     </div>
                     <pre className="px-4 py-3 text-sm font-mono leading-relaxed overflow-x-auto max-h-48 bg-muted/20 text-foreground/80">{CODE}</pre>
                   </div>
-
                   <p className="text-base leading-relaxed text-muted-foreground">
                     This HTML template follows your provided guidelines, featuring a single-column layout, inline CSS for compatibility, and placeholders for images.
                   </p>
-
                   <div className="flex items-center mt-2">
                     <span className="text-xs text-muted-foreground flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5" /> 2010 tokenów · 9.65s
@@ -274,29 +272,18 @@ export default function AIChatScreen() {
         <div className="border-t bg-background">
           <div className="max-w-2xl mx-auto px-6 py-3">
 
-            {/* Pasek konfiguracji – jedna linia */}
+            {/* Config bar – jedna linia, wszystko h-9 */}
             <div className="flex items-center gap-2 mb-3">
               <Tabs defaultValue="chat">
-                <TabsList className="h-8">
-                  <TabsTrigger value="chat" className="text-sm h-7 px-4">Chat</TabsTrigger>
-                  <TabsTrigger value="completion" className="text-sm h-7 px-4">Completion</TabsTrigger>
+                <TabsList className="h-9">
+                  <TabsTrigger value="chat" className="text-sm h-8 px-4">Chat</TabsTrigger>
+                  <TabsTrigger value="completion" className="text-sm h-8 px-4">Completion</TabsTrigger>
                 </TabsList>
               </Tabs>
 
               <Separator orientation="vertical" className="h-5" />
 
-              <Select defaultValue="gpt4o">
-                <SelectTrigger className="h-8 w-36 text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="gpt4o">GPT-4o</SelectItem>
-                  <SelectItem value="gpt4o-mini">GPT-4o mini</SelectItem>
-                  <SelectItem value="claude-sonnet">Claude Sonnet</SelectItem>
-                  <SelectItem value="claude-haiku">Claude Haiku</SelectItem>
-                  <SelectItem value="gemini-pro">Gemini Pro</SelectItem>
-                </SelectContent>
-              </Select>
+              <ModelPicker value={model} onChange={setModel} />
 
               <div className="ml-auto">
                 <ParamsPopover />
