@@ -17,6 +17,7 @@ import AITeamsScreen from './showcase/projects/contentpilot/AITeamsScreen'
 import AIStudioScreenC from './showcase/projects/contentpilot/AIStudioScreenC'
 import AIStudioEditorScreen from './showcase/projects/contentpilot/AIStudioEditorScreen'
 import AIStudioEditorEmptyScreen from './showcase/projects/contentpilot/AIStudioEditorEmptyScreen'
+import DocumentsScreen from './showcase/projects/contentpilot/DocumentsScreen'
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="ai-studio"              element={<AIStudioScreenC />} />
           <Route path="ai-studio-editor-empty" element={<AIStudioEditorEmptyScreen />} />
           <Route path="ai-studio/:genSlug"     element={<AIStudioEditorScreen />} />
+          <Route path="documents"               element={<DocumentsScreen />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

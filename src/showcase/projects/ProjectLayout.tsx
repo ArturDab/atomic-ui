@@ -25,7 +25,8 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
     nav: [
       { path: 'all',      label: 'Wszystkie widoki' },
       { path: 'ai-chat',  label: 'AI Chat' },
-      { path: 'ai-teams', label: 'AI Teams' },
+      { path: 'ai-teams',   label: 'AI Teams' },
+      { path: 'documents',  label: 'Dokumenty' },
       {
         label: 'AI Studio',
         defaultPath: 'ai-studio',

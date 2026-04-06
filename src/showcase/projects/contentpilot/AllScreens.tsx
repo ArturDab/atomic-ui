@@ -4,6 +4,7 @@ import AITeamsScreen from './AITeamsScreen'
 import AIStudioScreenC from './AIStudioScreenC'
 import AIStudioEditorScreen from './AIStudioEditorScreen'
 import AIStudioEditorEmptyScreen from './AIStudioEditorEmptyScreen'
+import DocumentsScreen from './DocumentsScreen'
 
 const SCREENS = [
   { path: 'ai-chat',              label: 'AI Chat',                Component: AIChatScreen },
@@ -11,6 +12,7 @@ const SCREENS = [
   { path: 'ai-studio',            label: 'AI Studio – galeria',    Component: AIStudioScreenC },
   { path: 'ai-studio-editor-empty', label: 'Edytor – pusty',       Component: AIStudioEditorEmptyScreen },
   { path: 'ai-studio/article',    label: 'Edytor – z treścią',     Component: AIStudioEditorScreen },
+  { path: 'documents',              label: 'Dokumenty',              Component: DocumentsScreen },
 ]
 
 export default function AllScreens() {
