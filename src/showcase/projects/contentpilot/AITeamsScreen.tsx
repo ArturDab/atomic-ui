@@ -4,15 +4,18 @@ import { TopBar } from './_TopBar'
 import { ChatMessages } from './_ChatMessage'
 import { ChatInput } from './_ChatInput'
 import type { Message } from './_ChatMessage'
+import {
+  SidePanel, SidePanelHeader, SidePanelAction, SidePanelToolbar,
+  SidePanelSection, SidePanelItem, SidePanelItemTitle, SidePanelItemMeta, SidePanelList,
+} from './_SidePanel'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { Switch } from '@/components/ui/switch'
 import { Slider } from '@/components/ui/slider'
 import {
-  Plus, Star, MessageSquarePlus, SlidersHorizontal,
-  Trash2, Upload, MessageSquare, Users, ChevronRight, AtSign,
+  Plus, Star, MessageSquarePlus, SlidersHorizontal, Trash2,
+  Upload, MessageSquare, Users, ChevronRight, AtSign,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -35,13 +38,12 @@ const CHAT_HISTORY = Array.from({ length: 9 }, (_, i) => ({ id: String(i), activ
 const MESSAGES: Message[] = [
   { id: '1', role: 'user', userName: 'ArturD', userInitials: 'A', text: 'Czy jesteście gotowi do pracy?' },
   { id: '2', role: 'assistant', agentName: 'Copywriter', agentInitial: 'C', agentColor: AGENT_COLOR.c,
-    text: 'Cześć @ArturD, oczywiście, że jesteśmy gotowi do pracy! Daj mi znać, co konkretnie chcesz, żebym przygotował.',
-    time: '2.2s' },
+    text: 'Cześć @ArturD, oczywiście, że jesteśmy gotowi do pracy!', time: '2.2s' },
   { id: '3', role: 'assistant', agentName: 'SEO Specialist', agentInitial: 'S', agentColor: AGENT_COLOR.s,
-    text: '@ArturD, tak, jestem gotowy. Jak tylko @Copywriter przygotuje zarys treści, od razu wejdę w to, żeby zadbać o dobór słów kluczowych i zoptymalizować nagłówki.',
+    text: '@ArturD, tak, jestem gotowy. Jak tylko @Copywriter przygotuje zarys treści, od razu wejdę w to.',
     tokens: '936 tok', time: '1.8s' },
   { id: '4', role: 'assistant', agentName: 'Editor-in-Chief', agentInitial: 'E', agentColor: AGENT_COLOR.e, isSummary: true,
-    text: '@ArturD, tak, zespół jest gotowy do pracy. @Copywriter czeka na szczegóły projektu, a @SEO Specialist jest gotowy do optymalizacji.\n\nJednak żeby ruszyć efektywnie, potrzebujemy więcej informacji.\n\n**Co konkretnie mamy przygotować i jaki masz deadline?**',
+    text: '@ArturD, tak, zespół jest gotowy do pracy.\n\nJednak żeby ruszyć efektywnie, potrzebujemy więcej informacji.\n\n**Co konkretnie mamy przygotować i jaki masz deadline?**',
     tokens: '1179 tok', time: '6.4s' },
   { id: '5', role: 'user', userName: 'ArturD', userInitials: 'A', text: 'Wymyślmy copy do reklamy Animails.' },
   { id: '6', role: 'assistant', agentName: 'Copywriter', agentInitial: 'C', agentColor: AGENT_COLOR.c,
@@ -58,50 +60,41 @@ export default function AITeamsScreen() {
 
   return (
     <div className="flex h-full bg-background">
-
-      {/* Nav rail */}
       <CPSidebar active="ai-teams" />
-
-      {/* Content area – TopBar + rest */}
       <div className="flex-1 flex flex-col overflow-hidden">
-
-        {/* Breadcrumbs – część UI ContentPilot, zaczyna się po nav rail */}
         <TopBar crumbs={[{ label: 'Strona główna' }, { label: 'AI Teams' }]} />
-
-        {/* Główna treść – trzy kolumny */}
         <div className="flex flex-1 overflow-hidden">
 
-          {/* Lista zespołów */}
-          <div className="w-72 border-r flex flex-col shrink-0">
-            <div className="p-4 border-b">
-              <Button className="w-full gap-2"><Plus className="w-4 h-4" /> Utwórz zespół</Button>
-            </div>
-            <div className="px-4 py-2">
+          <SidePanel>
+            <SidePanelHeader>
+              <SidePanelAction icon={Plus} label="Utwórz zespół" />
+            </SidePanelHeader>
+            <SidePanelToolbar>
               <Button variant="ghost" size="sm" className="gap-1.5 text-sm text-muted-foreground px-2">
                 <span className="text-xs">⊞</span> Zaznacz
               </Button>
-            </div>
-            <ScrollArea className="flex-1">
+            </SidePanelToolbar>
+            <SidePanelList>
               {TEAMS.map(team => (
-                <button key={team.id} className={cn('w-full text-left px-4 py-3 border-b flex items-start gap-3 hover:bg-muted/50 transition-colors', team.active && 'bg-muted')}>
-                  <Users className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium truncate">{team.name}</p>
-                    <p className="text-xs text-muted-foreground line-clamp-1">{team.desc}</p>
+                <SidePanelItem key={team.id} active={team.active}>
+                  <Users className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <SidePanelItemTitle className="font-medium truncate">{team.name}</SidePanelItemTitle>
+                    <SidePanelItemMeta>{team.desc}</SidePanelItemMeta>
                   </div>
-                </button>
+                </SidePanelItem>
               ))}
-              <p className="px-4 pt-4 pb-2 text-xs font-semibold text-muted-foreground uppercase tracking-widest">Historia czatów</p>
+              <SidePanelSection label="Historia czatów" />
               {CHAT_HISTORY.map(c => (
-                <button key={c.id} className={cn('w-full text-left px-4 py-2.5 flex items-center gap-3 hover:bg-muted/50 transition-colors', c.active && 'bg-muted')}>
+                <SidePanelItem key={c.id} active={c.active}>
                   <MessageSquare className="w-4 h-4 text-muted-foreground shrink-0" />
-                  <span className="text-sm">Nowy czat</span>
-                </button>
+                  <SidePanelItemTitle>Nowy czat</SidePanelItemTitle>
+                </SidePanelItem>
               ))}
-            </ScrollArea>
-          </div>
+            </SidePanelList>
+          </SidePanel>
 
-          {/* Czat */}
+          {/* Chat */}
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
               <h1 className="text-base font-semibold">Tworzenie treści</h1>
@@ -117,18 +110,14 @@ export default function AITeamsScreen() {
                 <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground"><Trash2 className="w-4 h-4" /></Button>
               </div>
             </div>
-
-            <ScrollArea className="flex-1">
+            <div className="flex-1 overflow-hidden">
               <ChatMessages messages={MESSAGES} />
-            </ScrollArea>
-
-            <ChatInput
-              placeholder="Napisz wiadomość do zespołu..."
-              hint={<span className="flex items-center gap-1">Shift + Enter nowa linia · <AtSign className="w-3 h-3" /> to mention agent</span>}
-            />
+            </div>
+            <ChatInput placeholder="Napisz wiadomość do zespołu..."
+              hint={<span className="flex items-center gap-1">Shift + Enter nowa linia · <AtSign className="w-3 h-3" /> to mention agent</span>} />
           </div>
 
-          {/* Panel prawy */}
+          {/* Right panel */}
           <div className="w-72 border-l flex flex-col shrink-0 overflow-y-auto">
             <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
               <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Przegląd zespołu</span>
@@ -157,10 +146,8 @@ export default function AITeamsScreen() {
                         {agent.initial}
                       </div>
                       <p className="text-sm font-medium flex-1">{agent.name}</p>
-                      <Switch
-                        checked={agent.enabled}
-                        onCheckedChange={() => setAgents(prev => prev.map(a => a.id === agent.id ? { ...a, enabled: !a.enabled } : a))}
-                      />
+                      <Switch checked={agent.enabled}
+                        onCheckedChange={() => setAgents(prev => prev.map(a => a.id === agent.id ? { ...a, enabled: !a.enabled } : a))} />
                     </div>
                   ))}
                 </div>
@@ -183,11 +170,10 @@ export default function AITeamsScreen() {
                   <span className="text-sm font-semibold tabular-nums">{limit[0]}</span>
                 </div>
                 <Slider value={limit} onValueChange={setLimit} min={10} max={50} step={5} className="mb-2" />
-                <p className="text-xs text-muted-foreground leading-relaxed">Zakres: 10–50 wiadomości. Mniejsza wartość oszczędza tokeny (szybciej + taniej).</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">Zakres: 10–50 wiadomości. Mniejsza wartość oszczędza tokeny.</p>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

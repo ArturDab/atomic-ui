@@ -6,6 +6,10 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import {
+  SidePanel, SidePanelList,
+  SidePanelItem, SidePanelItemTitle, SidePanelItemMeta,
+} from './_SidePanel'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import {
   FileText, ShoppingBag, Mail, Share2, AlignLeft,
@@ -111,18 +115,15 @@ export default function AIStudioScreenC() {
         <div className="flex flex-1 overflow-hidden">
 
           {/* Lewy panel – historia */}
-          <div className="w-72 border-r flex flex-col shrink-0">
-            <ScrollArea className="flex-1">
+          <SidePanel>
+            <SidePanelList>
               {HISTORY.map(item => {
                 const Icon = TYPE_ICONS[item.type] ?? FileText
                 return (
-                  <button
+                  <SidePanelItem
                     key={item.id}
+                    active={activeHistory === item.id}
                     onClick={() => setActiveHistory(item.id)}
-                    className={cn(
-                      'w-full text-left px-4 py-3 border-b transition-colors hover:bg-muted/50',
-                      activeHistory === item.id && 'bg-muted'
-                    )}
                   >
                     <div className="flex items-start gap-2.5">
                       <Icon className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-1" />
@@ -135,11 +136,11 @@ export default function AIStudioScreenC() {
                         </p>
                       </div>
                     </div>
-                  </button>
+                  </SidePanelItem>
                 )
               })}
-            </ScrollArea>
-          </div>
+            </SidePanelList>
+          </SidePanel>
 
           {/* Główna strefa */}
           <ScrollArea className="flex-1 bg-[#fafafa]">
