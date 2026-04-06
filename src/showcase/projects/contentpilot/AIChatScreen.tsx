@@ -6,10 +6,11 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Plus, CheckSquare, ChevronDown, ChevronUp,
   Paperclip, Send, Sparkles, Copy, ThumbsUp,
-  ThumbsDown, RotateCcw, Clock,
+  ThumbsDown, RotateCcw, Clock, Settings2, Thermometer, BrainCircuit,
 } from 'lucide-react'
 
 const CHAT_LIST = [
@@ -53,10 +54,10 @@ const CODE = `<!DOCTYPE html>
 </html>`
 
 const MessageActions = () => (
-  <div className="flex items-center gap-1 mt-2">
+  <div className="flex items-center gap-1 mt-3">
     {[ThumbsUp, ThumbsDown, RotateCcw, Copy].map((Icon, i) => (
-      <Button key={i} variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground">
-        <Icon className="w-3.5 h-3.5" />
+      <Button key={i} variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground">
+        <Icon className="w-4 h-4" />
       </Button>
     ))}
   </div>
@@ -71,22 +72,22 @@ export default function AIChatScreen() {
       <CPSidebar active="ai-chat" />
 
       {/* ── Chat list ── */}
-      <div className="w-64 border-r flex flex-col shrink-0">
-        <div className="p-3 border-b">
-          <Button className="w-full gap-2" size="sm">
-            <Plus className="w-3.5 h-3.5" />
+      <div className="w-72 border-r flex flex-col shrink-0">
+        <div className="p-4 border-b">
+          <Button className="w-full gap-2">
+            <Plus className="w-4 h-4" />
             Nowy czat
           </Button>
         </div>
 
-        <div className="flex items-center px-3 py-2">
-          <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs text-muted-foreground px-2">
-            <CheckSquare className="w-3.5 h-3.5" />
+        <div className="flex items-center px-4 py-2">
+          <Button variant="ghost" size="sm" className="gap-1.5 text-sm text-muted-foreground px-2">
+            <CheckSquare className="w-4 h-4" />
             Zaznacz
           </Button>
         </div>
 
-        <p className="px-3 pb-2 text-[10px] text-muted-foreground/70">
+        <p className="px-4 pb-2 text-xs text-muted-foreground/70">
           Sortowanie aktywne · przeciąganie wyłączone
         </p>
 
@@ -94,10 +95,10 @@ export default function AIChatScreen() {
           {CHAT_LIST.map(chat => (
             <button
               key={chat.id}
-              className={`w-full text-left px-3 py-2.5 border-b transition-colors hover:bg-muted/50 ${chat.active ? 'bg-muted' : ''}`}
+              className={`w-full text-left px-4 py-3 border-b transition-colors hover:bg-muted/50 ${chat.active ? 'bg-muted' : ''}`}
             >
-              <p className="text-xs leading-snug line-clamp-2 mb-0.5">{chat.title}</p>
-              <p className="text-[10px] text-muted-foreground">{chat.time}</p>
+              <p className="text-sm leading-snug line-clamp-2 mb-1">{chat.title}</p>
+              <p className="text-xs text-muted-foreground">{chat.time}</p>
             </button>
           ))}
         </ScrollArea>
@@ -107,69 +108,71 @@ export default function AIChatScreen() {
       <div className="flex-1 flex flex-col overflow-hidden">
 
         {/* Header */}
-        <div className="h-12 border-b flex items-center px-6 gap-3 shrink-0">
-          <h1 className="text-sm font-semibold flex-1 truncate">
+        <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
+          <h1 className="text-base font-semibold flex-1 truncate">
             Jeśli poproszę Cię tutaj o kod HTML newslettera, t...
           </h1>
-          <Badge variant="outline" className="font-mono text-xs shrink-0">GPT-4o</Badge>
+          <Badge variant="outline" className="font-mono shrink-0">GPT-4o</Badge>
         </div>
 
         {/* System prompt bar */}
         <div className="border-b">
           <button
-            className="w-full flex items-center justify-between px-6 py-2.5 hover:bg-muted/40 transition-colors"
+            className="w-full flex items-center justify-between px-6 py-3 hover:bg-muted/40 transition-colors"
             onClick={() => setSystemPromptOpen(o => !o)}
           >
-            <span className="text-xs text-muted-foreground">Prompt systemowy</span>
+            <span className="text-sm text-muted-foreground">Prompt systemowy</span>
             {systemPromptOpen
-              ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" />
-              : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />}
+              ? <ChevronUp className="w-4 h-4 text-muted-foreground" />
+              : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
           </button>
           {systemPromptOpen && (
-            <div className="px-6 pb-3">
-              <div className="rounded-md border bg-muted/40 px-3 py-2.5 text-xs text-muted-foreground font-mono leading-relaxed">
+            <div className="px-6 pb-4">
+              <div className="rounded-md border bg-muted/40 px-4 py-3 text-sm text-muted-foreground font-mono leading-relaxed">
                 Role: You are a World-Class UI/UX Designer and HTML Email Developer with 15+ years of experience...
               </div>
             </div>
           )}
         </div>
 
-        {/* Messages – wyśrodkowane, max-width jak w ChatGPT */}
+        {/* Messages */}
         <ScrollArea className="flex-1">
           <div className="py-8 px-6">
             <div className="max-w-2xl mx-auto space-y-8">
 
               {/* Assistant: code */}
-              <div className="flex gap-3">
-                <Avatar className="w-7 h-7 shrink-0 mt-0.5">
-                  <AvatarFallback><Sparkles className="w-3.5 h-3.5" /></AvatarFallback>
+              <div className="flex gap-4">
+                <Avatar className="w-8 h-8 shrink-0 mt-0.5">
+                  <AvatarFallback><Sparkles className="w-4 h-4" /></AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-semibold">Asystent</span>
-                    <Badge variant="outline" className="text-[10px] font-mono py-0 h-4">GPT-4o</Badge>
-                    <span className="text-[10px] text-muted-foreground">13:24</span>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-sm font-semibold">Asystent</span>
+                    <Badge variant="outline" className="font-mono text-xs">GPT-4o</Badge>
+                    <span className="text-xs text-muted-foreground">13:24</span>
                   </div>
 
-                  <div className="rounded-md border overflow-hidden mb-3">
-                    <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/40">
-                      <span className="text-[10px] font-mono text-muted-foreground">html</span>
-                      <Button variant="ghost" size="sm" className="h-6 gap-1 text-[10px] px-2">
-                        <Copy className="w-3 h-3" /> Kopiuj
+                  <div className="rounded-md border overflow-hidden mb-4">
+                    <div className="flex items-center justify-between px-4 py-2.5 border-b bg-muted/40">
+                      <span className="text-xs font-mono text-muted-foreground">html</span>
+                      <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs">
+                        <Copy className="w-3.5 h-3.5" /> Kopiuj
                       </Button>
                     </div>
-                    <pre className="px-3 py-3 text-xs font-mono leading-relaxed overflow-x-auto max-h-44 bg-muted/20 text-foreground/80">{CODE}</pre>
+                    <pre className="px-4 py-3 text-sm font-mono leading-relaxed overflow-x-auto max-h-48 bg-muted/20 text-foreground/80">{CODE}</pre>
                   </div>
 
-                  <p className="text-sm leading-relaxed text-muted-foreground">
+                  <p className="text-base leading-relaxed text-muted-foreground">
                     This HTML template follows your provided guidelines, featuring a single-column layout, inline CSS for compatibility, and placeholders for images.
                   </p>
 
-                  <div className="flex items-center gap-1 mt-2">
-                    <span className="text-[10px] text-muted-foreground flex items-center gap-1 mr-auto">
-                      <Clock className="w-3 h-3" /> 2010 tokenów · 9.65s
+                  <div className="flex items-center gap-2 mt-3">
+                    <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5" /> 2010 tokenów · 9.65s
                     </span>
-                    <MessageActions />
+                    <div className="ml-auto">
+                      <MessageActions />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -177,34 +180,36 @@ export default function AIChatScreen() {
               <Separator />
 
               {/* User message */}
-              <div className="flex gap-3 justify-end">
-                <div className="max-w-[75%] bg-foreground text-background rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm leading-relaxed">
+              <div className="flex gap-4 justify-end">
+                <div className="max-w-[75%] bg-foreground text-background rounded-2xl rounded-tr-sm px-5 py-3 text-base leading-relaxed">
                   Czy możesz wyświetlić mi ten kod z podglądem w bocznej kolumnie jako artefakt?
                 </div>
-                <Avatar className="w-7 h-7 shrink-0 mt-0.5">
-                  <AvatarFallback className="text-xs">AK</AvatarFallback>
+                <Avatar className="w-8 h-8 shrink-0 mt-0.5">
+                  <AvatarFallback className="text-sm">AK</AvatarFallback>
                 </Avatar>
               </div>
 
               {/* Assistant: text */}
-              <div className="flex gap-3">
-                <Avatar className="w-7 h-7 shrink-0 mt-0.5">
-                  <AvatarFallback><Sparkles className="w-3.5 h-3.5" /></AvatarFallback>
+              <div className="flex gap-4">
+                <Avatar className="w-8 h-8 shrink-0 mt-0.5">
+                  <AvatarFallback><Sparkles className="w-4 h-4" /></AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-semibold">Asystent</span>
-                    <Badge variant="outline" className="text-[10px] font-mono py-0 h-4">GPT-4o</Badge>
-                    <span className="text-[10px] text-muted-foreground">13:24</span>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-sm font-semibold">Asystent</span>
+                    <Badge variant="outline" className="font-mono text-xs">GPT-4o</Badge>
+                    <span className="text-xs text-muted-foreground">13:24</span>
                   </div>
-                  <p className="text-sm leading-relaxed text-foreground">
+                  <p className="text-base leading-relaxed text-foreground">
                     Niestety, nie jestem w stanie bezpośrednio wyświetlić kodu HTML jako artefaktu z podglądem w bocznej kolumnie. Jednak mogę dostarczyć ci kod HTML, który możesz skopiować i wkleić do edytora HTML lub platformy do tworzenia e-maili, aby zobaczyć, jak wygląda w przeglądarce.
                   </p>
-                  <div className="flex items-center gap-1 mt-2">
-                    <span className="text-[10px] text-muted-foreground flex items-center gap-1 mr-auto">
-                      <Clock className="w-3 h-3" /> 2795 tokenów · 1.92s
+                  <div className="flex items-center gap-2 mt-3">
+                    <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5" /> 2795 tokenów · 1.92s
                     </span>
-                    <MessageActions />
+                    <div className="ml-auto">
+                      <MessageActions />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -213,27 +218,65 @@ export default function AIChatScreen() {
           </div>
         </ScrollArea>
 
+        {/* ── Panel modułów i parametrów ── */}
+        <div className="border-t border-b bg-muted/20">
+          <div className="max-w-2xl mx-auto px-6 py-2 flex items-center gap-2 flex-wrap">
+            <span className="text-xs text-muted-foreground font-medium shrink-0">Konfiguracja:</span>
+
+            <Tabs defaultValue="chat">
+              <TabsList className="h-7">
+                <TabsTrigger value="chat" className="text-xs h-6 px-3">Chat</TabsTrigger>
+                <TabsTrigger value="completion" className="text-xs h-6 px-3">Completion</TabsTrigger>
+              </TabsList>
+            </Tabs>
+
+            <Separator orientation="vertical" className="h-4" />
+
+            <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
+              <BrainCircuit className="w-3.5 h-3.5" />
+              GPT-4o
+              <ChevronDown className="w-3 h-3 text-muted-foreground" />
+            </Button>
+
+            <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
+              <Thermometer className="w-3.5 h-3.5" />
+              Temp: 0.7
+              <ChevronDown className="w-3 h-3 text-muted-foreground" />
+            </Button>
+
+            <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
+              <Settings2 className="w-3.5 h-3.5" />
+              Max tokenów: 2000
+              <ChevronDown className="w-3 h-3 text-muted-foreground" />
+            </Button>
+
+            <Badge variant="secondary" className="text-xs ml-auto">
+              Top P: 1
+            </Badge>
+          </div>
+        </div>
+
         {/* Input */}
-        <div className="border-t p-4">
+        <div className="p-4 bg-background">
           <div className="max-w-2xl mx-auto">
             <div className="border rounded-lg focus-within:ring-1 focus-within:ring-ring overflow-hidden">
               <Input
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 placeholder="Napisz wiadomość... (Enter = wyślij, Shift+Enter = nowa linia)"
-                className="border-0 rounded-none focus-visible:ring-0 text-sm"
+                className="border-0 rounded-none focus-visible:ring-0 text-base py-3"
               />
-              <div className="flex items-center justify-between px-3 py-2 border-t bg-muted/20">
-                <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="icon" className="h-7 w-7">
-                    <Paperclip className="w-3.5 h-3.5" />
+              <div className="flex items-center justify-between px-3 py-2.5 border-t bg-muted/20">
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Paperclip className="w-4 h-4" />
                   </Button>
-                  <span className="text-xs text-muted-foreground">+0 tokenów</span>
+                  <span className="text-sm text-muted-foreground">+0 tokenów</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-muted-foreground">Shift + Enter nowa linia</span>
-                  <Button size="sm" className="h-7 gap-1.5 text-xs">
-                    <Send className="w-3.5 h-3.5" /> Wyślij
+                  <span className="text-xs text-muted-foreground">Shift + Enter nowa linia</span>
+                  <Button size="sm" className="gap-1.5">
+                    <Send className="w-4 h-4" /> Wyślij
                   </Button>
                 </div>
               </div>
