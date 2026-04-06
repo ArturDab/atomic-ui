@@ -12,6 +12,9 @@ const PROJECT_META: Record<string, { name: string; screens: Array<{ path: string
       { path: 'ai-teams',  label: 'AI Teams' },
       { path: 'ai-studio', label: 'AI Studio' },
       { path: 'ai-studio/article', label: 'AI Studio – Edytor' },
+      { path: 'ai-studio-b',       label: 'Studio B' },
+      { path: 'ai-studio-c',       label: 'Studio C' },
+      { path: 'ai-studio-d',       label: 'Studio D' },
     ],
   },
 }

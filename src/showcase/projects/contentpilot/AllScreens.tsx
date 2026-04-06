@@ -3,12 +3,18 @@ import AIChatScreen from './AIChatScreen'
 import AITeamsScreen from './AITeamsScreen'
 import AIStudioScreen from './AIStudioScreen'
 import AIStudioEditorScreen from './AIStudioEditorScreen'
+import AIStudioScreenB from './AIStudioScreenB'
+import AIStudioScreenC from './AIStudioScreenC'
+import AIStudioScreenD from './AIStudioScreenD'
 
 const SCREENS = [
   { path: 'ai-chat',  label: 'AI Chat',   Component: AIChatScreen },
   { path: 'ai-teams',  label: 'AI Teams',         Component: AITeamsScreen },
   { path: 'ai-studio', label: 'AI Studio – galeria',  Component: AIStudioScreen },
-  { path: 'ai-studio/article', label: 'AI Studio – edytor', Component: AIStudioEditorScreen },
+  { path: 'ai-studio/article', label: 'AI Studio – edytor',    Component: AIStudioEditorScreen },
+  { path: 'ai-studio-b',       label: 'AI Studio – lista B',   Component: AIStudioScreenB },
+  { path: 'ai-studio-c',       label: 'AI Studio – featured C', Component: AIStudioScreenC },
+  { path: 'ai-studio-d',       label: 'AI Studio – command D',  Component: AIStudioScreenD },
 ]
 
 export default function AllScreens() {
