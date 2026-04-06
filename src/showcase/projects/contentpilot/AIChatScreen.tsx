@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { CPSidebar } from './_Sidebar'
+import { TopBar } from './_TopBar'
 import { ModelPicker } from './_ModelPicker'
 import { ChatMessages } from './_ChatMessage'
 import { ChatInput } from './_ChatInput'
@@ -38,14 +39,13 @@ const MESSAGES: Message[] = [
     tokens: '2010 tok', time: '9.65s',
   },
   {
-    id: '2', role: 'user',
-    userInitials: 'AK',
+    id: '2', role: 'user', userInitials: 'AK',
     text: 'Czy możesz wyświetlić mi ten kod z podglądem w bocznej kolumnie jako artefakt?',
   },
   {
     id: '3', role: 'assistant',
     agentName: 'Asystent', modelBadge: 'GPT-4o',
-    text: 'Niestety, nie jestem w stanie bezpośrednio wyświetlić kodu HTML jako artefaktu z podglądem w bocznej kolumnie. Jednak mogę dostarczyć ci kod HTML, który możesz skopiować i wkleić do edytora HTML lub platformy do tworzenia e-maili.',
+    text: 'Niestety, nie jestem w stanie bezpośrednio wyświetlić kodu HTML jako artefaktu z podglądem w bocznej kolumnie. Jednak mogę dostarczyć ci kod HTML, który możesz skopiować i wkleić do edytora HTML.',
     tokens: '2795 tok', time: '1.92s',
   },
 ]
@@ -113,66 +113,79 @@ export default function AIChatScreen() {
   )
 
   return (
-    <div className="flex h-full bg-background">
-      <CPSidebar active="ai-chat" />
+    <div className="flex flex-col h-full bg-background">
 
-      <div className="w-72 border-r flex flex-col shrink-0">
-        <div className="p-4 border-b">
-          <Button className="w-full gap-2">
-            <Plus className="w-4 h-4" /> Nowy czat
-          </Button>
+      {/* TopBar – część UI ContentPilot */}
+      <TopBar crumbs={[{ label: 'Strona główna' }, { label: 'AI Chat' }]} />
+
+      {/* Główny układ – sidebar + content */}
+      <div className="flex flex-1 overflow-hidden">
+
+        <CPSidebar active="ai-chat" />
+
+        {/* Lista czatów */}
+        <div className="w-72 border-r flex flex-col shrink-0">
+          <div className="p-4 border-b">
+            <Button className="w-full gap-2">
+              <Plus className="w-4 h-4" /> Nowy czat
+            </Button>
+          </div>
+          <div className="flex items-center px-4 py-2">
+            <Button variant="ghost" size="sm" className="gap-1.5 text-sm text-muted-foreground px-2">
+              <CheckSquare className="w-4 h-4" /> Zaznacz
+            </Button>
+          </div>
+          <p className="px-4 pb-2 text-xs text-muted-foreground/70">
+            Sortowanie aktywne · przeciąganie wyłączone
+          </p>
+          <ScrollArea className="flex-1">
+            {CHAT_LIST.map(chat => (
+              <button key={chat.id} className={`w-full text-left px-4 py-3 border-b transition-colors hover:bg-muted/50 ${chat.active ? 'bg-muted' : ''}`}>
+                <p className="text-sm leading-snug line-clamp-2 mb-1">{chat.title}</p>
+                <p className="text-xs text-muted-foreground">{chat.time}</p>
+              </button>
+            ))}
+          </ScrollArea>
         </div>
-        <div className="flex items-center px-4 py-2">
-          <Button variant="ghost" size="sm" className="gap-1.5 text-sm text-muted-foreground px-2">
-            <CheckSquare className="w-4 h-4" /> Zaznacz
-          </Button>
-        </div>
-        <p className="px-4 pb-2 text-xs text-muted-foreground/70">
-          Sortowanie aktywne · przeciąganie wyłączone
-        </p>
-        <ScrollArea className="flex-1">
-          {CHAT_LIST.map(chat => (
-            <button key={chat.id} className={`w-full text-left px-4 py-3 border-b transition-colors hover:bg-muted/50 ${chat.active ? 'bg-muted' : ''}`}>
-              <p className="text-sm leading-snug line-clamp-2 mb-1">{chat.title}</p>
-              <p className="text-xs text-muted-foreground">{chat.time}</p>
+
+        {/* Obszar czatu */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
+            <h1 className="text-base font-semibold flex-1 truncate">
+              Jeśli poproszę Cię tutaj o kod HTML newslettera, t...
+            </h1>
+          </div>
+
+          <div className="border-b">
+            <button
+              className="w-full flex items-center justify-between px-6 py-3 hover:bg-muted/40 transition-colors"
+              onClick={() => setSystemPromptOpen(o => !o)}
+            >
+              <span className="text-sm text-muted-foreground">Prompt systemowy</span>
+              {systemPromptOpen
+                ? <ChevronUp className="w-4 h-4 text-muted-foreground" />
+                : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
             </button>
-          ))}
-        </ScrollArea>
-      </div>
-
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
-          <h1 className="text-base font-semibold flex-1 truncate">
-            Jeśli poproszę Cię tutaj o kod HTML newslettera, t...
-          </h1>
-        </div>
-
-        <div className="border-b">
-          <button
-            className="w-full flex items-center justify-between px-6 py-3 hover:bg-muted/40 transition-colors"
-            onClick={() => setSystemPromptOpen(o => !o)}
-          >
-            <span className="text-sm text-muted-foreground">Prompt systemowy</span>
-            {systemPromptOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
-          </button>
-          {systemPromptOpen && (
-            <div className="px-6 pb-4">
-              <div className="rounded-md border bg-muted/40 px-4 py-3 text-sm text-muted-foreground font-mono leading-relaxed">
-                Role: You are a World-Class UI/UX Designer and HTML Email Developer...
+            {systemPromptOpen && (
+              <div className="px-6 pb-4">
+                <div className="rounded-md border bg-muted/40 px-4 py-3 text-sm text-muted-foreground font-mono leading-relaxed">
+                  Role: You are a World-Class UI/UX Designer and HTML Email Developer...
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
+          <ScrollArea className="flex-1">
+            <ChatMessages messages={MESSAGES} />
+          </ScrollArea>
+
+          <ChatInput
+            placeholder="Napisz wiadomość... (Enter = wyślij, Shift+Enter = nowa linia)"
+            hint="Shift + Enter nowa linia"
+            configBar={configBar}
+          />
         </div>
 
-        <ScrollArea className="flex-1">
-          <ChatMessages messages={MESSAGES} />
-        </ScrollArea>
-
-        <ChatInput
-          placeholder="Napisz wiadomość... (Enter = wyślij, Shift+Enter = nowa linia)"
-          hint="Shift + Enter nowa linia"
-          configBar={configBar}
-        />
       </div>
     </div>
   )

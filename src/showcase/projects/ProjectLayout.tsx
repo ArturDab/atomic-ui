@@ -22,17 +22,17 @@ export default function ProjectLayout() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="h-11 border-b bg-white flex items-center px-4 gap-3 shrink-0 z-10">
+      <div className="h-11 bg-foreground flex items-center px-4 gap-3 shrink-0 z-10">
         <Link
           to="/projects"
-          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          className="flex items-center gap-1 text-xs text-background/60 hover:text-background transition-colors"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
           Projekty
         </Link>
-        <div className="w-px h-4 bg-border" />
-        <span className="text-xs font-semibold">{meta.name}</span>
-        <div className="w-px h-4 bg-border" />
+        <div className="w-px h-4 bg-background/20" />
+        <span className="text-xs font-semibold text-background">{meta.name}</span>
+        <div className="w-px h-4 bg-background/20" />
         <nav className="flex gap-0.5 flex-1">
           {meta.screens.map(s => (
             <NavLink
