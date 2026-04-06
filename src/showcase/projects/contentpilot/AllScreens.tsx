@@ -2,9 +2,11 @@ import * as React from 'react'
 import { useParams } from 'react-router-dom'
 import { Maximize2, X } from 'lucide-react'
 import AIChatScreen from './AIChatScreen'
+import AITeamsScreen from './AITeamsScreen'
 
 const SCREENS = [
-  { path: 'ai-chat', label: 'AI Chat', Component: AIChatScreen },
+  { path: 'ai-chat',  label: 'AI Chat',   Component: AIChatScreen },
+  { path: 'ai-teams', label: 'AI Teams',  Component: AITeamsScreen },
 ]
 
 export default function AllScreens() {

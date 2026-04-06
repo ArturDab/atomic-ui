@@ -13,6 +13,7 @@ import AllPreviewPage from './showcase/pages/AllPreviewPage'
 import ProjectLayout from './showcase/projects/ProjectLayout'
 import AllScreens from './showcase/projects/contentpilot/AllScreens'
 import AIChatScreen from './showcase/projects/contentpilot/AIChatScreen'
+import AITeamsScreen from './showcase/projects/contentpilot/AITeamsScreen'
 
 export default function App() {
   return (
@@ -32,7 +33,8 @@ export default function App() {
         <Route path="/projects/:projectSlug" element={<ProjectLayout />}>
           <Route index element={<Navigate to="all" replace />} />
           <Route path="all"     element={<AllScreens />} />
-          <Route path="ai-chat" element={<AIChatScreen />} />
+          <Route path="ai-chat"  element={<AIChatScreen />} />
+          <Route path="ai-teams" element={<AITeamsScreen />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />
