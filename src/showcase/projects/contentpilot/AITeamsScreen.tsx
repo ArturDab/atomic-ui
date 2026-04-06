@@ -7,7 +7,7 @@ import type { Message } from './_ChatMessage'
 import {
   SidePanel, SidePanelHeader, SidePanelAction, SidePanelToolbar,
   SidePanelSection, SidePanelItem, SidePanelItemTitle, SidePanelItemMeta, SidePanelList,
-} from './_SidePanel'
+} from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'

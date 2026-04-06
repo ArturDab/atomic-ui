@@ -5,7 +5,7 @@ import {
   SidePanel, SidePanelHeader, SidePanelAction, SidePanelSearch,
   SidePanelToolbar, SidePanelNote, SidePanelItem, SidePanelItemTitle,
   SidePanelItemMeta, SidePanelList,
-} from './_SidePanel'
+} from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'

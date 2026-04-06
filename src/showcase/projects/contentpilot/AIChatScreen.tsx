@@ -8,7 +8,7 @@ import type { Message } from './_ChatMessage'
 import {
   SidePanel, SidePanelHeader, SidePanelAction, SidePanelToolbar,
   SidePanelNote, SidePanelItem, SidePanelItemTitle, SidePanelItemMeta, SidePanelList,
-} from './_SidePanel'
+} from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'

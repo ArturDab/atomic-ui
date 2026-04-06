@@ -9,7 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   SidePanel, SidePanelList,
   SidePanelItem, SidePanelItemTitle, SidePanelItemMeta,
-} from './_SidePanel'
+} from '@/components/blocks/side-panel'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import {
   FileText, ShoppingBag, Mail, Share2, AlignLeft,

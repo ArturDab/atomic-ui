@@ -9,6 +9,7 @@ import { EditorToolbar } from '@/components/blocks/editor-toolbar'
 import { ChatMessage } from '@/components/blocks/chat-message'
 import { ConnectionCard } from '@/components/blocks/connection-card'
 import { FilterBar } from '@/components/blocks/filter-bar'
+import { SidePanel, SidePanelHeader, SidePanelAction, SidePanelSearch, SidePanelToolbar, SidePanelNote, SidePanelSection, SidePanelItem, SidePanelItemTitle, SidePanelItemMeta, SidePanelList } from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
 import type { RegistryEntry } from './types'
 
