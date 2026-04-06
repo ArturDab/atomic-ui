@@ -2,21 +2,17 @@ import { Link, useParams } from 'react-router-dom'
 import AIChatScreen from './AIChatScreen'
 import AITeamsScreen from './AITeamsScreen'
 import AIStudioScreen from './AIStudioScreen'
+import AIStudioScreenC from './AIStudioScreenC'
 import AIStudioEditorScreen from './AIStudioEditorScreen'
 import AIStudioEditorEmptyScreen from './AIStudioEditorEmptyScreen'
-import AIStudioScreenB from './AIStudioScreenB'
-import AIStudioScreenC from './AIStudioScreenC'
-import AIStudioScreenD from './AIStudioScreenD'
 
 const SCREENS = [
-  { path: 'ai-chat',  label: 'AI Chat',   Component: AIChatScreen },
-  { path: 'ai-teams',  label: 'AI Teams',         Component: AITeamsScreen },
-  { path: 'ai-studio', label: 'AI Studio – galeria',  Component: AIStudioScreen },
-  { path: 'ai-studio/article',       label: 'AI Studio – edytor (z treścią)', Component: AIStudioEditorScreen },
-  { path: 'ai-studio-editor-empty',   label: 'AI Studio – edytor (empty)',    Component: AIStudioEditorEmptyScreen },
-  { path: 'ai-studio-b',       label: 'AI Studio – lista B',   Component: AIStudioScreenB },
-  { path: 'ai-studio-c',       label: 'AI Studio – featured C', Component: AIStudioScreenC },
-  { path: 'ai-studio-d',       label: 'AI Studio – command D',  Component: AIStudioScreenD },
+  { path: 'ai-chat',              label: 'AI Chat',                Component: AIChatScreen },
+  { path: 'ai-teams',             label: 'AI Teams',               Component: AITeamsScreen },
+  { path: 'ai-studio',            label: 'AI Studio – galeria A',  Component: AIStudioScreen },
+  { path: 'ai-studio-c',          label: 'AI Studio – galeria C',  Component: AIStudioScreenC },
+  { path: 'ai-studio-editor-empty', label: 'Edytor – pusty',       Component: AIStudioEditorEmptyScreen },
+  { path: 'ai-studio/article',    label: 'Edytor – z treścią',     Component: AIStudioEditorScreen },
 ]
 
 export default function AllScreens() {
@@ -36,7 +32,6 @@ export default function AllScreens() {
               to={`/projects/${projectSlug}/${path}`}
               className="group border rounded-xl bg-white overflow-hidden hover:border-foreground/30 hover:shadow-md transition-all"
             >
-              {/* Scaled preview */}
               <div className="relative h-48 overflow-hidden bg-muted/10">
                 <div
                   className="absolute top-0 left-0 pointer-events-none origin-top-left"
@@ -47,7 +42,6 @@ export default function AllScreens() {
                   </div>
                 </div>
               </div>
-              {/* Footer */}
               <div className="px-4 py-3 border-t flex items-center justify-between">
                 <span className="text-sm font-medium">{label}</span>
                 <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">Otwórz →</span>

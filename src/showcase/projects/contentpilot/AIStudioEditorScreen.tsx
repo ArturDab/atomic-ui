@@ -130,8 +130,8 @@ export default function AIStudioEditorScreen() {
               <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
                 <ArrowLeft className="w-4 h-4" />
               </Button>
-              <div className="w-8 h-8 rounded-md bg-blue-100 flex items-center justify-center shrink-0">
-                <FileText className="w-4 h-4 text-blue-600" />
+              <div className="w-8 h-8 rounded-md bg-muted flex items-center justify-center shrink-0">
+                <FileText className="w-4 h-4 text-muted-foreground" />
               </div>
               <span className="font-semibold text-sm">Artykuł blogowy</span>
             </div>

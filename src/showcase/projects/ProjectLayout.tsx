@@ -1,34 +1,63 @@
-import { NavLink, Outlet, useParams, useNavigate, Link } from 'react-router-dom'
-import { ChevronLeft, Maximize2 } from 'lucide-react'
+import { NavLink, Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom'
+import { ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 
-const PROJECT_META: Record<string, { name: string; screens: Array<{ path: string; label: string }> }> = {
+interface ScreenItem {
+  path: string
+  label: string
+}
+
+interface ScreenGroup {
+  label: string
+  defaultPath: string
+  children: ScreenItem[]
+}
+
+type NavEntry = ScreenItem | ScreenGroup
+
+function isGroup(e: NavEntry): e is ScreenGroup {
+  return 'children' in e
+}
+
+const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
   contentpilot: {
     name: 'ContentPilot',
-    screens: [
+    nav: [
       { path: 'all',      label: 'Wszystkie widoki' },
       { path: 'ai-chat',  label: 'AI Chat' },
-      { path: 'ai-teams',  label: 'AI Teams' },
-      { path: 'ai-studio', label: 'AI Studio' },
-      { path: 'ai-studio/article',     label: 'Edytor' },
-      { path: 'ai-studio-editor-empty', label: 'Edytor (empty)' },
-      { path: 'ai-studio-b',       label: 'Studio B' },
-      { path: 'ai-studio-c',       label: 'Studio C' },
-      { path: 'ai-studio-d',       label: 'Studio D' },
+      { path: 'ai-teams', label: 'AI Teams' },
+      {
+        label: 'AI Studio',
+        defaultPath: 'ai-studio',
+        children: [
+          { path: 'ai-studio',              label: 'Galeria' },
+          { path: 'ai-studio-editor-empty', label: 'Edytor – pusty' },
+          { path: 'ai-studio/article',      label: 'Edytor – z treścią' },
+          { path: 'ai-studio-c',            label: 'Studio C' },
+        ],
+      },
     ],
   },
 }
 
 export default function ProjectLayout() {
   const { projectSlug } = useParams<{ projectSlug: string }>()
+  const location = useLocation()
   const navigate = useNavigate()
   const meta = PROJECT_META[projectSlug ?? '']
   if (!meta) return <div className="p-8 text-sm text-muted-foreground">Projekt nie istnieje.</div>
 
+  const currentPath = location.pathname.split(`/projects/${projectSlug}/`)[1] ?? ''
+
+  // Find active group (if any)
+  const activeGroup = meta.nav
+    .filter(isGroup)
+    .find(g => g.children.some(c => currentPath === c.path || currentPath.startsWith(c.path + '/')))
+
   return (
     <div className="flex flex-col h-screen">
-      <div className="h-11 bg-foreground flex items-center px-4 gap-3 shrink-0 z-10">
+      {/* Primary nav bar */}
+      <div className="h-11 bg-foreground flex items-center px-4 gap-3 shrink-0">
         <Link
           to="/projects"
           className="flex items-center gap-1 text-xs text-background/60 hover:text-background transition-colors"
@@ -39,23 +68,66 @@ export default function ProjectLayout() {
         <div className="w-px h-4 bg-background/20" />
         <span className="text-xs font-semibold text-background">{meta.name}</span>
         <div className="w-px h-4 bg-background/20" />
-        <nav className="flex gap-0.5 flex-1">
-          {meta.screens.map(s => (
-            <NavLink
-              key={s.path}
-              to={`/projects/${projectSlug}/${s.path}`}
-              className={({ isActive }) => cn(
-                'px-3 py-1 rounded-md text-xs font-medium transition-colors',
-                isActive
-                  ? 'bg-foreground text-background'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              )}
-            >
-              {s.label}
-            </NavLink>
-          ))}
+        <nav className="flex gap-0.5">
+          {meta.nav.map((entry, i) => {
+            if (isGroup(entry)) {
+              const isGroupActive = !!activeGroup && activeGroup.label === entry.label
+              return (
+                <button
+                  key={i}
+                  onClick={() => navigate(`/projects/${projectSlug}/${entry.defaultPath}`)}
+                  className={cn(
+                    'px-3 py-1 rounded-md text-xs font-medium transition-colors',
+                    isGroupActive
+                      ? 'bg-background text-foreground'
+                      : 'text-background/60 hover:text-background hover:bg-background/10'
+                  )}
+                >
+                  {entry.label}
+                </button>
+              )
+            }
+            return (
+              <NavLink
+                key={entry.path}
+                to={`/projects/${projectSlug}/${entry.path}`}
+                className={({ isActive }) => cn(
+                  'px-3 py-1 rounded-md text-xs font-medium transition-colors',
+                  isActive
+                    ? 'bg-background text-foreground'
+                    : 'text-background/60 hover:text-background hover:bg-background/10'
+                )}
+              >
+                {entry.label}
+              </NavLink>
+            )
+          })}
         </nav>
       </div>
+
+      {/* Secondary nav – shown when inside a group */}
+      {activeGroup && (
+        <div className="h-9 border-b bg-muted/30 flex items-center px-4 gap-1 shrink-0">
+          {activeGroup.children.map(child => {
+            const isActive = currentPath === child.path || currentPath.startsWith(child.path + '/')
+            return (
+              <NavLink
+                key={child.path}
+                to={`/projects/${projectSlug}/${child.path}`}
+                className={cn(
+                  'px-3 py-1 rounded-md text-xs font-medium transition-colors',
+                  isActive
+                    ? 'bg-foreground text-background'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                )}
+              >
+                {child.label}
+              </NavLink>
+            )
+          })}
+        </div>
+      )}
+
       <div className="flex-1 overflow-hidden">
         <Outlet />
       </div>

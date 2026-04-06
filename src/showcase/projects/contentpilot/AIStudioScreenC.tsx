@@ -112,11 +112,6 @@ export default function AIStudioScreenC() {
 
           {/* Lewy panel – historia */}
           <div className="w-72 border-r flex flex-col shrink-0">
-            <div className="p-4 border-b">
-              <Button className="w-full gap-2">
-                <Plus className="w-4 h-4" /> Nowa generacja
-              </Button>
-            </div>
             <ScrollArea className="flex-1">
               {HISTORY.map(item => {
                 const Icon = TYPE_ICONS[item.type] ?? FileText
