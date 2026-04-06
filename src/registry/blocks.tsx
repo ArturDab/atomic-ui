@@ -1,4 +1,4 @@
-import { BookOpen, FileText, Zap } from 'lucide-react'
+import { BookOpen, FileText, Zap, Plus } from 'lucide-react'
 import { PageHeader } from '@/components/blocks/page-header'
 import { AppSidebar } from '@/components/blocks/app-sidebar'
 import { DocumentCard } from '@/components/blocks/document-card'
@@ -13,7 +13,7 @@ import { SidePanel, SidePanelHeader, SidePanelAction, SidePanelSearch, SidePanel
 import { Button } from '@/components/ui/button'
 import type { RegistryEntry } from './types'
 
-export const blockRegistry: RegistryEntry[] = [
+export const blockRegistry: RegistryEntry[] = ([
 
   {
     slug: 'block-page-header',
@@ -347,4 +347,62 @@ export const blockRegistry: RegistryEntry[] = [
     ],
   },
 
-]
+
+,
+
+  {
+    slug: 'block-side-panel',
+    title: 'Side Panel',
+    description: 'Lewy panel nawigacyjny. Prymitywy z ujednoliconymi tokenami: w-72, px-4 py-3, text-sm/text-xs, hover/active. Spójny we wszystkich modułach ContentPilot.',
+    category: 'Blocks',
+    props: [
+      { name: 'SidePanel', type: 'wrapper', description: 'Kontener: w-72 border-r flex flex-col shrink-0' },
+      { name: 'SidePanelHeader', type: 'slot', description: 'Nagłówek z akcją główną: p-4 border-b' },
+      { name: 'SidePanelAction', type: '{ icon, label }', description: 'Przycisk akcji h-10 pełna szerokość' },
+      { name: 'SidePanelSearch', type: '{ placeholder?, value?, onChange? }', description: 'Szukajka h-8 z ikoną' },
+      { name: 'SidePanelToolbar', type: 'slot', description: 'Pasek pomocniczy (Zaznacz, sortowanie)' },
+      { name: 'SidePanelNote', type: 'text', description: 'Drobna notka text-[10px] text-muted-foreground/60' },
+      { name: 'SidePanelSection', type: '{ label }', description: 'Nagłówek sekcji uppercase tracking-widest' },
+      { name: 'SidePanelItem', type: '{ active?, onClick? }', description: 'Element listy px-4 py-3 border-b' },
+      { name: 'SidePanelItemTitle', type: 'text', description: 'Tekst główny text-sm' },
+      { name: 'SidePanelItemMeta', type: 'text', description: 'Tekst pomocniczy text-xs text-muted-foreground' },
+      { name: 'SidePanelList', type: 'wrapper', description: 'ScrollArea opakowujące listę' },
+    ],
+    examples: [
+      {
+        title: 'Panel z listą i akcją',
+        render: () => (
+          <div className="flex h-52 w-64 overflow-hidden rounded-md border">
+            <SidePanel>
+              <SidePanelHeader>
+                <SidePanelAction icon={Plus} label="Nowy element" />
+              </SidePanelHeader>
+              <SidePanelNote>Sortowanie aktywne · przeciąganie wyłączone</SidePanelNote>
+              <SidePanelList>
+                <SidePanelItem active>
+                  <div className="flex-1 min-w-0">
+                    <SidePanelItemTitle>Aktywny element</SidePanelItemTitle>
+                    <SidePanelItemMeta>20 mar</SidePanelItemMeta>
+                  </div>
+                </SidePanelItem>
+                <SidePanelItem>
+                  <div className="flex-1 min-w-0">
+                    <SidePanelItemTitle>Drugi element</SidePanelItemTitle>
+                    <SidePanelItemMeta>19 mar</SidePanelItemMeta>
+                  </div>
+                </SidePanelItem>
+                <SidePanelItem>
+                  <div className="flex-1 min-w-0">
+                    <SidePanelItemTitle>Trzeci element</SidePanelItemTitle>
+                    <SidePanelItemMeta>18 mar</SidePanelItemMeta>
+                  </div>
+                </SidePanelItem>
+              </SidePanelList>
+            </SidePanel>
+          </div>
+        ),
+      },
+    ],
+  }
+
+] as RegistryEntry[])
