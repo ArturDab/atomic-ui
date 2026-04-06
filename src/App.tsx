@@ -16,6 +16,7 @@ import AIChatScreen from './showcase/projects/contentpilot/AIChatScreen'
 import AITeamsScreen from './showcase/projects/contentpilot/AITeamsScreen'
 import AIStudioScreen from './showcase/projects/contentpilot/AIStudioScreen'
 import AIStudioEditorScreen from './showcase/projects/contentpilot/AIStudioEditorScreen'
+import AIStudioEditorEmptyScreen from './showcase/projects/contentpilot/AIStudioEditorEmptyScreen'
 import AIStudioScreenB from './showcase/projects/contentpilot/AIStudioScreenB'
 import AIStudioScreenC from './showcase/projects/contentpilot/AIStudioScreenC'
 import AIStudioScreenD from './showcase/projects/contentpilot/AIStudioScreenD'
@@ -41,7 +42,8 @@ export default function App() {
           <Route path="ai-chat"  element={<AIChatScreen />} />
           <Route path="ai-teams"          element={<AITeamsScreen />} />
           <Route path="ai-studio"          element={<AIStudioScreen />} />
-          <Route path="ai-studio/:genSlug" element={<AIStudioEditorScreen />} />
+          <Route path="ai-studio/:genSlug"    element={<AIStudioEditorScreen />} />
+          <Route path="ai-studio-editor-empty" element={<AIStudioEditorEmptyScreen />} />
           <Route path="ai-studio-b"          element={<AIStudioScreenB />} />
           <Route path="ai-studio-c"          element={<AIStudioScreenC />} />
           <Route path="ai-studio-d"          element={<AIStudioScreenD />} />
