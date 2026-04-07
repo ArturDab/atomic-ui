@@ -1,0 +1,112 @@
+export type ThemeId = 'ink' | 'nova' | 'folio'
+
+export interface Theme {
+  id: ThemeId
+  name: string
+  tagline: string
+  vars: Record<string, string>
+  editorFont: string
+  editorFontSize: string
+  radius: string
+}
+
+export const THEMES: Theme[] = [
+  {
+    id: 'ink',
+    name: 'Ink',
+    tagline: 'Minimalistyczny · Ciepły · Skupiony',
+    radius: '6px',
+    editorFont: "'Lora', Georgia, serif",
+    editorFontSize: '18px',
+    vars: {
+      '--background':        '45 20% 97%',
+      '--foreground':        '35 15% 12%',
+      '--card':              '45 20% 97%',
+      '--card-foreground':   '35 15% 12%',
+      '--popover':           '45 20% 97%',
+      '--popover-foreground':'35 15% 12%',
+      '--primary':           '35 15% 12%',
+      '--primary-foreground':'45 20% 97%',
+      '--secondary':         '40 15% 92%',
+      '--secondary-foreground': '35 15% 20%',
+      '--muted':             '40 12% 93%',
+      '--muted-foreground':  '35 10% 45%',
+      '--accent':            '35 45% 58%',
+      '--accent-foreground': '0 0% 100%',
+      '--destructive':       '0 65% 55%',
+      '--destructive-foreground': '0 0% 100%',
+      '--border':            '40 12% 87%',
+      '--input':             '40 12% 87%',
+      '--ring':              '35 15% 12%',
+      '--radius':            '0.375rem',
+    },
+  },
+  {
+    id: 'nova',
+    name: 'Nova',
+    tagline: 'Nowoczesny · Produktowy · Precyzyjny',
+    radius: '8px',
+    editorFont: "'Merriweather', Georgia, serif",
+    editorFontSize: '17px',
+    vars: {
+      '--background':        '0 0% 100%',
+      '--foreground':        '222 47% 11%',
+      '--card':              '0 0% 100%',
+      '--card-foreground':   '222 47% 11%',
+      '--popover':           '0 0% 100%',
+      '--popover-foreground':'222 47% 11%',
+      '--primary':           '239 84% 67%',
+      '--primary-foreground':'0 0% 100%',
+      '--secondary':         '220 14% 96%',
+      '--secondary-foreground': '222 47% 15%',
+      '--muted':             '220 14% 96%',
+      '--muted-foreground':  '220 9% 46%',
+      '--accent':            '239 84% 67%',
+      '--accent-foreground': '0 0% 100%',
+      '--destructive':       '0 65% 55%',
+      '--destructive-foreground': '0 0% 100%',
+      '--border':            '220 13% 91%',
+      '--input':             '220 13% 91%',
+      '--ring':              '239 84% 67%',
+      '--radius':            '0.5rem',
+    },
+  },
+  {
+    id: 'folio',
+    name: 'Folio',
+    tagline: 'Klasyczny · Publikacyjny · Prestiżowy',
+    radius: '4px',
+    editorFont: "'Source Serif 4', 'Georgia', serif",
+    editorFontSize: '19px',
+    vars: {
+      '--background':        '40 15% 97%',
+      '--foreground':        '222 28% 16%',
+      '--card':              '40 15% 97%',
+      '--card-foreground':   '222 28% 16%',
+      '--popover':           '40 15% 97%',
+      '--popover-foreground':'222 28% 16%',
+      '--primary':           '222 38% 28%',
+      '--primary-foreground':'40 15% 97%',
+      '--secondary':         '38 14% 90%',
+      '--secondary-foreground': '222 28% 20%',
+      '--muted':             '38 14% 92%',
+      '--muted-foreground':  '220 10% 46%',
+      '--accent':            '32 45% 52%',
+      '--accent-foreground': '0 0% 100%',
+      '--destructive':       '0 65% 55%',
+      '--destructive-foreground': '0 0% 100%',
+      '--border':            '38 14% 84%',
+      '--input':             '38 14% 84%',
+      '--ring':              '222 38% 28%',
+      '--radius':            '0.25rem',
+    },
+  },
+]
+
+export function applyTheme(themeId: ThemeId, container: HTMLElement) {
+  const theme = THEMES.find(t => t.id === themeId)
+  if (!theme) return
+  Object.entries(theme.vars).forEach(([key, value]) => {
+    container.style.setProperty(key, value)
+  })
+}

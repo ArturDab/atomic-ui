@@ -40,6 +40,7 @@ import ManuscriptBookEditor from './showcase/projects/manuscript/BookEditorScree
 import ManuscriptStudyEditor from './showcase/projects/manuscript/StudyEditorScreen'
 import ManuscriptNewContentScreen from './showcase/projects/manuscript/NewContentScreen'
 import ManuscriptWPExportScreen from './showcase/projects/manuscript/WPExportScreen'
+import ManuscriptDesignSystem from './showcase/projects/manuscript/DesignSystemScreen'
 
 export default function App() {
   return (
@@ -92,6 +93,7 @@ export default function App() {
           <Route path="ms-study-editor"  element={<ManuscriptStudyEditor />} />
           <Route path="ms-new-content"   element={<ManuscriptNewContentScreen />} />
           <Route path="ms-wp-export"     element={<ManuscriptWPExportScreen />} />
+          <Route path="ms-design-system" element={<ManuscriptDesignSystem />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

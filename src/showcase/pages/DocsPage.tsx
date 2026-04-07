@@ -1,6 +1,25 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
-import { Pencil, Check } from 'lucide-react'
+import { Pencil, Check, ClipboardCopy } from 'lucide-react'
+
+
+// ── Przycisk kopiowania promptu ───────────────────────────────────────────────
+
+function CopyPromptButton({ label, getText }: { label: string; getText: () => string }) {
+  const [copied, setCopied] = React.useState(false)
+  const copy = () => {
+    navigator.clipboard.writeText(getText())
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+  return (
+    <button onClick={copy}
+      className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-white hover:bg-muted transition-colors font-medium">
+      {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <ClipboardCopy className="w-3.5 h-3.5" />}
+      {copied ? 'Skopiowano!' : label}
+    </button>
+  )
+}
 
 // ── Edytowalny blok kodu ──────────────────────────────────────────────────────
 // Pola z [[ ]] są edytowalne i zapisywane w localStorage
@@ -131,6 +150,21 @@ Vercel: https://atomic-ui-sandy.vercel.app
 
 Sklonuj repo, przeczytaj CLAUDE.md i zacznij.`}
           />
+          <div className="mt-2 flex gap-2">
+            <CopyPromptButton
+              label="Kopiuj prompt startowy Atomic UI"
+              getText={() => {
+                const values = loadValues()
+                return `# Atomic UI – sesja robocza
+
+Repo: https://github.com/ArturDab/atomic-ui
+Token: ${values['TOKEN'] || 'UZUPEŁNIJ_TOKEN'}
+Vercel: https://atomic-ui-sandy.vercel.app
+
+Sklonuj repo, przeczytaj CLAUDE.md i zacznij.`
+              }}
+            />
+          </div>
           <Note>Wklej to na początku każdej nowej konwersacji w projekcie Atomic UI. Token zapisuje się w przeglądarce.</Note>
         </Section>
 
