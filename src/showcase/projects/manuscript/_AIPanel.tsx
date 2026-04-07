@@ -1,19 +1,11 @@
-/**
- * AIPanel – panel asystenta AI w edytorze.
- * Inspirowany AIAssistantPanel z Manuscript Replit.
- * Dwa tryby: czat (ogólny) i kontekst rozdziału.
- */
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Separator } from '@/components/ui/separator'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
+import { Separator } from '@/components/ui/separator'
 import {
-  Sparkles, Send, Trash2, Settings, ChevronRight, Copy,
-  PenLine, Zap, BookOpen, Check, RotateCcw, X, Eye, EyeOff,
-  SlidersHorizontal, Coins,
+  Sparkles, Send, Trash2, SlidersHorizontal, ChevronRight,
+  Copy, PenLine, Zap, Check, RotateCcw, X, Eye, EyeOff, Coins,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -26,15 +18,15 @@ interface Message {
 
 interface AIPanelProps {
   onClose?: () => void
-  contextTitle?: string // tytuł rozdziału / artykułu
+  contextTitle?: string
   className?: string
 }
 
 const QUICK_ACTIONS = [
   { label: 'Kontynuuj tekst', prompt: 'Kontynuuj pisanie od miejsca, w którym skończyłem. Napisz następne 2–3 zdania.' },
-  { label: 'Popraw styl', prompt: 'Przeanalizuj styl i zaproponuj konkretne ulepszenia.' },
+  { label: 'Popraw styl',     prompt: 'Przeanalizuj styl i zaproponuj konkretne ulepszenia.' },
   { label: 'Sprawdź spójność', prompt: 'Sprawdź spójność z resztą dokumentu.' },
-  { label: 'Skróć', prompt: 'Skróć aktualny fragment o ~30%, zachowując sens.' },
+  { label: 'Skróć',           prompt: 'Skróć aktualny fragment o ~30%, zachowując sens.' },
 ]
 
 const DEMO_MESSAGES: Message[] = [
@@ -53,12 +45,12 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
   const [messages, setMessages] = React.useState<Message[]>(DEMO_MESSAGES)
   const [input, setInput] = React.useState('')
   const [showSettings, setShowSettings] = React.useState(false)
-  const [showInstructions, setShowInstructions] = React.useState(false)
   const [instructions, setInstructions] = React.useState(
-    'Pisz w stylu przystępnym, ale eksperckim. Unikaj żargonu. Tekst ma być po polsku.'
+    'Pisz w stylu przystępnym, ale eksperckim. Unikaj żargonu. Tekst po polsku.'
   )
-  const textareaRef = React.useRef<HTMLTextAreaElement>(null)
+  const [showInstructions, setShowInstructions] = React.useState(false)
   const bottomRef = React.useRef<HTMLDivElement>(null)
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -66,10 +58,8 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
 
   const send = () => {
     if (!input.trim()) return
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input }
-    setMessages(prev => [...prev, userMsg])
+    setMessages(prev => [...prev, { id: Date.now().toString(), role: 'user', content: input }])
     setInput('')
-    // Symulowana odpowiedź
     setTimeout(() => {
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
@@ -82,31 +72,32 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
 
   return (
     <div className={cn('flex flex-col bg-background border-l', className)}>
-      {/* Header */}
+
+      {/* Header – h-14 jak wszystkie nagłówki pierwszego rzędu */}
       <div className="h-14 border-b flex items-center gap-2 px-4 shrink-0">
-        <Sparkles className="w-4 h-4 text-muted-foreground" />
-        <span className="text-sm font-semibold flex-1">Asystent AI</span>
-        {contextTitle && (
-          <Badge variant="outline" className="text-[10px] max-w-[120px] truncate hidden sm:flex">
-            {contextTitle}
-          </Badge>
-        )}
-        <Button variant="ghost" size="icon" className="h-7 w-7"
-          onClick={() => setShowSettings(o => !o)} title="Ustawienia">
+        <Sparkles className="w-4 h-4 text-muted-foreground shrink-0" />
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold leading-tight">Asystent AI</p>
+          {contextTitle && (
+            <p className="text-xs text-muted-foreground truncate leading-tight mt-0.5">{contextTitle}</p>
+          )}
+        </div>
+        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0"
+          onClick={() => setShowSettings(o => !o)}>
           <SlidersHorizontal className="w-4 h-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-7 w-7"
-          onClick={() => setMessages([])} title="Wyczyść" disabled={messages.length === 0}>
+        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0"
+          onClick={() => setMessages([])} disabled={messages.length === 0}>
           <Trash2 className="w-4 h-4" />
         </Button>
         {onClose && (
-          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
+          <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={onClose}>
             <ChevronRight className="w-4 h-4" />
           </Button>
         )}
       </div>
 
-      {/* Settings panel */}
+      {/* Settings */}
       {showSettings && (
         <div className="border-b px-4 py-3 bg-muted/30 space-y-3 shrink-0">
           <div className="flex items-center justify-between">
@@ -115,38 +106,28 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
               <X className="w-3 h-3" />
             </Button>
           </div>
-          {/* Model */}
-          <div className="space-y-1.5">
-            <p className="text-xs text-muted-foreground">Model</p>
-            <select className="w-full text-xs border rounded-md px-2 py-1.5 bg-background">
-              <option>OpenAI GPT-4o</option>
-              <option>Claude Sonnet</option>
-              <option>Gemini Pro</option>
-            </select>
-          </div>
-          {/* API Key status */}
+          <select className="w-full text-xs border rounded-md px-2 py-1.5 bg-background">
+            <option>OpenAI GPT-4o</option>
+            <option>Claude Sonnet</option>
+            <option>Gemini Pro</option>
+          </select>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <div className="w-2 h-2 rounded-full bg-amber-400" />
-            Dodaj klucz API w ustawieniach aplikacji
+            Dodaj klucz API w ustawieniach
           </div>
-          {/* Instructions */}
-          <div className="space-y-1.5">
-            <button
-              onClick={() => setShowInstructions(o => !o)}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {showInstructions ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-              Instrukcje systemowe
-            </button>
-            {showInstructions && (
-              <Textarea
-                value={instructions}
-                onChange={e => setInstructions(e.target.value)}
-                className="text-xs min-h-16 resize-none"
-                placeholder="Opisz styl, ton, kontekst..."
-              />
-            )}
-          </div>
+          <button
+            onClick={() => setShowInstructions(o => !o)}
+            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+            {showInstructions ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+            Instrukcje systemowe
+          </button>
+          {showInstructions && (
+            <Textarea
+              value={instructions}
+              onChange={e => setInstructions(e.target.value)}
+              className="text-xs min-h-16 resize-none"
+            />
+          )}
         </div>
       )}
 
@@ -161,7 +142,7 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
               <p className="text-sm font-medium">Jak mogę pomóc?</p>
               <p className="text-xs text-muted-foreground mt-0.5">Znam kontekst tego dokumentu.</p>
             </div>
-            <div className="flex flex-wrap gap-1.5 justify-center mt-2">
+            <div className="flex flex-wrap gap-1.5 justify-center mt-1">
               {QUICK_ACTIONS.map(a => (
                 <button key={a.label}
                   onClick={() => { setInput(a.prompt); textareaRef.current?.focus() }}
@@ -182,9 +163,7 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
                 )}
                 <div className={cn(
                   'max-w-[85%] rounded-xl px-3 py-2.5 text-sm leading-relaxed',
-                  msg.role === 'user'
-                    ? 'bg-foreground text-background'
-                    : 'bg-muted/50 border'
+                  msg.role === 'user' ? 'bg-foreground text-background' : 'bg-muted/50 border'
                 )}>
                   <p className="whitespace-pre-wrap">{msg.content}</p>
                   {msg.role === 'assistant' && (

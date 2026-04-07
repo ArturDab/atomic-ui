@@ -10,10 +10,9 @@ import {
   Clock, Hash, CheckCircle2, Timer, Circle, Settings,
   Eye, ExternalLink, Search, History, PanelLeft, Star,
   Save, AlignLeft, Heading1, Heading2, Heading3, X,
+  Maximize2, Minimize2,
 } from 'lucide-react'
-import {
-  Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
-} from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { EditorToolbar } from './_Toolbar'
 import { AIPanel } from './_AIPanel'
 import { SelectionMenu } from './_SelectionMenu'
@@ -22,17 +21,17 @@ import { cn } from '@/lib/utils'
 // ── Dane ──────────────────────────────────────────────────────────────────────
 
 const STRUCTURE = [
-  { id: 'p1', type: 'part', title: 'Część I: Fundamenty', status: 'done', children: [
+  { id: 'p1', status: 'done', title: 'Część I: Fundamenty', children: [
     { id: 'c1', title: 'Wprowadzenie do agentów AI', status: 'done', words: 3200 },
     { id: 'c2', title: 'Architektura systemów agentowych', status: 'done', words: 2800 },
     { id: 'c3', title: 'Modele językowe jako fundament', status: 'in-progress', words: 2400, active: true },
   ]},
-  { id: 'p2', type: 'part', title: 'Część II: Implementacja', status: 'in-progress', children: [
+  { id: 'p2', status: 'in-progress', title: 'Część II: Implementacja', children: [
     { id: 'c4', title: 'Projektowanie przepływów pracy', status: 'in-progress', words: 1800 },
     { id: 'c5', title: 'Integracja z istniejącymi systemami', status: 'draft', words: 600 },
     { id: 'c6', title: 'Testowanie i walidacja agentów', status: 'draft', words: 0 },
   ]},
-  { id: 'p3', type: 'part', title: 'Część III: Skalowanie', status: 'draft', children: [
+  { id: 'p3', status: 'draft', title: 'Część III: Skalowanie', children: [
     { id: 'c7', title: 'Zarządzanie zespołami agentów', status: 'draft', words: 0 },
     { id: 'c8', title: 'Ekonomia wdrożeń AI', status: 'draft', words: 0 },
   ]},
@@ -55,7 +54,7 @@ const SC: Record<string, string> = {
   done: 'text-emerald-500', 'in-progress': 'text-blue-500', draft: 'text-muted-foreground/30',
 }
 
-// ── Settings Sheet ────────────────────────────────────────────────────────────
+// ── Settings Sheet ─────────────────────────────────────────────────────────────
 
 function SettingsSheet() {
   const [tab, setTab] = React.useState<'chapter'|'book'|'editor'>('chapter')
@@ -64,7 +63,6 @@ function SettingsSheet() {
     { id: 'book'    as const, label: 'Książka' },
     { id: 'editor'  as const, label: 'Edytor' },
   ]
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -76,51 +74,37 @@ function SettingsSheet() {
         <SheetHeader className="px-5 pt-5 pb-0 shrink-0">
           <SheetTitle>Ustawienia</SheetTitle>
         </SheetHeader>
-
-        {/* Taby */}
         <div className="flex border-b px-5 mt-4 shrink-0 gap-5">
           {TABS.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              className={cn(
-                'pb-2.5 text-sm border-b-2 transition-colors',
-                tab === t.id
-                  ? 'border-foreground font-medium text-foreground'
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
-              )}>
+              className={cn('pb-2.5 text-sm border-b-2 transition-colors',
+                tab === t.id ? 'border-foreground font-medium' : 'border-transparent text-muted-foreground hover:text-foreground')}>
               {t.label}
             </button>
           ))}
         </div>
-
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
           {tab === 'chapter' && (
             <>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Tytuł rozdziału</label>
-                <Input defaultValue="Modele językowe jako fundament" className="text-sm h-9" />
+                <Input defaultValue="Modele językowe jako fundament" className="h-9" />
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Status</label>
                 <select className="w-full text-sm border rounded-md px-3 py-2 bg-background">
-                  <option>Szkic</option>
-                  <option>W trakcie</option>
-                  <option>Do rewizji</option>
-                  <option>Gotowe</option>
+                  <option>Szkic</option><option>W trakcie</option><option>Do rewizji</option><option>Gotowe</option>
                 </select>
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium flex justify-between">
-                  Cel słów
-                  <span className="font-mono text-muted-foreground text-xs">2 400 / 3 000</span>
+                  Cel słów <span className="font-mono text-muted-foreground text-xs">2 400 / 3 000</span>
                 </label>
-                <Input defaultValue="3000" type="number" className="text-sm h-9" />
+                <Input defaultValue="3000" type="number" className="h-9" />
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Notatki prywatne</label>
-                <Textarea
-                  defaultValue="Wspomnieć o context window 200k Gemini. Porównać koszty modeli."
-                  className="text-sm min-h-24 resize-none"
-                />
+                <Textarea defaultValue="Wspomnieć o context window 200k Gemini. Porównać koszty modeli." className="text-sm min-h-24 resize-none" />
                 <p className="text-[10px] text-muted-foreground">Nie będą eksportowane</p>
               </div>
               <Button variant="outline" size="sm" className="w-full gap-2 h-9">
@@ -128,20 +112,19 @@ function SettingsSheet() {
               </Button>
             </>
           )}
-
           {tab === 'book' && (
             <>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Tytuł książki</label>
-                <Input defaultValue="Strategie Contentowe dla Ekspertów" className="text-sm h-9" />
+                <Input defaultValue="Strategie Contentowe dla Ekspertów" className="h-9" />
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Autor</label>
-                <Input defaultValue="Artur Kamiński" className="text-sm h-9" />
+                <Input defaultValue="Artur Kamiński" className="h-9" />
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Cel słów</label>
-                <Input defaultValue="50000" type="number" className="text-sm h-9" />
+                <Input defaultValue="50000" type="number" className="h-9" />
               </div>
               <div className="bg-muted/40 rounded-lg p-3 space-y-2">
                 <p className="text-xs font-medium">Postęp</p>
@@ -152,35 +135,27 @@ function SettingsSheet() {
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Instrukcje AI dla całej książki</label>
-                <Textarea
-                  defaultValue="Pisz w stylu przystępnym, ale eksperckim. Audience: doświadczeni marketerzy."
-                  className="text-sm min-h-24 resize-none"
-                />
+                <Textarea defaultValue="Pisz w stylu przystępnym, ale eksperckim. Audience: doświadczeni marketerzy." className="text-sm min-h-24 resize-none" />
                 <p className="text-[10px] text-muted-foreground">Dodawane do każdego zapytania AI</p>
               </div>
             </>
           )}
-
           {tab === 'editor' && (
             <>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Czcionka edytora</label>
                 <select className="w-full text-sm border rounded-md px-3 py-2 bg-background">
-                  <option>Merriweather</option>
-                  <option>Geist</option>
-                  <option>Lora</option>
+                  <option>Merriweather</option><option>Geist</option><option>Lora</option>
                 </select>
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Rozmiar czcionki</label>
-                <Input defaultValue="18" type="number" className="text-sm h-9" />
+                <Input defaultValue="18" type="number" className="h-9" />
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium">Szerokość edytora</label>
                 <select className="w-full text-sm border rounded-md px-3 py-2 bg-background">
-                  <option>Wąska (600px)</option>
-                  <option>Średnia (800px)</option>
-                  <option>Szeroka (1000px)</option>
+                  <option>Wąska (600px)</option><option>Średnia (800px)</option><option>Szeroka (1000px)</option>
                 </select>
               </div>
               <Separator />
@@ -203,11 +178,8 @@ function SettingsSheet() {
             </>
           )}
         </div>
-
         <div className="px-5 py-4 border-t shrink-0">
-          <Button className="w-full gap-2 h-9">
-            <Save className="w-4 h-4" /> Zapisz
-          </Button>
+          <Button className="w-full gap-2 h-9"><Save className="w-4 h-4" /> Zapisz</Button>
         </div>
       </SheetContent>
     </Sheet>
@@ -222,6 +194,7 @@ export default function BookEditorScreen() {
   const [showStructure, setShowStructure] = React.useState(true)
   const [showOutline, setShowOutline] = React.useState(true)
   const [showSelection, setShowSelection] = React.useState(false)
+  const [fullscreen, setFullscreen] = React.useState(false)
   const [activeH, setActiveH] = React.useState('h2a')
 
   const toggle = (id: string) => setExpanded(p => {
@@ -232,11 +205,16 @@ export default function BookEditorScreen() {
     1: Heading1, 2: Heading2, 3: Heading3,
   }
 
-  return (
-    <div className="flex flex-col h-full bg-background">
+  // W trybie pełnoekranowym owijamy cały widok fixed overlay
+  const wrapClass = fullscreen
+    ? 'fixed inset-0 z-50 flex flex-col bg-background'
+    : 'flex flex-col h-full bg-background'
 
-      {/* Header */}
-      <div className="h-12 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
+  return (
+    <div className={wrapClass}>
+
+      {/* Header – h-14, wyrównany ze wszystkimi kolumnami */}
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <ArrowLeft className="w-4 h-4" />
         </Button>
@@ -244,16 +222,16 @@ export default function BookEditorScreen() {
           <Badge variant="outline" className="text-[10px] border-emerald-200 bg-emerald-50 text-emerald-600 shrink-0">
             Książka
           </Badge>
-          <span className="text-sm text-muted-foreground truncate hidden md:block">Strategie Contentowe</span>
-          <ChevronRight className="w-3 h-3 text-muted-foreground shrink-0 hidden md:block" />
+          <span className="text-sm text-muted-foreground truncate hidden lg:block">Strategie Contentowe</span>
+          <ChevronRight className="w-3 h-3 text-muted-foreground shrink-0 hidden lg:block" />
           <span className="text-sm font-medium truncate">Modele językowe jako fundament</span>
           <Badge variant="outline" className="text-[10px] ml-1 shrink-0">W trakcie</Badge>
         </div>
         <div className="flex items-center gap-1 shrink-0">
-          <span className="text-xs text-muted-foreground hidden lg:flex items-center gap-1">
+          <span className="text-xs text-muted-foreground hidden xl:flex items-center gap-1">
             <Clock className="w-3 h-3" /> Autozapis
           </span>
-          <Separator orientation="vertical" className="h-5 mx-1 hidden lg:block" />
+          <Separator orientation="vertical" className="h-5 mx-1 hidden xl:block" />
           <Button variant="ghost" size="icon" className="h-8 w-8"><Search className="w-4 h-4" /></Button>
           <Button variant="ghost" size="icon" className="h-8 w-8"><History className="w-4 h-4" /></Button>
           <Button variant="ghost" size="icon" className="h-8 w-8"><Star className="w-4 h-4" /></Button>
@@ -261,6 +239,11 @@ export default function BookEditorScreen() {
           <Separator orientation="vertical" className="h-5 mx-1" />
           <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm hidden sm:flex">
             <Eye className="w-4 h-4" /> Podgląd
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8"
+            onClick={() => setFullscreen(f => !f)}
+            title={fullscreen ? 'Wyjdź z pełnego ekranu' : 'Pełny ekran'}>
+            {fullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </Button>
           <Button size="sm" className="h-8 gap-1.5 text-sm">
             <ExternalLink className="w-4 h-4" /> Eksportuj
@@ -270,22 +253,23 @@ export default function BookEditorScreen() {
 
       <div className="flex flex-1 overflow-hidden">
 
-        {/* Kolumna 1: Struktura – szeroka */}
-        {showStructure && (
+        {/* Kolumna 1: Struktura – h-14 header, text-xs */}
+        {showStructure && !fullscreen && (
           <div className="w-64 border-r flex flex-col shrink-0 bg-background">
-            <div className="h-10 border-b flex items-center justify-between px-3 shrink-0">
-              <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Struktura</span>
+            {/* h-14 – wyrównane z app header i AI panelem */}
+            <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Struktura</span>
               <div className="flex gap-1">
-                <Button variant="ghost" size="icon" className="h-6 w-6">
+                <Button variant="ghost" size="icon" className="h-7 w-7">
                   <Plus className="w-3.5 h-3.5" />
                 </Button>
-                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setShowStructure(false)}>
-                  <X className="w-3 h-3" />
+                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setShowStructure(false)}>
+                  <X className="w-3.5 h-3.5" />
                 </Button>
               </div>
             </div>
-            <div className="px-3 py-2 border-b">
-              <div className="flex justify-between text-[10px] text-muted-foreground mb-1">
+            <div className="px-4 py-2.5 border-b">
+              <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
                 <span>18 400 słów</span><span>50 000 cel</span>
               </div>
               <div className="h-1 bg-muted rounded-full overflow-hidden">
@@ -293,18 +277,18 @@ export default function BookEditorScreen() {
               </div>
             </div>
             <ScrollArea className="flex-1">
-              <div className="py-1.5">
+              <div className="py-2">
                 {STRUCTURE.map(part => {
                   const PIcon = SI[part.status] || Circle
                   return (
                     <div key={part.id}>
                       <button onClick={() => toggle(part.id)}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted/50 transition-colors">
+                        className="w-full flex items-center gap-2 px-4 py-2 text-xs hover:bg-muted/50 transition-colors">
                         {expanded.has(part.id)
                           ? <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                           : <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0" />}
-                        <PIcon className={cn('w-2.5 h-2.5 shrink-0', SC[part.status])} />
-                        <span className="flex-1 text-left font-medium text-muted-foreground text-[11px] leading-snug">
+                        <PIcon className={cn('w-3 h-3 shrink-0', SC[part.status])} />
+                        <span className="flex-1 text-left font-semibold text-muted-foreground text-xs leading-snug">
                           {part.title}
                         </span>
                       </button>
@@ -313,15 +297,17 @@ export default function BookEditorScreen() {
                         return (
                           <button key={ch.id}
                             className={cn(
-                              'w-full flex items-center gap-2 px-3 py-2 text-[11px] pl-7 transition-colors border-l-2',
-                              ch.active
-                                ? 'bg-muted border-l-foreground font-medium text-foreground'
-                                : 'border-l-transparent hover:bg-muted/40 text-muted-foreground'
+                              'w-full flex items-center gap-2 px-4 py-2 pl-9 text-xs transition-colors border-l-2 border-l-transparent',
+                              (ch as any).active
+                                ? 'bg-muted !border-l-foreground font-medium text-foreground'
+                                : 'hover:bg-muted/40 text-muted-foreground'
                             )}>
                             <CIcon className={cn('w-2.5 h-2.5 shrink-0', SC[ch.status])} />
                             <span className="flex-1 text-left line-clamp-2 leading-snug">{ch.title}</span>
                             {ch.words > 0 && (
-                              <span className="text-muted-foreground/50 shrink-0 tabular-nums ml-1">{ch.words}</span>
+                              <span className="text-muted-foreground/50 shrink-0 tabular-nums text-[10px] ml-1">
+                                {ch.words.toLocaleString()}
+                              </span>
                             )}
                           </button>
                         )
@@ -334,34 +320,32 @@ export default function BookEditorScreen() {
           </div>
         )}
 
-        {/* Kolumna 2: Nagłówki rozdziału */}
-        {showOutline && (
+        {/* Kolumna 2: Nagłówki rozdziału – h-14, text-xs */}
+        {showOutline && !fullscreen && (
           <div className="w-52 border-r flex flex-col shrink-0 bg-background">
-            <div className="h-10 border-b flex items-center justify-between px-3 shrink-0">
-              <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Rozdział</span>
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setShowOutline(false)}>
-                <X className="w-3 h-3" />
+            <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Rozdział</span>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setShowOutline(false)}>
+                <X className="w-3.5 h-3.5" />
               </Button>
             </div>
             <ScrollArea className="flex-1">
-              <div className="py-2 px-2 space-y-0.5">
+              <div className="py-3 px-2 space-y-0.5">
                 {HEADINGS.map(h => {
                   const Icon = HIcon[h.level]
                   return (
                     <button key={h.id} onClick={() => setActiveH(h.id)}
                       className={cn(
-                        'w-full flex items-start gap-2 px-2 py-1.5 rounded-md text-left transition-colors',
-                        h.level === 1 ? 'pl-2' : h.level === 2 ? 'pl-4' : 'pl-6',
+                        'w-full flex items-start gap-2 px-2 py-2 rounded-md text-left transition-colors',
+                        h.level === 1 ? 'pl-2' : h.level === 2 ? 'pl-4' : 'pl-7',
                         activeH === h.id
                           ? 'bg-muted text-foreground font-medium'
                           : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                       )}>
                       <Icon className={cn('shrink-0 mt-0.5',
-                        h.level === 1 ? 'w-3.5 h-3.5' : h.level === 2 ? 'w-3 h-3' : 'w-2.5 h-2.5'
+                        h.level === 1 ? 'w-3.5 h-3.5' : 'w-3 h-3'
                       )} />
-                      <span className={cn('leading-snug',
-                        h.level === 1 ? 'text-[11px] font-semibold' : 'text-[11px]'
-                      )}>{h.title}</span>
+                      <span className={cn('leading-snug text-xs')}>{h.title}</span>
                     </button>
                   )
                 })}
@@ -374,14 +358,15 @@ export default function BookEditorScreen() {
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
           <EditorToolbar wordCount={2400} chapterWordCount={2400} />
 
+          {/* Sub-toolbar */}
           <div className="h-9 border-b flex items-center px-4 gap-2 bg-muted/20 shrink-0">
-            {!showStructure && (
-              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setShowStructure(true)}>
+            {(!showStructure || fullscreen) && (
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => { setShowStructure(true); setFullscreen(false) }}>
                 <PanelLeft className="w-3.5 h-3.5" />
               </Button>
             )}
-            {!showOutline && (
-              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setShowOutline(true)}>
+            {(!showOutline || fullscreen) && (
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => { setShowOutline(true); setFullscreen(false) }}>
                 <AlignLeft className="w-3.5 h-3.5" />
               </Button>
             )}
@@ -401,10 +386,8 @@ export default function BookEditorScreen() {
           <ScrollArea className="flex-1">
             <div className="max-w-2xl mx-auto px-8 py-10">
               <div className="mb-6">
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">Rozdział 3</p>
-                <h1 className="text-2xl font-bold tracking-tight leading-tight">
-                  Modele językowe jako fundament
-                </h1>
+                <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Rozdział 3</p>
+                <h1 className="text-2xl font-bold tracking-tight leading-tight">Modele językowe jako fundament</h1>
               </div>
 
               <h2 className="text-lg font-semibold mt-6 mb-3">Czym jest model językowy?</h2>
@@ -414,22 +397,22 @@ export default function BookEditorScreen() {
 
               <h2 className="text-lg font-semibold mt-6 mb-3">Function calling i narzędzia</h2>
               <p className="text-base leading-relaxed mb-4" onMouseUp={() => setShowSelection(true)}>
-                Kluczowym aspektem odróżniającym modele odpowiednie dla systemów agentowych jest zdolność do tzw. function calling – wywoływania zewnętrznych narzędzi i API na podstawie konwersacji. GPT-4o, Claude Sonnet czy Gemini Pro oferują tę funkcjonalność natywnie.
+                Kluczowym aspektem odróżniającym modele odpowiednie dla systemów agentowych jest zdolność do tzw. function calling – wywoływania zewnętrznych narzędzi i API na podstawie konwersacji.
               </p>
 
               <h3 className="text-base font-semibold mt-4 mb-2 text-muted-foreground">Porównanie modeli</h3>
               <p className="text-base leading-relaxed mb-4">
-                Praktycznym kryterium wyboru jest context window – maksymalna liczba tokenów w jednym wywołaniu. W systemach z długą historią działań lub bogatym kontekstem kluczowe są modele z oknem 100k+ tokenów.
+                Praktycznym kryterium wyboru jest context window – maksymalna liczba tokenów w jednym wywołaniu. Dla systemów z długą historią działań kluczowe są modele z oknem 100k+ tokenów.
               </p>
 
               <h3 className="text-base font-semibold mt-4 mb-2 text-muted-foreground">Koszty i latency</h3>
               <p className="text-base leading-relaxed mb-4">
-                Wybór modelu powinien być podyktowany nie tylko możliwościami, ale też latency i kosztami. W systemach agentowych, gdzie jeden przepływ może wymagać kilkunastu wywołań modelu, różnice te kumulują się znacząco.
+                Wybór modelu powinien być podyktowany nie tylko możliwościami, ale też latency i kosztami. W systemach agentowych różnice te kumulują się znacząco.
               </p>
 
               <h2 className="text-lg font-semibold mt-6 mb-3">Context window</h2>
               <p className="text-base leading-relaxed mb-4">
-                Okno kontekstu determinuje ile informacji model może uwzględnić jednocześnie. Dla systemów agentowych z długą historią działań minimalna wartość to 32k tokenów.
+                Okno kontekstu determinuje ile informacji model może uwzględnić jednocześnie. Dla systemów agentowych minimalna wartość to 32k tokenów.
               </p>
 
               <p className="text-base text-muted-foreground/50 mt-6">Kontynuuj pisanie...</p>
