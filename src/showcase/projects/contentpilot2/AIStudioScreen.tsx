@@ -1,13 +1,3 @@
-/**
- * AI Studio 2.0
- *
- * Kluczowe zmiany vs v1:
- * 1. Brak galerii kart – zamiast tego command palette z wyszukiwarką na środku
- * 2. Historia nie jest osobną kolumną – jest stroną startową (ostatnie generacje jako karty)
- * 3. Edytor wysuwa się bez zmiany URL – panel formularza slide-in z lewej
- * 4. Generatory jako lista z pogrupowanym menu, nie siatka kart
- * 5. "Szybki start" zamiast "Polecane" – 3 najczęstsze akcje jako duże przyciski
- */
 import * as React from 'react'
 import { CP2Sidebar } from './_Sidebar'
 import { Button } from '@/components/ui/button'
@@ -21,60 +11,60 @@ import { Badge } from '@/components/ui/badge'
 import {
   Search, FileText, Mail, Share2, AlignLeft, Languages,
   SpellCheck2, HelpCircle, ShoppingBag, Wand2, Clock,
-  Hash, ArrowRight, X, Play, ChevronDown, RotateCcw,
-  Copy, Coins, BookMarked, Video, Newspaper, Megaphone,
+  Hash, ArrowRight, X, Play, RotateCcw, Copy, Coins,
+  BookMarked, Video, Newspaper, Megaphone, Pin, PinOff,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const QUICK_START = [
-  { icon: FileText, label: 'Artykuł blogowy', desc: 'SEO · długoformatowy', slug: 'article' },
-  { icon: Mail,     label: 'Email marketingowy', desc: 'Kampanie · CTA', slug: 'email' },
-  { icon: Share2,   label: 'Post social media', desc: 'LinkedIn · Instagram · X', slug: 'social' },
+const ALL_GENERATORS = [
+  { icon: FileText,    name: 'Artykuł blogowy',    slug: 'article',    category: 'Tworzenie treści' },
+  { icon: ShoppingBag, name: 'Opis produktu',      slug: 'product',    category: 'Tworzenie treści' },
+  { icon: Mail,        name: 'Email marketingowy', slug: 'email',      category: 'Tworzenie treści' },
+  { icon: Newspaper,   name: 'Newsletter',         slug: 'newsletter', category: 'Tworzenie treści' },
+  { icon: Share2,      name: 'Post social media',  slug: 'social',     category: 'Tworzenie treści' },
+  { icon: Video,       name: 'Skrypt wideo',       slug: 'script',     category: 'Tworzenie treści' },
+  { icon: Megaphone,   name: 'Kopia reklamowa',    slug: 'ad',         category: 'Tworzenie treści' },
+  { icon: AlignLeft,   name: 'Streszczenie',       slug: 'summary',    category: 'Analiza i edycja' },
+  { icon: SpellCheck2, name: 'Korekta i redakcja', slug: 'proofread',  category: 'Analiza i edycja' },
+  { icon: RotateCcw,   name: 'Przepisanie tekstu', slug: 'rewrite',    category: 'Analiza i edycja' },
+  { icon: Languages,   name: 'Tłumaczenie',        slug: 'translate',  category: 'Językowe' },
+  { icon: Search,      name: 'SEO meta tagi',      slug: 'seo',        category: 'SEO i techniczne' },
+  { icon: HelpCircle,  name: 'Generator FAQ',      slug: 'faq',        category: 'SEO i techniczne' },
 ]
 
-const GROUPS = [
-  { label: 'Tworzenie treści', items: [
-    { icon: FileText,    name: 'Artykuł blogowy',   slug: 'article' },
-    { icon: ShoppingBag, name: 'Opis produktu',     slug: 'product' },
-    { icon: Mail,        name: 'Email marketingowy',slug: 'email' },
-    { icon: Newspaper,   name: 'Newsletter',        slug: 'newsletter' },
-    { icon: Share2,      name: 'Post social media', slug: 'social' },
-    { icon: Video,       name: 'Skrypt wideo',      slug: 'script' },
-    { icon: Megaphone,   name: 'Kopia reklamowa',   slug: 'ad' },
-  ]},
-  { label: 'Analiza i edycja', items: [
-    { icon: AlignLeft,   name: 'Streszczenie',       slug: 'summary' },
-    { icon: SpellCheck2, name: 'Korekta i redakcja', slug: 'proofread' },
-    { icon: RotateCcw,   name: 'Przepisanie tekstu', slug: 'rewrite' },
-  ]},
-  { label: 'Językowe', items: [
-    { icon: Languages,   name: 'Tłumaczenie',         slug: 'translate' },
-  ]},
-  { label: 'SEO i techniczne', items: [
-    { icon: Search,      name: 'SEO meta tagi',  slug: 'seo' },
-    { icon: HelpCircle,  name: 'Generator FAQ',  slug: 'faq' },
-  ]},
-]
+const CATEGORIES = ['Tworzenie treści', 'Analiza i edycja', 'Językowe', 'SEO i techniczne']
 
+// Historia ma podgląd fragmentu treści – wyraźnie odróżnia się od kafli generatorów
 const HISTORY = [
-  { id: '1', type: 'Artykuł blogowy', topic: 'Jak stworzyć skuteczny zespół agentów AI?', words: 980, date: 'dziś, 14:22' },
-  { id: '2', type: 'Post social media', topic: 'Launch Animails – nowa aplikacja dla miłośników zwierząt', words: 220, date: 'dziś, 11:05' },
-  { id: '3', type: 'Email marketingowy', topic: 'Newsletter Q1 – podsumowanie wyników', words: 540, date: 'wczoraj' },
-  { id: '4', type: 'SEO meta tagi', topic: 'Strona główna Beezu.pl', words: 160, date: '18 mar' },
+  {
+    id: '1', type: 'Artykuł blogowy', slug: 'article',
+    topic: 'Jak stworzyć skuteczny zespół agentów AI?',
+    excerpt: 'Tworzenie skutecznego zespołu agentów AI to wyzwanie, które wymaga starannego planowania i kluczowej strategii...',
+    words: 980, date: 'dziś, 14:22',
+  },
+  {
+    id: '2', type: 'Post social media', slug: 'social',
+    topic: 'Launch Animails – nowa aplikacja dla miłośników zwierząt',
+    excerpt: 'Poznajcie Animails 🐾 – nową aplikację dla miłośników zwierząt! Zarządzaj zdrowiem pupila, znajdź weterynarza...',
+    words: 220, date: 'dziś, 11:05',
+  },
+  {
+    id: '3', type: 'Email marketingowy', slug: 'email',
+    topic: 'Newsletter Q1 – podsumowanie wyników',
+    excerpt: 'Witaj! Pierwszy kwartał za nami – czas na podsumowanie. W Q1 osiągnęliśmy rekordowe wyniki sprzedaży...',
+    words: 540, date: 'wczoraj',
+  },
+  {
+    id: '4', type: 'SEO meta tagi', slug: 'seo',
+    topic: 'Strona główna Beezu.pl',
+    excerpt: 'Title: Beezu – Biżuteria Złota i Srebrna | Sklep Online | Meta: Odkryj unikalną biżuterię złotą...',
+    words: 160, date: '18 mar',
+  },
 ]
-
-const TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  'Artykuł blogowy': FileText,
-  'Post social media': Share2,
-  'Email marketingowy': Mail,
-  'SEO meta tagi': Search,
-  'Streszczenie': AlignLeft,
-  'Tłumaczenie': Languages,
-}
 
 const CONTENT = [
   { type: 'h1', text: 'Jak Stworzyć Skuteczny Zespół Agentów AI?' },
-  { type: 'p',  text: 'Tworzenie skutecznego zespołu agentów AI to wyzwanie, które wymaga starannego planowania. Agenci AI mogą przekształcić sposób funkcjonowania firm, zwiększając efektywność i wspierając innowacje.' },
+  { type: 'p',  text: 'Tworzenie skutecznego zespołu agentów AI to wyzwanie, które wymaga starannego planowania. Agenci AI mogą przekształcić sposób funkcjonowania firm.' },
   { type: 'h2', text: '1. Zrozum cel i zakres działań' },
   { type: 'p',  text: 'Przed rozpoczęciem budowania zespołu, kluczowe jest zrozumienie ich roli:' },
   { type: 'li', text: '**Cele biznesowe:** Upewnij się, że cele agentów są zgodne ze strategiami firmy.' },
@@ -86,18 +76,24 @@ const CONTENT = [
 export default function AIStudioScreen() {
   const [search, setSearch] = React.useState('')
   const [editorOpen, setEditorOpen] = React.useState(false)
-  const [selectedGen, setSelectedGen] = React.useState<string | null>(null)
   const [hasContent, setHasContent] = React.useState(false)
+  const [pinned, setPinned] = React.useState<Set<string>>(new Set(['article', 'email', 'social']))
 
-  const openEditor = (slug: string) => {
-    setSelectedGen(slug)
-    setEditorOpen(true)
-    setHasContent(false)
+  const openEditor = (slug: string) => { setEditorOpen(true); setHasContent(false) }
+
+  const togglePin = (slug: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    setPinned(prev => {
+      const n = new Set(prev)
+      n.has(slug) ? n.delete(slug) : n.add(slug)
+      return n
+    })
   }
 
-  const allItems = GROUPS.flatMap(g => g.items)
+  const pinnedGenerators = ALL_GENERATORS.filter(g => pinned.has(g.slug))
+
   const searchResults = search.trim()
-    ? allItems.filter(i => i.name.toLowerCase().includes(search.toLowerCase()))
+    ? ALL_GENERATORS.filter(i => i.name.toLowerCase().includes(search.toLowerCase()))
     : []
 
   const formatBold = (text: string) => text.split(/(\*\*[^*]+\*\*)/).map((p, i) =>
@@ -108,10 +104,9 @@ export default function AIStudioScreen() {
     <div className="flex h-full bg-background">
       <CP2Sidebar active="ai-studio" />
 
-      {/* Main */}
       <div className="flex-1 flex overflow-hidden">
 
-        {/* Generator panel slide-in */}
+        {/* Slide-in form panel */}
         {editorOpen && (
           <div className="w-80 border-r flex flex-col shrink-0 bg-background">
             <div className="h-14 border-b flex items-center gap-3 px-4 shrink-0">
@@ -136,7 +131,6 @@ export default function AIStudioScreen() {
                     <SelectContent>
                       <SelectItem value="professional">Profesjonalny</SelectItem>
                       <SelectItem value="casual">Swobodny</SelectItem>
-                      <SelectItem value="authoritative">Autorytatywny</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -175,10 +169,8 @@ export default function AIStudioScreen() {
           </div>
         )}
 
-        {/* Content area */}
+        {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden">
-
-          {/* Header */}
           <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
             <h1 className="text-base font-semibold">AI Studio</h1>
             {editorOpen && hasContent && (
@@ -199,7 +191,6 @@ export default function AIStudioScreen() {
             )}
           </div>
 
-          {/* Show generator output or home screen */}
           {editorOpen && hasContent ? (
             <ScrollArea className="flex-1">
               <div className="max-w-2xl mx-auto px-8 py-8">
@@ -218,123 +209,165 @@ export default function AIStudioScreen() {
                 })}
               </div>
             </ScrollArea>
-          ) : editorOpen && !hasContent ? (
-            // Empty state when editor open but not generated yet
+          ) : editorOpen ? (
             <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
               <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center">
                 <Wand2 className="w-7 h-7 text-muted-foreground" strokeWidth={1.5} />
               </div>
               <div>
                 <p className="text-base font-semibold mb-1">Gotowy do generowania</p>
-                <p className="text-sm text-muted-foreground max-w-xs">Wypełnij formularz po lewej i kliknij Generuj.</p>
+                <p className="text-sm text-muted-foreground">Wypełnij formularz i kliknij Generuj.</p>
               </div>
             </div>
           ) : (
-            // Home – search + quick start + history
-            <ScrollArea className="flex-1">
-              <div className="max-w-2xl mx-auto px-6 py-8">
+            <ScrollArea className="flex-1 bg-[#fafafa]">
+              <div className="max-w-2xl mx-auto px-6 py-8 space-y-8">
 
                 {/* Search */}
-                <div className="relative mb-8">
+                <div className="relative">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     placeholder="Szukaj generatora..."
                     value={search}
                     onChange={e => setSearch(e.target.value)}
-                    className="pl-11 h-11 text-base"
-                    autoFocus
+                    className="pl-11 h-11 text-base bg-white"
                   />
                 </div>
 
-                {/* Search results */}
                 {search.trim() ? (
-                  <div>
+                  // Search results
+                  <div className="space-y-1">
                     {searchResults.length === 0 ? (
                       <p className="text-sm text-muted-foreground text-center py-8">Brak wyników dla „{search}"</p>
-                    ) : (
-                      <div className="space-y-1">
-                        {searchResults.map(item => (
-                          <button key={item.slug} onClick={() => openEditor(item.slug)}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
-                            <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                              <item.icon className="w-4 h-4 text-muted-foreground" />
-                            </div>
-                            <p className="font-medium text-sm flex-1">{item.name}</p>
-                            <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                    ) : searchResults.map(item => (
+                      <button key={item.slug} onClick={() => openEditor(item.slug)}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
+                        <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                          <item.icon className="w-4 h-4 text-muted-foreground" />
+                        </div>
+                        <p className="font-medium text-sm flex-1">{item.name}</p>
+                        <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </button>
+                    ))}
                   </div>
                 ) : (
                   <>
-                    {/* Quick start */}
-                    <div className="mb-8">
-                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Szybki start</p>
-                      <div className="grid grid-cols-3 gap-3">
-                        {QUICK_START.map(qs => (
-                          <button key={qs.slug} onClick={() => openEditor(qs.slug)}
-                            className="flex flex-col items-start p-4 border rounded-xl bg-white hover:border-foreground/25 hover:shadow-sm transition-all group text-left">
-                            <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center mb-3">
-                              <qs.icon className="w-4 h-4 text-foreground" />
+
+                    {/* Przypięte – user controls */}
+                    <div>
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Przypięte</p>
+                      {pinnedGenerators.length === 0 ? (
+                        <div className="border border-dashed rounded-xl bg-white/60 flex flex-col items-center py-7 text-center px-6">
+                          <Pin className="w-5 h-5 text-muted-foreground/40 mb-2" />
+                          <p className="text-sm font-medium text-muted-foreground">Brak przypiętych generatorów</p>
+                          <p className="text-xs text-muted-foreground/60 mt-1">Kliknij ikonę pinezki przy dowolnym generatorze poniżej.</p>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-3 gap-3">
+                          {pinnedGenerators.map(gen => (
+                            <div key={gen.slug} className="relative group/pin">
+                              <button onClick={() => openEditor(gen.slug)}
+                                className="w-full flex flex-col items-start p-4 border rounded-xl bg-white hover:border-foreground/25 hover:shadow-sm transition-all text-left">
+                                <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center mb-3">
+                                  <gen.icon className="w-4 h-4 text-foreground" />
+                                </div>
+                                <p className="font-semibold text-sm">{gen.name}</p>
+                                <p className="text-xs text-muted-foreground mt-0.5">{gen.category}</p>
+                              </button>
+                              <button
+                                onClick={e => togglePin(gen.slug, e)}
+                                className="absolute top-2 right-2 w-6 h-6 rounded-md flex items-center justify-center bg-muted text-foreground opacity-0 group-hover/pin:opacity-100 transition-opacity"
+                              >
+                                <PinOff className="w-3 h-3" />
+                              </button>
                             </div>
-                            <p className="font-semibold text-sm mb-0.5">{qs.label}</p>
-                            <p className="text-xs text-muted-foreground">{qs.desc}</p>
-                          </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Historia – inny wzorzec niż kafle */}
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Ostatnie generacje</p>
+                        <button className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                          Pełna historia <ArrowRight className="w-3 h-3" />
+                        </button>
+                      </div>
+
+                      {/* Timeline list – zupełnie inny wygląd niż kafle generatorów */}
+                      <div className="space-y-0 border rounded-xl bg-white overflow-hidden">
+                        {HISTORY.map((item, i) => (
+                          <div key={item.id}>
+                            {i > 0 && <Separator />}
+                            <button
+                              onClick={() => openEditor(item.slug)}
+                              className="w-full text-left px-4 py-3.5 hover:bg-muted/40 transition-colors group flex items-start gap-4"
+                            >
+                              {/* Lewa kreska kolorystyczna – timeline accent */}
+                              <div className="w-0.5 h-full bg-muted rounded-full self-stretch shrink-0 mt-1 min-h-[2.5rem]" />
+
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Badge variant="secondary" className="text-[10px] h-4 px-1.5 font-medium shrink-0">
+                                    {item.type}
+                                  </Badge>
+                                  <span className="text-[10px] text-muted-foreground/60">{item.date}</span>
+                                  <span className="text-[10px] text-muted-foreground/60 ml-auto flex items-center gap-1">
+                                    <Hash className="w-3 h-3" />{item.words}
+                                  </span>
+                                </div>
+                                {/* Tytuł */}
+                                <p className="text-sm font-medium leading-snug mb-1 truncate">{item.topic}</p>
+                                {/* Podgląd tekstu – tego nie ma w kaflach generatorów */}
+                                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-1">{item.excerpt}</p>
+                              </div>
+
+                              <ArrowRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1" />
+                            </button>
+                          </div>
                         ))}
                       </div>
                     </div>
 
-                    {/* Recent generations */}
-                    {HISTORY.length > 0 && (
-                      <div className="mb-8">
-                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Ostatnie generacje</p>
-                        <div className="space-y-2">
-                          {HISTORY.map(item => {
-                            const Icon = TYPE_ICONS[item.type] ?? FileText
-                            return (
-                              <button key={item.id}
-                                className="w-full flex items-center gap-3 px-4 py-3 border rounded-xl bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
-                                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                                  <Icon className="w-4 h-4 text-muted-foreground" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-xs text-muted-foreground mb-0.5">{item.type}</p>
-                                  <p className="text-sm font-medium leading-snug truncate">{item.topic}</p>
-                                </div>
-                                <div className="text-right shrink-0">
-                                  <p className="text-xs text-muted-foreground flex items-center gap-1 justify-end">
-                                    <Hash className="w-3 h-3" />{item.words}
-                                  </p>
-                                  <p className="text-[10px] text-muted-foreground/60 mt-0.5">{item.date}</p>
-                                </div>
-                              </button>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* All generators grouped */}
+                    {/* Wszystkie generatory – kafle */}
                     <div>
                       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Wszystkie generatory</p>
                       <div className="space-y-4">
-                        {GROUPS.map(group => (
-                          <div key={group.label}>
-                            <p className="text-xs text-muted-foreground font-medium mb-2 px-1">{group.label}</p>
-                            <div className="grid grid-cols-2 gap-2">
-                              {group.items.map(item => (
-                                <button key={item.slug} onClick={() => openEditor(item.slug)}
-                                  className="flex items-center gap-2.5 px-3 py-2.5 border rounded-xl bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
-                                  <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                                    <item.icon className="w-3.5 h-3.5 text-muted-foreground" />
+                        {CATEGORIES.map(cat => {
+                          const items = ALL_GENERATORS.filter(g => g.category === cat)
+                          return (
+                            <div key={cat}>
+                              <p className="text-xs text-muted-foreground font-medium mb-2 px-1">{cat}</p>
+                              <div className="grid grid-cols-2 gap-2">
+                                {items.map(gen => (
+                                  <div key={gen.slug} className="relative group/tile">
+                                    <button onClick={() => openEditor(gen.slug)}
+                                      className="w-full flex items-center gap-2.5 px-3 py-2.5 border rounded-xl bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left">
+                                      <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                                        <gen.icon className="w-3.5 h-3.5 text-muted-foreground" />
+                                      </div>
+                                      <p className="font-medium text-sm flex-1">{gen.name}</p>
+                                    </button>
+                                    <button
+                                      onClick={e => togglePin(gen.slug, e)}
+                                      className={cn(
+                                        'absolute top-1.5 right-1.5 w-6 h-6 rounded-md flex items-center justify-center transition-all',
+                                        pinned.has(gen.slug)
+                                          ? 'bg-muted text-foreground opacity-100'
+                                          : 'text-muted-foreground opacity-0 group-hover/tile:opacity-100 hover:bg-muted'
+                                      )}
+                                    >
+                                      {pinned.has(gen.slug)
+                                        ? <PinOff className="w-3 h-3" />
+                                        : <Pin className="w-3 h-3" />}
+                                    </button>
                                   </div>
-                                  <p className="font-medium text-sm">{item.name}</p>
-                                </button>
-                              ))}
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          )
+                        })}
                       </div>
                     </div>
 
