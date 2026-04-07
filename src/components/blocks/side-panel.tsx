@@ -1,14 +1,15 @@
 /**
  * SidePanel – system lewego panelu nawigacyjnego ContentPilot.
  *
- * Tokeny (nie zmieniać per-moduł):
+ * Tokeny layoutu (nie zmieniać per-moduł):
  *   szerokość:        w-72
- *   item padding:     px-4 py-2.5
+ *   header padding:   p-3 border-b
+ *   item padding:     px-4 py-2.5 border-b
  *   tekst główny:     text-sm
  *   tekst pomocniczy: text-xs text-muted-foreground
  *   hover:            hover:bg-muted/50
  *   aktywny:          bg-muted
- *   border-b:         border-b na każdym item
+ *   toolbar chip:     h-7 px-2.5 border rounded-md text-xs
  */
 
 import * as React from 'react'
@@ -16,7 +17,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
-import { LucideIcon, Search, ChevronDown, ChevronRight, Star, MoreHorizontal } from 'lucide-react'
+import {
+  LucideIcon, Search, ChevronDown, ChevronRight,
+  Star, MoreHorizontal, ArrowUpDown,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // ── Kontener ──────────────────────────────────────────────────────────────────
@@ -39,7 +43,8 @@ export function SidePanelHeader({ children, className }: { children: React.React
   )
 }
 
-// ── Przycisk głównej akcji (pełna szerokość) ──────────────────────────────────
+// ── Przycisk głównej akcji (pełna szerokość, ikona po lewej) ──────────────────
+// Uwaga: justify-start + ikona z mr-2 – zgodnie z LibrarySidebar
 
 export function SidePanelAction({
   icon: Icon, label, onClick,
@@ -49,14 +54,14 @@ export function SidePanelAction({
   onClick?: () => void
 }) {
   return (
-    <Button className="flex-1 gap-2 justify-center h-10" onClick={onClick}>
-      <Icon className="w-4 h-4" strokeWidth={2} />
+    <Button className="flex-1 justify-start gap-0 h-10" onClick={onClick}>
+      <Icon className="w-4 h-4 mr-2 shrink-0" strokeWidth={2} />
       {label}
     </Button>
   )
 }
 
-// ── Przycisk pomocniczy obok głównej akcji (np. ikona folderu) ────────────────
+// ── Przycisk pomocniczy obok głównej akcji (np. ikona folderu z plusem) ────────
 
 export function SidePanelIconButton({
   icon: Icon, onClick, title,
@@ -94,17 +99,18 @@ export function SidePanelSearch({
   )
 }
 
-// ── Pasek z przyciskami pomocniczymi (Sortuj / Zaznacz / tryby) ───────────────
+// ── Pasek z chipami (Sortuj / Zaznacz / tryby) ────────────────────────────────
 
 export function SidePanelToolbar({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-3 py-2 border-b flex items-center gap-1.5">
+    <div className="px-3 py-2 border-b flex items-center gap-1.5 flex-wrap">
       {children}
     </div>
   )
 }
 
-// ── Przycisk toolbar – wariant normalny ───────────────────────────────────────
+// ── Chip toolbar – standardowy (Zaznacz, widok, filtr) ────────────────────────
+// Subtelny: border + text-xs, aktywny = bg-foreground text-background
 
 export function SidePanelToolbarButton({
   icon: Icon, label, active = false, onClick,
@@ -118,14 +124,40 @@ export function SidePanelToolbarButton({
     <button
       onClick={onClick}
       className={cn(
-        'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors',
+        'inline-flex items-center gap-1 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors',
         active
-          ? 'bg-foreground text-background'
-          : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+          ? 'bg-foreground text-background border-foreground'
+          : 'text-muted-foreground border-border hover:bg-muted/50 hover:text-foreground'
       )}
     >
-      {Icon && <Icon className="w-3.5 h-3.5" />}
+      {Icon && <Icon className="w-3 h-3" />}
       {label}
+    </button>
+  )
+}
+
+// ── Sort chip – z ArrowUpDown + ChevronDown ────────────────────────────────────
+
+export function SidePanelSortButton({
+  label = 'Sortuj', active = false, onClick,
+}: {
+  label?: string
+  active?: boolean
+  onClick?: () => void
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        'inline-flex items-center gap-1 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors',
+        active
+          ? 'text-foreground border-foreground/40 bg-muted'
+          : 'text-muted-foreground border-border hover:bg-muted/50 hover:text-foreground'
+      )}
+    >
+      <ArrowUpDown className="w-3 h-3" />
+      {label}
+      <ChevronDown className="w-3 h-3 opacity-60" />
     </button>
   )
 }
@@ -134,7 +166,7 @@ export function SidePanelToolbarButton({
 
 export function SidePanelNote({ children }: { children: React.ReactNode }) {
   return (
-    <p className="px-3 py-1.5 text-[10px] text-muted-foreground/60 border-b leading-snug">
+    <p className="px-4 py-1.5 text-[10px] text-muted-foreground/60 border-b leading-snug">
       {children}
     </p>
   )
@@ -160,7 +192,7 @@ export function SidePanelStarredItem({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-3 py-2.5 flex items-center gap-2.5 border-b bg-amber-50 hover:bg-amber-100 transition-colors"
+      className="w-full text-left px-4 py-2.5 flex items-center gap-2.5 border-b bg-amber-50 hover:bg-amber-100 transition-colors"
     >
       <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 shrink-0" />
       <span className="text-sm font-medium truncate">{label}</span>
@@ -183,7 +215,7 @@ export function SidePanelFolder({
     <div>
       <button
         onClick={onToggle}
-        className="w-full flex items-center gap-2 px-3 py-2.5 border-b hover:bg-muted/50 transition-colors group"
+        className="w-full flex items-center gap-2 px-4 py-2.5 border-b hover:bg-muted/50 transition-colors group"
       >
         {expanded
           ? <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
@@ -195,18 +227,11 @@ export function SidePanelFolder({
         {count !== undefined && (
           <span className="text-xs text-muted-foreground/60 mr-1">{count}</span>
         )}
-        <button
-          onClick={e => e.stopPropagation()}
-          className="opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-muted transition-all"
-        >
+        <span className="opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-muted transition-all">
           <MoreHorizontal className="w-3.5 h-3.5 text-muted-foreground" />
-        </button>
+        </span>
       </button>
-      {expanded && (
-        <div className="ml-0">
-          {children}
-        </div>
-      )}
+      {expanded && <div>{children}</div>}
     </div>
   )
 }
@@ -215,7 +240,7 @@ export function SidePanelFolder({
 
 export function SidePanelDropZone({ label = 'Przeciągnij elementy tutaj' }: { label?: string }) {
   return (
-    <p className="pl-10 pr-3 py-2 text-xs text-muted-foreground/50 italic border-b">
+    <p className="pl-10 pr-4 py-2.5 text-xs text-muted-foreground/50 italic border-b">
       {label}
     </p>
   )
@@ -237,7 +262,7 @@ export function SidePanelItem({
       onClick={onClick}
       className={cn(
         'w-full text-left border-b flex items-start gap-2.5 hover:bg-muted/50 transition-colors',
-        indent ? 'px-10 py-2.5' : 'px-4 py-2.5',
+        indent ? 'pl-10 pr-4 py-2.5' : 'px-4 py-2.5',
         active && 'bg-muted',
         className
       )}
@@ -252,17 +277,13 @@ export function SidePanelItem({
 export function SidePanelItemTitle({
   children, className,
 }: { children: React.ReactNode; className?: string }) {
-  return (
-    <p className={cn('text-sm leading-snug', className)}>{children}</p>
-  )
+  return <p className={cn('text-sm leading-snug', className)}>{children}</p>
 }
 
 // ── Tekst pomocniczy / meta elementu ─────────────────────────────────────────
 
 export function SidePanelItemMeta({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{children}</p>
-  )
+  return <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{children}</p>
 }
 
 // ── Badge w meta (np. kolorowy tag folderu) ───────────────────────────────────
@@ -281,7 +302,7 @@ export function SidePanelItemBadge({
 
 export function SidePanelItemFlow({ steps }: { steps: string[] }) {
   return (
-    <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
+    <p className="text-xs text-muted-foreground mt-0.5 leading-snug line-clamp-2">
       {steps.join(' → ')}
     </p>
   )

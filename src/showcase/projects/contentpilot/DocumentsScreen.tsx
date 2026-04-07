@@ -3,15 +3,15 @@ import { CPSidebar } from './_Sidebar'
 import { TopBar } from './_TopBar'
 import {
   SidePanel, SidePanelHeader, SidePanelAction, SidePanelIconButton,
-  SidePanelSearch, SidePanelToolbar, SidePanelToolbarButton, SidePanelNote,
-  SidePanelStarredItem, SidePanelFolder, SidePanelDropZone,
+  SidePanelSearch, SidePanelToolbar, SidePanelToolbarButton, SidePanelSortButton,
+  SidePanelNote, SidePanelStarredItem, SidePanelFolder, SidePanelDropZone,
   SidePanelItem, SidePanelItemTitle, SidePanelItemBadge, SidePanelItemMeta, SidePanelList,
 } from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import {
-  FilePlus2, FolderOpen, Star, ChevronDown, Trash2, Copy,
+  FilePlus2, FolderPlus, Star, ChevronDown, Trash2, Copy,
   Download, Wand2, Undo2, Redo2, Bold, Italic, Underline,
   Strikethrough, Code, Highlighter, List, ListOrdered, AlignLeft,
   AlignCenter, AlignRight, AlignJustify, Quote, Minus, Link2, Type,
@@ -45,13 +45,13 @@ export default function DocumentsScreen() {
           <SidePanel>
             <SidePanelHeader>
               <SidePanelAction icon={FilePlus2} label="Nowy dokument" />
-              <SidePanelIconButton icon={FolderOpen} title="Nowy folder" />
+              <SidePanelIconButton icon={FolderPlus} title="Nowy folder" />
             </SidePanelHeader>
 
             <SidePanelSearch placeholder="Szukaj" />
 
             <SidePanelToolbar>
-              <SidePanelToolbarButton icon={AlignLeft} label="Najnowsze" active />
+              <SidePanelSortButton label="Najnowsze" active />
               <SidePanelToolbarButton label="Zaznacz" />
             </SidePanelToolbar>
 
