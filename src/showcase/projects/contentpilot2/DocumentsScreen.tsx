@@ -15,135 +15,145 @@ import {
 import { cn } from '@/lib/utils'
 
 // ── Inline AI popup ───────────────────────────────────────────────────────────
-// Uproszczona wersja AIInlinePopup do prototypu
+// Wzorce: Notion AI, Craft.do, Linear
+// Zasady: input dominuje, akcje jako jedna linia, wynik bez ozdobników
 
-const INLINE_ACTIONS = [
-  { id: 'rewrite',  label: 'Przepisz' },
-  { id: 'shorten',  label: 'Skróć' },
-  { id: 'expand',   label: 'Rozwiń' },
-  { id: 'formal',   label: 'Formalniej' },
-  { id: 'casual',   label: 'Swobodniej' },
-  { id: 'en',       label: 'Na angielski' },
-  { id: 'continue', label: 'Kontynuuj' },
-]
+const QUICK_ACTIONS = ['Przepisz', 'Skróć', 'Rozwiń', 'Formalniej', 'Swobodniej', 'Na angielski', 'Kontynuuj']
+
+const RESULT_TEXT = 'Tworzenie skutecznego zespołu agentów AI wymaga precyzyjnego zdefiniowania ról i odpowiedzialności każdego z nich – zanim uruchomisz pierwszy model, musisz wiedzieć, kto odpowiada za co.'
 
 function AIInlinePopup({ onClose }: { onClose: () => void }) {
-  const [state, setState] = React.useState<'idle' | 'loading' | 'result'>('idle')
+  const [phase, setPhase] = React.useState<'input' | 'loading' | 'result'>('input')
   const [custom, setCustom] = React.useState('')
-  const [activeAction, setActiveAction] = React.useState('')
+  const [label, setLabel] = React.useState('')
+  const inputRef = React.useRef<HTMLTextAreaElement>(null)
 
-  const runAction = (label: string) => {
-    setActiveAction(label)
-    setState('loading')
-    setTimeout(() => setState('result'), 1400)
+  React.useEffect(() => { inputRef.current?.focus() }, [])
+
+  const run = (actionLabel: string) => {
+    setLabel(actionLabel)
+    setPhase('loading')
+    setTimeout(() => setPhase('result'), 1500)
   }
 
-  const RESULT = 'Tworzenie skutecznego zespołu agentów AI wymaga przede wszystkim precyzyjnego zdefiniowania ról i odpowiedzialności każdego agenta w procesie.'
-
   return (
-    <div className="absolute z-30 w-[340px] bg-background border rounded-2xl shadow-lg flex flex-col overflow-hidden"
-      style={{ top: '200px', left: '50%', transform: 'translateX(-30%)' }}>
-
-      {state === 'idle' && (
+    <div
+      className="absolute z-30 w-[360px] bg-background rounded-xl shadow-xl border border-border/80 flex flex-col overflow-hidden"
+      style={{ top: '185px', left: '50%', transform: 'translateX(-28%)' }}
+    >
+      {/* ── INPUT ── */}
+      {phase === 'input' && (
         <>
-          <div className="flex items-start gap-2 px-3 pt-3 pb-2">
-            <div className="flex items-center gap-1 px-1.5 py-1 bg-foreground/8 rounded-md shrink-0 mt-0.5">
-              <Wand2 className="w-3 h-3 text-foreground" />
-              <span className="text-[10px] font-semibold">AI</span>
-            </div>
+          {/* Pole input – bez obramowania, dominuje */}
+          <div className="flex items-start gap-2.5 px-3.5 pt-3 pb-1">
+            <Sparkles className="w-4 h-4 text-muted-foreground shrink-0 mt-2.5" />
             <textarea
+              ref={inputRef}
               value={custom}
               onChange={e => setCustom(e.target.value)}
-              onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (custom.trim()) runAction(custom.trim()) } }}
-              placeholder="Opisz co zrobić z zaznaczonym tekstem..."
-              className="flex-1 min-h-[52px] px-2.5 py-2 text-xs bg-muted/50 border rounded-lg resize-none outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/50"
+              onKeyDown={e => {
+                if (e.key === 'Escape') onClose()
+                if (e.key === 'Enter' && !e.shiftKey && custom.trim()) {
+                  e.preventDefault(); run(custom.trim())
+                }
+              }}
+              placeholder="Co zrobić z zaznaczonym tekstem?"
               rows={2}
+              className="flex-1 text-sm outline-none bg-transparent resize-none placeholder:text-muted-foreground/50 leading-relaxed py-2"
             />
-            <Button size="icon" className="h-8 w-8 shrink-0 mt-0.5" disabled={!custom.trim()}
-              onClick={() => runAction(custom.trim())}>
-              <Send className="w-3.5 h-3.5" />
-            </Button>
+            {custom.trim() && (
+              <button
+                onClick={() => run(custom.trim())}
+                className="shrink-0 mt-1.5 w-7 h-7 rounded-lg bg-foreground text-background flex items-center justify-center hover:opacity-80 transition-opacity"
+              >
+                <Send className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
-          <div className="px-3 pb-3">
-            <div className="flex flex-wrap gap-1">
-              {INLINE_ACTIONS.map(a => (
-                <button key={a.id} onClick={() => runAction(a.label)}
-                  className="text-[11px] px-2 py-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-                  {a.label}
+
+          {/* Separator + quick actions – jedna linia, scrollowalna */}
+          <div className="border-t mx-3 mb-1" />
+          <div className="px-3 pb-3 pt-2 flex items-center gap-0 overflow-x-auto scrollbar-none">
+            {QUICK_ACTIONS.map((a, i) => (
+              <React.Fragment key={a}>
+                {i > 0 && <span className="text-border select-none px-0.5 shrink-0">·</span>}
+                <button
+                  onClick={() => run(a)}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap shrink-0 px-1 py-0.5 rounded hover:bg-muted"
+                >
+                  {a}
                 </button>
-              ))}
-            </div>
+              </React.Fragment>
+            ))}
           </div>
         </>
       )}
 
-      {state === 'loading' && (
-        <div className="px-4 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md bg-muted flex items-center justify-center">
-                <span className="inline-flex gap-0.5">
-                  {[0, 150, 300].map(d => (
-                    <span key={d} className="w-1 h-1 bg-foreground/60 rounded-full animate-bounce"
-                      style={{ animationDelay: `${d}ms`, animationDuration: '600ms' }} />
-                  ))}
-                </span>
+      {/* ── LOADING ── */}
+      {phase === 'loading' && (
+        <div className="px-4 py-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="flex gap-1">
+                {[0, 120, 240].map(d => (
+                  <span key={d}
+                    className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce"
+                    style={{ animationDelay: `${d}ms`, animationDuration: '700ms' }}
+                  />
+                ))}
               </div>
-              <div>
-                <p className="text-xs font-medium">{activeAction}</p>
-                <p className="text-[10px] text-muted-foreground">Generuję...</p>
-              </div>
+              <span className="text-sm text-muted-foreground">{label}...</span>
             </div>
-            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={onClose}>
-              <X className="w-3 h-3" />
-            </Button>
+            <button onClick={onClose} className="text-muted-foreground hover:text-foreground transition-colors">
+              <X className="w-4 h-4" />
+            </button>
           </div>
+          {/* Skeleton */}
           <div className="space-y-2 animate-pulse">
-            <div className="h-3 bg-muted rounded w-full" />
-            <div className="h-3 bg-muted/70 rounded w-[85%]" />
-            <div className="h-3 bg-muted/50 rounded w-[70%]" />
+            <div className="h-3 bg-muted rounded-full w-full" />
+            <div className="h-3 bg-muted/70 rounded-full w-[88%]" />
+            <div className="h-3 bg-muted/50 rounded-full w-[72%]" />
           </div>
         </div>
       )}
 
-      {state === 'result' && (
+      {/* ── RESULT ── */}
+      {phase === 'result' && (
         <>
-          <div className="flex items-center justify-between px-4 pt-3 pb-2">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md bg-emerald-100 flex items-center justify-center">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-              </div>
-              <div>
-                <p className="text-xs font-medium">{activeAction}</p>
-                <p className="text-[10px] text-muted-foreground">Gotowe</p>
-              </div>
+          {/* Wynik – czyste tło, bez boksów z nagłówkami */}
+          <div className="px-4 pt-3 pb-2">
+            <div className="flex items-center gap-1.5 mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-muted-foreground" />
+              <span className="text-[11px] text-muted-foreground font-medium">{label}</span>
+              <div className="flex-1" />
+              <button onClick={() => run(label)} className="text-muted-foreground hover:text-foreground transition-colors" title="Generuj ponownie">
+                <RotateCcw className="w-3.5 h-3.5" />
+              </button>
+              <button onClick={() => { navigator.clipboard?.writeText(RESULT_TEXT) }} className="text-muted-foreground hover:text-foreground transition-colors" title="Kopiuj">
+                <Copy className="w-3.5 h-3.5" />
+              </button>
+              <button onClick={onClose} className="text-muted-foreground hover:text-foreground transition-colors ml-1">
+                <X className="w-3.5 h-3.5" />
+              </button>
             </div>
-            <div className="flex items-center gap-0.5">
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setState('idle')}>
-                <RotateCcw className="w-3 h-3" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={onClose}>
-                <X className="w-3 h-3" />
-              </Button>
-            </div>
+
+            {/* Propozycja – subtelne zielone tło, bez nagłówka "Propozycja AI" */}
+            <p className="text-sm leading-relaxed bg-emerald-50 text-foreground px-3 py-2.5 rounded-lg border border-emerald-100">
+              {RESULT_TEXT}
+            </p>
           </div>
-          <div className="px-4 pb-2">
-            <div className="p-3 rounded-lg border-2 bg-emerald-50/50 border-emerald-200">
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[9px] uppercase tracking-wider font-semibold text-emerald-700">Propozycja AI</span>
-                <Copy className="w-3 h-3 text-muted-foreground cursor-pointer" />
-              </div>
-              <p className="text-xs leading-relaxed text-foreground">{RESULT}</p>
-            </div>
-          </div>
-          <div className="flex items-center justify-between px-4 py-2.5 border-t bg-muted/30">
-            <span className="text-[10px] text-muted-foreground">Enter – zamień</span>
-            <div className="flex items-center gap-1.5">
-              <Button variant="outline" size="sm" className="h-7 text-[11px] px-2.5" onClick={onClose}>
-                <ArrowDown className="w-3 h-3 mr-1" /> Wstaw po
+
+          {/* CTA – pełna szerokość primary, ghost secondary */}
+          <div className="px-3 pb-3 space-y-1.5">
+            <Button className="w-full h-9 gap-2" onClick={onClose}>
+              <Check className="w-4 h-4" /> Zamień zaznaczony tekst
+            </Button>
+            <div className="flex gap-1.5">
+              <Button variant="ghost" size="sm" className="flex-1 h-8 text-xs gap-1.5" onClick={onClose}>
+                <ArrowDown className="w-3.5 h-3.5" /> Wstaw poniżej
               </Button>
-              <Button size="sm" className="h-7 text-[11px] px-2.5 bg-emerald-600 hover:bg-emerald-700 text-white" onClick={onClose}>
-                <Check className="w-3 h-3 mr-1" /> Zamień
+              <Button variant="ghost" size="sm" className="flex-1 h-8 text-xs" onClick={() => setPhase('input')}>
+                Odrzuć
               </Button>
             </div>
           </div>
