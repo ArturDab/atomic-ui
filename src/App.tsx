@@ -11,7 +11,7 @@ import DocsPage from './showcase/pages/DocsPage'
 import PreviewPage from './showcase/pages/PreviewPage'
 import AllPreviewPage from './showcase/pages/AllPreviewPage'
 
-import ProjectLayout from './showcase/projects/ProjectLayout'
+import ProjectLayout, { ProjectIndex } from './showcase/projects/ProjectLayout'
 
 // ContentPilot v1
 import AllScreens from './showcase/projects/contentpilot/AllScreens'
@@ -55,7 +55,7 @@ export default function App() {
 
         {/* Wszystkie projekty – jeden handler :projectSlug */}
         <Route path="/projects/:projectSlug" element={<ProjectLayout />}>
-          <Route index element={<Navigate to="all" replace />} />
+          <Route index element={<ProjectIndex />} />
 
           {/* ContentPilot v1 */}
           <Route path="all"                    element={<AllScreens />} />

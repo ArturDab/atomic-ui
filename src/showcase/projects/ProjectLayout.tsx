@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom'
+import { NavLink, Navigate, Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -75,12 +75,21 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
   },
 }
 
+export function ProjectIndex() {
+  const { projectSlug = '' } = useParams<{ projectSlug: string }>()
+  const meta = PROJECT_META[projectSlug]
+  if (!meta) return null
+  const first = meta.nav[0]
+  const firstPath = isGroup(first) ? first.defaultPath : (first as ScreenItem).path
+  return <Navigate to={firstPath} replace />
+}
+
 export default function ProjectLayout() {
   const { projectSlug } = useParams<{ projectSlug: string }>()
   const location = useLocation()
   const navigate = useNavigate()
   const meta = PROJECT_META[projectSlug ?? '']
-  if (!meta) return <div className="p-8 text-sm text-muted-foreground">Projekt nie istnieje.</div>
+  if (!meta) return null
 
   const currentPath = location.pathname.split(`/projects/${projectSlug}/`)[1] ?? ''
 
