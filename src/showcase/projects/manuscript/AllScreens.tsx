@@ -8,10 +8,29 @@ import NewContentModal from './NewContentModal'
 import WordPressExportPanel from './WordPressExportPanel'
 
 const SCREENS = [
-  { path: 'ms-dashboard',      label: 'Dashboard',        Component: DashboardScreen },
-  { path: 'ms-article', label: 'Edytor artykułu',  Component: ArticleEditorScreen },
-  { path: 'ms-book-overview',  label: 'Przegląd książki', Component: BookOverviewScreen },
-  { path: 'ms-book-editor',    label: 'Edytor książki',   Component: BookEditorScreen },
+  { path: 'ms-dashboard',     label: 'Dashboard',             Component: DashboardScreen },
+  { path: 'ms-article',       label: 'Edytor artykułu',       Component: ArticleEditorScreen },
+  { path: 'ms-study-editor',  label: 'Edytor opracowania',    Component: StudyEditorScreen },
+  { path: 'ms-book-overview', label: 'Przegląd książki',      Component: BookOverviewScreen },
+  { path: 'ms-book-editor',   label: 'Edytor książki',        Component: BookEditorScreen },
+  {
+    path: 'ms-new-content',
+    label: 'Nowa treść (modal)',
+    Component: () => (
+      <div className="relative h-full bg-muted/20 flex items-center justify-center">
+        <NewContentModal onClose={() => {}} />
+      </div>
+    ),
+  },
+  {
+    path: 'ms-wp-export',
+    label: 'Eksport do WordPress',
+    Component: () => (
+      <div className="relative h-full bg-muted/20 flex items-center justify-center">
+        <WordPressExportPanel onClose={() => {}} />
+      </div>
+    ),
+  },
 ]
 
 export default function AllScreens() {
@@ -27,11 +46,16 @@ export default function AllScreens() {
         </div>
         <div className="grid grid-cols-3 gap-5">
           {SCREENS.map(({ path, label, Component }) => (
-            <Link key={path} to={`/projects/${projectSlug}/${path}`}
-              className="group border rounded-xl bg-white overflow-hidden hover:border-foreground/30 hover:shadow-md transition-all">
-              <div className="relative h-56 overflow-hidden bg-muted/10">
-                <div className="absolute top-0 left-0 pointer-events-none origin-top-left"
-                  style={{ width: '1280px', height: '720px', transform: 'scale(0.234)' }}>
+            <Link
+              key={path}
+              to={`/projects/${projectSlug}/${path}`}
+              className="group border rounded-xl bg-white overflow-hidden hover:border-foreground/30 hover:shadow-md transition-all"
+            >
+              <div className="relative h-48 overflow-hidden bg-muted/10">
+                <div
+                  className="absolute top-0 left-0 pointer-events-none origin-top-left"
+                  style={{ width: '1280px', height: '720px', transform: 'scale(0.234)' }}
+                >
                   <div style={{ width: '1280px', height: '720px' }} className="overflow-hidden">
                     <Component />
                   </div>
@@ -39,7 +63,9 @@ export default function AllScreens() {
               </div>
               <div className="px-4 py-3 border-t flex items-center justify-between">
                 <span className="text-sm font-medium">{label}</span>
-                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">Otwórz →</span>
+                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  Otwórz →
+                </span>
               </div>
             </Link>
           ))}
