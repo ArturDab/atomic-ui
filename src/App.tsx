@@ -8,6 +8,8 @@ import AllComponents from './showcase/pages/AllComponents'
 import BlocksPage from './showcase/pages/BlocksPage'
 import ProjectsPage from './showcase/pages/ProjectsPage'
 import DocsPage from './showcase/pages/DocsPage'
+import ModulesPage from './showcase/pages/ModulesPage'
+import DesignSystemsPage from './showcase/pages/DesignSystemsPage'
 import PreviewPage from './showcase/pages/PreviewPage'
 import AllPreviewPage from './showcase/pages/AllPreviewPage'
 
@@ -51,6 +53,8 @@ export default function App() {
           <Route path="blocks" element={<BlocksPage />} />
           <Route path="projects" element={<ProjectsPage />} />
           <Route path="docs" element={<DocsPage />} />
+          <Route path="modules" element={<ModulesPage />} />
+          <Route path="design-systems" element={<DesignSystemsPage />} />
         </Route>
 
         <Route path="/preview/:slug" element={<PreviewPage />} />
