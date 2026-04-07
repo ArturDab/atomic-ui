@@ -22,6 +22,7 @@ import CP2AllScreens from './showcase/projects/contentpilot2/AllScreens'
 import CP2AIChatScreen from './showcase/projects/contentpilot2/AIChatScreen'
 import CP2AITeamsScreen from './showcase/projects/contentpilot2/AITeamsScreen'
 import CP2DocumentsScreen from './showcase/projects/contentpilot2/DocumentsScreen'
+import CP2AIStudioScreen from './showcase/projects/contentpilot2/AIStudioScreen'
 
 export default function App() {
   return (
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="cp2-ai-chat"   element={<CP2AIChatScreen />} />
           <Route path="cp2-ai-teams"  element={<CP2AITeamsScreen />} />
           <Route path="cp2-documents" element={<CP2DocumentsScreen />} />
+          <Route path="cp2-ai-studio" element={<CP2AIStudioScreen />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

@@ -27,6 +27,7 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
       { path: 'cp2-ai-chat',   label: 'AI Chat' },
       { path: 'cp2-ai-teams',  label: 'AI Teams' },
       { path: 'cp2-documents', label: 'Dokumenty' },
+      { path: 'cp2-ai-studio', label: 'AI Studio' },
     ],
   },
   contentpilot: {

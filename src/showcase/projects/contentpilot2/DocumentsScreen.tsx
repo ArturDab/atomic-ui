@@ -80,7 +80,7 @@ export default function DocumentsScreen() {
             {/* Starred */}
             <button className="w-full text-left px-4 py-2.5 flex items-center gap-2.5 border-b bg-amber-50 hover:bg-amber-100 transition-colors">
               <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 shrink-0" />
-              <span className="text-sm font-medium truncate">Jak Stworzyć Skuteczny Zespół Agentów AI?</span>
+              <span className="text-sm font-medium line-clamp-2 text-left leading-snug">Jak Stworzyć Skuteczny Zespół Agentów AI?</span>
             </button>
 
             {/* Folders */}
@@ -112,7 +112,7 @@ export default function DocumentsScreen() {
                   )}>
                     <FileText className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                     <div className="flex-1 min-w-0 text-left">
-                      <p className="text-sm truncate">{doc.name}</p>
+                      <p className="text-sm line-clamp-2 leading-snug">{doc.name}</p>
                       <p className="text-[10px] text-muted-foreground mt-0.5">{doc.date}</p>
                     </div>
                   </button>
