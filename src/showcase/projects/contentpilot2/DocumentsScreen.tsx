@@ -127,7 +127,7 @@ export default function DocumentsScreen() {
       <div className="flex-1 flex flex-col overflow-hidden">
 
         {/* Document header – minimalistyczny, metadata w jednej linii */}
-        <div className="h-12 border-b flex items-center px-5 gap-3 shrink-0">
+        <div className="h-14 border-b flex items-center px-5 gap-3 shrink-0">
           {!leftOpen && (
             <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => setLeftOpen(true)}>
               <PanelLeft className="w-4 h-4" />

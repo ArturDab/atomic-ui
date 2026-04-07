@@ -296,10 +296,10 @@ export default function AIStudioScreen() {
                       </div>
 
                       {/* Timeline list – zupełnie inny wygląd niż kafle generatorów */}
-                      <div className="space-y-0 border rounded-xl bg-white overflow-hidden">
+                      <div className="space-y-0 bg-white overflow-hidden">
                         {HISTORY.map((item, i) => (
                           <div key={item.id}>
-                            {i > 0 && <Separator />}
+                            {i > 0 && <div className="h-px bg-border mx-4" />}
                             <button
                               onClick={() => openEditor(item.slug)}
                               className="w-full text-left px-4 py-3.5 hover:bg-muted/40 transition-colors group flex items-start gap-4"

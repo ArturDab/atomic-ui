@@ -85,8 +85,8 @@ export default function AITeamsScreen() {
 
       {/* Team list – slim, no competing with chat */}
       <div className="w-64 border-r flex flex-col shrink-0">
-        <div className="p-3 border-b">
-          <Button className="w-full gap-2 justify-start h-9">
+        <div className="h-14 border-b flex items-center px-3">
+          <Button className="w-full gap-2 justify-start h-10">
             <Plus className="w-4 h-4 shrink-0" /> Utwórz zespół
           </Button>
         </div>
