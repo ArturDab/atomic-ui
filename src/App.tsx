@@ -19,10 +19,10 @@ import AIStudioEditorScreen from './showcase/projects/contentpilot/AIStudioEdito
 import AIStudioEditorEmptyScreen from './showcase/projects/contentpilot/AIStudioEditorEmptyScreen'
 import DocumentsScreen from './showcase/projects/contentpilot/DocumentsScreen'
 import CP2AllScreens from './showcase/projects/contentpilot2/AllScreens'
-import CP2AIChatScreen from './showcase/projects/contentpilot2/AIChatScreen'
+import CP2AIChatScreen, { AIChatWithArtifactScreen as CP2AIChatArtifactScreen } from './showcase/projects/contentpilot2/AIChatScreen'
 import CP2AITeamsScreen from './showcase/projects/contentpilot2/AITeamsScreen'
 import CP2DocumentsScreen from './showcase/projects/contentpilot2/DocumentsScreen'
-import CP2AIStudioScreen from './showcase/projects/contentpilot2/AIStudioScreen'
+import CP2AIStudioScreen, { AIStudioEditorEmpty, AIStudioEditorFilled } from './showcase/projects/contentpilot2/AIStudioScreen'
 
 export default function App() {
   return (
@@ -50,10 +50,13 @@ export default function App() {
           <Route path="documents"               element={<DocumentsScreen />} />
           {/* ContentPilot 2.0 routes – shared :projectSlug handler */}
           <Route path="cp2-all"       element={<CP2AllScreens />} />
-          <Route path="cp2-ai-chat"   element={<CP2AIChatScreen />} />
+          <Route path="cp2-ai-chat"          element={<CP2AIChatScreen />} />
+          <Route path="cp2-ai-chat-artifact"  element={<CP2AIChatArtifactScreen />} />
           <Route path="cp2-ai-teams"  element={<CP2AITeamsScreen />} />
           <Route path="cp2-documents" element={<CP2DocumentsScreen />} />
-          <Route path="cp2-ai-studio" element={<CP2AIStudioScreen />} />
+          <Route path="cp2-ai-studio"        element={<CP2AIStudioScreen />} />
+          <Route path="cp2-ai-studio-empty"  element={<AIStudioEditorEmpty />} />
+          <Route path="cp2-ai-studio-filled" element={<AIStudioEditorFilled />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

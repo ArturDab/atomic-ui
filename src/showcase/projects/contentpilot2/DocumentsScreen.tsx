@@ -64,7 +64,7 @@ export default function DocumentsScreen() {
             <Button className="flex-1 gap-2 justify-start h-10">
               <Plus className="w-4 h-4 shrink-0" /> Nowy dokument
             </Button>
-            <Button variant="outline" size="icon" className="h-9 w-9 shrink-0">
+            <Button variant="outline" size="icon" className="h-10 w-10 shrink-0">
               <FolderPlus className="w-4 h-4" />
             </Button>
           </div>

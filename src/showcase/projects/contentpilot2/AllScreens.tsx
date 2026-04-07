@@ -1,14 +1,18 @@
 import { Link, useParams } from 'react-router-dom'
-import AIChatScreen from './AIChatScreen'
+import AIChatScreen, { AIChatWithArtifactScreen } from './AIChatScreen'
 import AITeamsScreen from './AITeamsScreen'
 import DocumentsScreen from './DocumentsScreen'
 import AIStudioScreen from './AIStudioScreen'
+import { AIStudioEditorEmpty, AIStudioEditorFilled } from './AIStudioScreen'
 
 const SCREENS = [
-  { path: 'cp2-ai-chat',   label: 'AI Chat',   Component: AIChatScreen },
+  { path: 'cp2-ai-chat',          label: 'AI Chat',                   Component: AIChatScreen },
+  { path: 'cp2-ai-chat-artifact',  label: 'AI Chat – z artefaktem',    Component: AIChatWithArtifactScreen },
   { path: 'cp2-ai-teams',  label: 'AI Teams',  Component: AITeamsScreen },
   { path: 'cp2-documents',  label: 'Dokumenty',  Component: DocumentsScreen },
-  { path: 'cp2-ai-studio', label: 'AI Studio',  Component: AIStudioScreen },
+  { path: 'cp2-ai-studio',         label: 'AI Studio – galeria',    Component: AIStudioScreen },
+  { path: 'cp2-ai-studio-empty',    label: 'AI Studio – edytor pusty', Component: AIStudioEditorEmpty },
+  { path: 'cp2-ai-studio-filled',   label: 'AI Studio – edytor treść', Component: AIStudioEditorFilled },
 ]
 
 export default function AllScreens() {
