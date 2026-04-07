@@ -109,9 +109,9 @@ export default function BookOverviewScreen() {
                   { label: 'Ukończono', value: `${Math.round(totalWords / totalGoal * 100)}%`, sub: 'całości' },
                 ].map(stat => (
                   <div key={stat.label} className="bg-white border rounded-xl p-4">
-                    <p className="text-xs text-muted-foreground mb-1">{stat.label}</p>
+                    <p className="text-xs text-foreground/55 mb-1">{stat.label}</p>
                     <p className="text-2xl font-semibold tracking-tight">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{stat.sub}</p>
+                    <p className="text-xs text-foreground/60 mt-0.5">{stat.sub}</p>
                   </div>
                 ))}
               </div>
@@ -150,7 +150,7 @@ export default function BookOverviewScreen() {
                       <BookOpen className="w-4 h-4 text-muted-foreground shrink-0" />
                       <p className="text-sm flex-1 truncate">{item.title}</p>
                       <span className="text-xs text-emerald-600 shrink-0">{item.words}</span>
-                      <span className="text-xs text-muted-foreground shrink-0">{item.time}</span>
+                      <span className="text-xs text-foreground/55 shrink-0">{item.time}</span>
                     </div>
                   ))}
                 </div>
@@ -208,7 +208,7 @@ export default function BookOverviewScreen() {
                 <h3 className="text-sm font-semibold flex items-center gap-2 mb-1">
                   <Sparkles className="w-4 h-4" /> Instrukcje dla AI
                 </h3>
-                <p className="text-xs text-muted-foreground mb-4">
+                <p className="text-xs text-foreground/65 mb-4">
                   Te instrukcje będą automatycznie dołączane do każdego zapytania AI w tej książce.
                 </p>
                 <Textarea
@@ -243,7 +243,7 @@ export default function BookOverviewScreen() {
               <p className="text-sm font-medium text-muted-foreground">
                 {TABS.find(t => t.id === activeTab)?.label}
               </p>
-              <p className="text-xs text-muted-foreground/60 mt-1 mb-4">
+              <p className="text-xs text-foreground/55 mt-1 mb-4">
                 {activeTab === 'characters' && 'Zarządzaj postaciami w swojej historii'}
                 {activeTab === 'world' && 'Buduj świat i miejsca swojej narracji'}
                 {activeTab === 'notes' && 'Notatki projektu i rozdziałów'}

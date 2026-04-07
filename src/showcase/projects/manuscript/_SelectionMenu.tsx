@@ -55,10 +55,10 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
         <>
           {/* Zaznaczony tekst */}
           <div className="px-4 py-3 border-b">
-            <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+            <p className="text-xs text-foreground/65 line-clamp-2 leading-relaxed">
               „{selectedText.length > 80 ? selectedText.slice(0, 80) + '…' : selectedText}"
             </p>
-            <p className="text-[10px] text-muted-foreground/60 mt-0.5">{selectedText.length} znaków</p>
+            <p className="text-[10px] text-foreground/50 mt-0.5">{selectedText.length} znaków</p>
           </div>
 
           {/* Custom input */}
@@ -146,7 +146,7 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
           <div className="px-4 pt-3 pb-2">
             <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="w-3.5 h-3.5 text-muted-foreground" />
-              <span className="text-[11px] text-muted-foreground font-medium">{label}</span>
+              <span className="text-[11px] text-foreground/65 font-medium">{label}</span>
               <div className="flex-1" />
               <button onClick={() => setPhase('input')}><RotateCcw className="w-3.5 h-3.5 text-muted-foreground" /></button>
               <button onClick={() => { navigator.clipboard?.writeText(RESULT) }}><Copy className="w-3.5 h-3.5 text-muted-foreground" /></button>

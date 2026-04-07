@@ -103,7 +103,7 @@ function BlockRenderer({ block, isSelected, onClick }: {
     case 'image': return (
       <div className="my-6">
         <div className="rounded-xl border bg-muted/30 aspect-video flex flex-col items-center justify-center gap-2">
-          <ImageIcon className="w-8 h-8 text-muted-foreground/40" strokeWidth={1.5} />
+          <ImageIcon className="w-8 h-8 text-foreground/30" strokeWidth={1.5} />
           <p className="text-sm text-muted-foreground">{block.content}</p>
         </div>
         {block.caption && (
@@ -163,7 +163,7 @@ export default function ArticleEditorScreen() {
           <span className="text-sm text-muted-foreground truncate">Jak AI Zmienia Content Marketing...</span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
-          <span className="text-xs text-muted-foreground flex items-center gap-1">
+          <span className="text-xs text-foreground/60 flex items-center gap-1">
             <Clock className="w-3 h-3" /> Autozapis 14:22
             <Hash className="w-3 h-3 ml-2" /> {wordCount} słów
           </span>
@@ -235,7 +235,7 @@ export default function ArticleEditorScreen() {
             {/* Demo: simulate text selection */}
             <button
               onClick={() => handleTextSelect()}
-              className="text-xs text-muted-foreground hover:text-foreground border border-dashed rounded px-2 py-0.5 transition-colors">
+              className="text-xs text-foreground/55 hover:text-foreground border border-dashed rounded px-2 py-0.5 transition-colors">
               Zaznacz tekst →
             </button>
           </div>

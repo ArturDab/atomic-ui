@@ -72,9 +72,9 @@ const STATUS_CONFIG: Record<Status, { label: string; dot: string }> = {
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
     <div className="bg-white border rounded-xl px-5 py-4">
-      <p className="text-xs text-muted-foreground mb-1">{label}</p>
+      <p className="text-xs text-foreground/55 mb-1">{label}</p>
       <p className="text-2xl font-semibold tracking-tight">{value}</p>
-      {sub && <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>}
+      {sub && <p className="text-xs text-foreground/60 mt-0.5">{sub}</p>}
     </div>
   )
 }
@@ -114,11 +114,11 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
               {STATUS_CONFIG[item.status].label}
             </span>
             {item.tags?.map(t => (
-              <span key={t} className="text-[10px] text-muted-foreground/70">#{t}</span>
+              <span key={t} className="text-xs text-foreground/55">#{t}</span>
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-4 text-xs text-muted-foreground shrink-0">
+        <div className="flex items-center gap-4 text-xs text-foreground/60 shrink-0">
           <span className="flex items-center gap-1"><Hash className="w-3 h-3" />{item.words.toLocaleString()}</span>
           {item.chapters && <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" />{item.chapters} rozdz.</span>}
           <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{item.updatedAt}</span>
@@ -198,7 +198,7 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
             {STATUS_CONFIG[item.status].label}
           </span>
         </div>
-        <div className="text-xs text-muted-foreground flex items-center gap-1">
+        <div className="text-xs text-foreground/60 flex items-center gap-1">
           <Hash className="w-3 h-3" /> {item.words.toLocaleString()}
         </div>
       </div>
@@ -243,7 +243,7 @@ export default function DashboardScreen() {
         <div className="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-semibold tracking-tight">Manuscript</h1>
-            <p className="text-xs text-muted-foreground">Twoje treści w jednym miejscu</p>
+            <p className="text-xs text-foreground/55">Twoje treści w jednym miejscu</p>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -261,7 +261,7 @@ export default function DashboardScreen() {
                     </div>
                     <div>
                       <p className="text-sm font-medium">{label}</p>
-                      <p className="text-[10px] text-muted-foreground">
+                      <p className="text-[10px] text-foreground/55">
                         {type === 'article' ? 'Jeden dokument, bloki treści' : type === 'study' ? 'Sekcje bez hierarchii' : 'Części i rozdziały'}
                       </p>
                     </div>
@@ -291,7 +291,7 @@ export default function DashboardScreen() {
               <button key={f.value} onClick={() => setFilter(f.value)}
                 className={cn(
                   'px-3 py-1.5 rounded-md text-sm transition-colors',
-                  filter === f.value ? 'bg-foreground text-background font-medium' : 'text-muted-foreground hover:text-foreground'
+                  filter === f.value ? 'bg-foreground text-background font-medium' : 'text-foreground/60 hover:text-foreground'
                 )}>
                 {f.label}
               </button>
@@ -348,9 +348,9 @@ export default function DashboardScreen() {
               {/* Starred first */}
               {filtered.filter(i => i.starred).length > 0 && (
                 <>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground px-1 mt-4 mb-2">Przypięte</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-foreground/50 px-1 mt-4 mb-2">Przypięte</p>
                   {filtered.filter(i => i.starred).map(i => <ItemCard key={i.id} item={i} view="list" />)}
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground px-1 mt-4 mb-2">Pozostałe</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-foreground/50 px-1 mt-4 mb-2">Pozostałe</p>
                 </>
               )}
               {filtered.filter(i => !i.starred).map(i => <ItemCard key={i.id} item={i} view="list" />)}
@@ -362,7 +362,7 @@ export default function DashboardScreen() {
           )}
 
           {filtered.length === 0 && (
-            <div className="text-center py-16 text-muted-foreground">
+            <div className="text-center py-16 text-foreground/55">
               <Search className="w-8 h-8 mx-auto mb-3 opacity-30" />
               <p className="text-sm">Brak wyników dla „{search}"</p>
             </div>

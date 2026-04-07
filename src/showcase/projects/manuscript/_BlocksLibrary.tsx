@@ -114,7 +114,7 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
         <div className="p-3 space-y-4">
           {Object.entries(grouped).map(([cat, blocks]) => (
             <div key={cat}>
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-2 px-1">{cat}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-foreground/55 mb-2 px-1">{cat}</p>
               <div className="space-y-1">
                 {blocks.map(block => (
                   <button key={block.id}
@@ -125,7 +125,7 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium leading-tight">{block.name}</p>
-                      <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{block.description}</p>
+                      <p className="text-[10px] text-foreground/60 mt-0.5 truncate">{block.description}</p>
                     </div>
                     <GripVertical className="w-3.5 h-3.5 text-muted-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
@@ -137,7 +137,7 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
       </ScrollArea>
 
       <div className="p-3 border-t">
-        <p className="text-[10px] text-muted-foreground text-center">Kliknij lub przeciągnij do edytora</p>
+        <p className="text-xs text-foreground/55 text-center">Kliknij lub przeciągnij do edytora</p>
       </div>
     </div>
   )

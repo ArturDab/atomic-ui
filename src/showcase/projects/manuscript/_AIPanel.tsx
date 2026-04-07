@@ -79,7 +79,7 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold leading-tight">Asystent AI</p>
           {contextTitle && (
-            <p className="text-xs text-muted-foreground truncate leading-tight mt-0.5">{contextTitle}</p>
+            <p className="text-xs text-foreground/60 truncate leading-tight mt-0.5">{contextTitle}</p>
           )}
         </div>
         <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0"
@@ -113,7 +113,7 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
           </select>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <div className="w-2 h-2 rounded-full bg-amber-400" />
-            Dodaj klucz API w ustawieniach
+            <span className="text-foreground/65">Dodaj klucz API w ustawieniach</span>
           </div>
           <button
             onClick={() => setShowInstructions(o => !o)}
@@ -140,13 +140,13 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
             </div>
             <div>
               <p className="text-sm font-medium">Jak mogę pomóc?</p>
-              <p className="text-xs text-muted-foreground mt-0.5">Znam kontekst tego dokumentu.</p>
+              <p className="text-xs text-foreground/60 mt-0.5">Znam kontekst tego dokumentu.</p>
             </div>
             <div className="flex flex-wrap gap-1.5 justify-center mt-1">
               {QUICK_ACTIONS.map(a => (
                 <button key={a.label}
                   onClick={() => { setInput(a.prompt); textareaRef.current?.focus() }}
-                  className="text-xs px-2.5 py-1 rounded-full bg-muted hover:bg-muted/70 transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1">
+                  className="text-xs px-2.5 py-1 rounded-full bg-muted hover:bg-muted/70 transition-colors text-foreground/65 hover:text-foreground flex items-center gap-1">
                   <Zap className="w-2.5 h-2.5" /> {a.label}
                 </button>
               ))}
@@ -169,7 +169,7 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
                   {msg.role === 'assistant' && (
                     <div className="flex items-center gap-2 mt-2 pt-2 border-t border-border/50">
                       {msg.tokens && (
-                        <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                        <span className="text-[10px] text-foreground/60 flex items-center gap-1">
                           <Coins className="w-2.5 h-2.5" /> {msg.tokens} tok
                         </span>
                       )}
@@ -204,7 +204,7 @@ export function AIPanel({ onClose, contextTitle, className }: AIPanelProps) {
             style={{ maxHeight: '120px' }}
           />
           <div className="flex items-center justify-between px-2 py-1.5 border-t bg-muted/20">
-            <span className="text-[10px] text-muted-foreground">⏎ wyślij · ⇧⏎ nowa linia</span>
+            <span className="text-[10px] text-foreground/55">⏎ wyślij · ⇧⏎ nowa linia</span>
             <Button size="sm" className="h-7 gap-1.5 text-xs px-3" onClick={send} disabled={!input.trim()}>
               <Send className="w-3.5 h-3.5" /> Wyślij
             </Button>
