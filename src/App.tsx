@@ -7,6 +7,7 @@ import ComponentPage from './showcase/pages/ComponentPage'
 import AllComponents from './showcase/pages/AllComponents'
 import BlocksPage from './showcase/pages/BlocksPage'
 import ProjectsPage from './showcase/pages/ProjectsPage'
+import DocsPage from './showcase/pages/DocsPage'
 import PreviewPage from './showcase/pages/PreviewPage'
 import AllPreviewPage from './showcase/pages/AllPreviewPage'
 
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="all" element={<AllComponents />} />
           <Route path="blocks" element={<BlocksPage />} />
           <Route path="projects" element={<ProjectsPage />} />
+          <Route path="docs" element={<DocsPage />} />
         </Route>
 
         <Route path="/preview/:slug" element={<PreviewPage />} />
