@@ -347,9 +347,6 @@ export const blockRegistry: RegistryEntry[] = ([
     ],
   },
 
-
-,
-
   {
     slug: 'block-side-panel',
     title: 'Side Panel',
