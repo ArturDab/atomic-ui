@@ -296,7 +296,7 @@ export default function AIStudioScreen() {
                       </div>
 
                       {/* Timeline list – zupełnie inny wygląd niż kafle generatorów */}
-                      <div className="space-y-0 bg-white overflow-hidden">
+                      <div>
                         {HISTORY.map((item, i) => (
                           <div key={item.id}>
                             {i > 0 && <div className="h-px bg-border mx-4" />}

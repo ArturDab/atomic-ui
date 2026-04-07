@@ -60,7 +60,7 @@ export default function DocumentsScreen() {
       {/* Toggleable left panel */}
       {leftOpen && (
         <div className="w-60 border-r flex flex-col shrink-0">
-          <div className="p-3 border-b flex items-center gap-2">
+          <div className="h-14 border-b flex items-center px-3 gap-2">
             <Button className="flex-1 gap-2 justify-start h-9 text-sm">
               <FilePlus2 className="w-4 h-4 shrink-0 mr-0" /> Nowy dokument
             </Button>
