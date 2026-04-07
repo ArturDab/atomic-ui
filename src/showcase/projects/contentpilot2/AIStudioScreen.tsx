@@ -9,10 +9,12 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
 import {
-  Search, FileText, Mail, Share2, AlignLeft, Languages,
+  Search, FileText, Mail, Share2, AlignLeft, AlignCenter, Languages,
   SpellCheck2, HelpCircle, ShoppingBag, Wand2, Clock,
   Hash, ArrowRight, X, Play, RotateCcw, Copy, Coins,
   BookMarked, Video, Newspaper, Megaphone, Pin, PinOff,
+  Bold, Italic, Underline, List, ListOrdered, Quote, Minus, Link2,
+  Undo2, Redo2, PanelLeft, ChevronRight,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -393,121 +395,177 @@ export function AIStudioEditorFilled() {
 }
 
 function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
+  const [leftOpen, setLeftOpen] = React.useState(true)
+
   const CONTENT = [
     { type: 'h1', text: 'Jak Stworzyć Skuteczny Zespół Agentów AI?' },
-    { type: 'p',  text: 'Tworzenie skutecznego zespołu agentów AI to wyzwanie, które wymaga starannego planowania. Agenci AI mogą przekształcić sposób funkcjonowania firm.' },
+    { type: 'p',  text: 'Tworzenie skutecznego zespołu agentów AI to wyzwanie, które wymaga starannego planowania. Agenci AI mogą przekształcić sposób funkcjonowania firm, zwiększając efektywność i wspierając innowacje.' },
     { type: 'h2', text: '1. Zrozum cel i zakres działań' },
-    { type: 'p',  text: 'Przed rozpoczęciem budowania zespołu, kluczowe jest zrozumienie ich roli:' },
-    { type: 'li', text: '**Cele biznesowe:** Upewnij się, że cele agentów są zgodne ze strategiami firmy.' },
+    { type: 'p',  text: 'Przed rozpoczęciem budowania zespołu agentów AI, kluczowe jest dokładne zrozumienie ich roli i celów:' },
+    { type: 'li', text: '**Określenie celów biznesowych:** Upewnij się, że cele agentów są zgodne z ogólnymi strategiami firmy.' },
     { type: 'li', text: '**Identyfikacja zadań:** Jasno określ, jakie zadania agenci będą realizować.' },
+    { type: 'h2', text: '2. Wybór odpowiednich narzędzi' },
+    { type: 'p',  text: 'Agenci AI wymagają odpowiedniego zaplecza technologicznego, aby działać skutecznie.' },
   ]
 
   const formatBold = (text: string) => text.split(/(\*\*[^*]+\*\*)/).map((p, i) =>
     p.startsWith('**') && p.endsWith('**') ? <strong key={i}>{p.slice(2, -2)}</strong> : p
   )
 
+  // Formularz (lewy panel) – widoczny gdy empty state, ukryty gdy treść
+  const TOOLBAR = [
+    [Undo2, Redo2],
+    [Bold, Italic, Underline],
+    [List, ListOrdered],
+    [AlignLeft, AlignCenter],
+    [Quote, Minus, Link2],
+  ]
+
   return (
     <div className="flex h-full bg-background">
       <CP2Sidebar active="ai-studio" />
       <div className="flex-1 flex overflow-hidden">
 
-        {/* Form panel */}
-        <div className="w-80 border-r flex flex-col shrink-0 bg-background">
-          <div className="h-14 border-b flex items-center gap-3 px-4 shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-              <Wand2 className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+        {/* Formularz – slide-in z lewej, chowa się po wygenerowaniu */}
+        {!hasContent && (
+          <div className="w-80 border-r flex flex-col shrink-0 bg-background">
+            <div className="h-14 border-b flex items-center gap-3 px-4 shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                <Wand2 className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+              </div>
+              <span className="font-semibold text-sm flex-1">Artykuł blogowy</span>
             </div>
-            <span className="font-semibold text-sm flex-1">Artykuł blogowy</span>
-          </div>
-          <ScrollArea className="flex-1">
-            <div className="p-4 space-y-4">
-              <div className="space-y-1.5">
-                <Label className="text-sm">Temat <span className="text-destructive">*</span></Label>
-                <Input defaultValue="Jak stworzyć skuteczny zespół agentów AI?" className="text-sm" />
+            <ScrollArea className="flex-1">
+              <div className="p-4 space-y-4">
+                <div className="space-y-1.5">
+                  <Label className="text-sm">Temat <span className="text-destructive">*</span></Label>
+                  <Input defaultValue="Jak stworzyć skuteczny zespół agentów AI?" className="text-sm" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-sm">Ton</Label>
+                  <Select defaultValue="professional">
+                    <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="professional">Profesjonalny</SelectItem>
+                      <SelectItem value="casual">Swobodny</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-sm">Długość</Label>
+                  <Select defaultValue="medium">
+                    <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="short">Krótki (400–600 słów)</SelectItem>
+                      <SelectItem value="medium">Średni (800–1200 słów)</SelectItem>
+                      <SelectItem value="long">Długi (1500–2500 słów)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-sm">Język</Label>
+                  <Select defaultValue="pl">
+                    <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pl">Polski</SelectItem>
+                      <SelectItem value="en">English</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-sm">Dodatkowe instrukcje</Label>
+                  <Textarea placeholder="Słowa kluczowe, styl, CTA..." className="text-sm resize-none min-h-20" />
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <Label className="text-sm">Ton</Label>
-                <Select defaultValue="professional">
-                  <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="professional">Profesjonalny</SelectItem>
-                    <SelectItem value="casual">Swobodny</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-sm">Długość</Label>
-                <Select defaultValue="short">
-                  <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="short">Krótki (400–600 słów)</SelectItem>
-                    <SelectItem value="medium">Średni (800–1200 słów)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-sm">Język</Label>
-                <Select defaultValue="pl">
-                  <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pl">Polski</SelectItem>
-                    <SelectItem value="en">English</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-sm">Dodatkowe instrukcje</Label>
-                <Textarea placeholder="Słowa kluczowe, styl, CTA..." className="text-sm resize-none min-h-20" />
-              </div>
+            </ScrollArea>
+            <div className="p-4 border-t">
+              <Button className="w-full gap-2">
+                <Play className="w-4 h-4" /> Generuj
+              </Button>
             </div>
-          </ScrollArea>
-          <div className="p-4 border-t">
-            <Button className="w-full gap-2">
-              <Play className="w-4 h-4" /> Generuj
-            </Button>
           </div>
-        </div>
+        )}
 
-        {/* Content area */}
+        {/* Edytor – identyczny layout jak w Dokumentach */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
-            <h1 className="text-base font-semibold flex-1">AI Studio</h1>
+
+          {/* Header – identyczny jak w Dokumentach */}
+          <div className="h-14 border-b flex items-center px-5 gap-3 shrink-0">
             {hasContent && (
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground flex items-center gap-1.5">
-                  <Coins className="w-3.5 h-3.5" /> 978 tok
-                  <Clock className="w-3.5 h-3.5 ml-1" /> 18.6s
+              <Button
+                variant="ghost" size="icon"
+                className="h-8 w-8 shrink-0"
+                onClick={() => {}}
+                title="Wróć do galerii"
+              >
+                <PanelLeft className="w-4 h-4" />
+              </Button>
+            )}
+            <div className="flex-1 min-w-0">
+              {hasContent ? (
+                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <span>AI Studio</span>
+                  <ChevronRight className="w-3 h-3" />
+                  <span className="text-foreground font-medium truncate">Jak Stworzyć Skuteczny Zespół Agentów AI?</span>
+                </div>
+              ) : (
+                <h1 className="text-base font-semibold">AI Studio</h1>
+              )}
+            </div>
+            {hasContent && (
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> 18.6s
+                  <Hash className="w-3 h-3 ml-1" /> 980 słów
                 </span>
+                <Separator orientation="vertical" className="h-4" />
                 <Button variant="ghost" size="icon" className="h-8 w-8"><RotateCcw className="w-4 h-4" /></Button>
-                <Separator orientation="vertical" className="h-5" />
-                <Button variant="outline" size="sm" className="h-8 gap-1.5 text-sm">
-                  <BookMarked className="w-4 h-4" /> W dokumentach
+                <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm">
+                  <Copy className="w-3.5 h-3.5" /> Kopiuj
                 </Button>
-                <Button variant="outline" size="sm" className="h-8 gap-1.5 text-sm">
-                  <Copy className="w-4 h-4" /> Kopiuj
+                {/* Kluczowa różnica vs Dokumenty */}
+                <Button size="sm" className="h-8 gap-1.5 text-sm">
+                  <BookMarked className="w-3.5 h-3.5" /> Przenieś do dokumentów
                 </Button>
               </div>
             )}
           </div>
 
           {hasContent ? (
-            <ScrollArea className="flex-1">
-              <div className="max-w-2xl mx-auto px-8 py-8">
-                {CONTENT.map((block, i) => {
-                  switch (block.type) {
-                    case 'h1': return <h1 key={i} className="text-2xl font-bold mb-4">{block.text}</h1>
-                    case 'h2': return <h2 key={i} className="text-lg font-bold mb-3 mt-6">{block.text}</h2>
-                    case 'p':  return <p key={i} className="text-base leading-relaxed mb-3">{block.text}</p>
-                    case 'li': return (
-                      <div key={i} className="flex gap-2 mb-2">
-                        <span className="text-muted-foreground mt-1.5 shrink-0">•</span>
-                        <p className="text-base leading-relaxed">{formatBold(block.text)}</p>
-                      </div>
-                    )
-                  }
-                })}
+            <>
+              {/* Toolbar – identyczny jak w Dokumentach */}
+              <div className="border-b flex items-center px-5 gap-0.5 h-10 shrink-0 overflow-x-auto">
+                {TOOLBAR.map((group, gi) => (
+                  <React.Fragment key={gi}>
+                    {gi > 0 && <div className="w-px h-4 bg-border mx-1.5 shrink-0" />}
+                    {group.map((Icon, bi) => (
+                      <button key={bi} className="h-7 w-7 rounded flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground transition-colors shrink-0">
+                        <Icon className="w-3.5 h-3.5" />
+                      </button>
+                    ))}
+                  </React.Fragment>
+                ))}
               </div>
-            </ScrollArea>
+
+              {/* Treść – identyczna jak w Dokumentach */}
+              <ScrollArea className="flex-1">
+                <div className="max-w-2xl mx-auto px-8 py-10">
+                  {CONTENT.map((block, i) => {
+                    switch (block.type) {
+                      case 'h1': return <h1 key={i} className="text-2xl font-bold mb-4 mt-2">{block.text}</h1>
+                      case 'h2': return <h2 key={i} className="text-lg font-bold mb-3 mt-6">{block.text}</h2>
+                      case 'p':  return <p key={i} className="text-base leading-relaxed mb-3 text-foreground">{block.text}</p>
+                      case 'li': return (
+                        <div key={i} className="flex gap-2 mb-2">
+                          <span className="text-muted-foreground mt-1.5 shrink-0">•</span>
+                          <p className="text-base leading-relaxed">{formatBold(block.text)}</p>
+                        </div>
+                      )
+                    }
+                  })}
+                </div>
+              </ScrollArea>
+            </>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
               <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center">
@@ -515,7 +573,7 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
               </div>
               <div>
                 <p className="text-base font-semibold mb-1">Gotowy do generowania</p>
-                <p className="text-sm text-muted-foreground max-w-xs">Formularz jest wypełniony. Kliknij Generuj, żeby zobaczyć wynik tutaj.</p>
+                <p className="text-sm text-muted-foreground max-w-xs">Formularz jest wypełniony. Kliknij Generuj.</p>
               </div>
             </div>
           )}
@@ -524,3 +582,5 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
     </div>
   )
 }
+
+

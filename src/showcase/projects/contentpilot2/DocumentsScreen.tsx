@@ -38,7 +38,7 @@ const DOC_CONTENT = [
 
 export default function DocumentsScreen() {
   const [leftOpen, setLeftOpen] = React.useState(true)
-  const [aiOpen, setAiOpen] = React.useState(false)
+  const [aiOpen, setAiOpen] = React.useState(true)
   const [expandedFolders, setExpandedFolders] = React.useState(new Set(['dokumenty']))
 
   const toggleFolder = (id: string) =>
@@ -215,7 +215,7 @@ export default function DocumentsScreen() {
       {/* AI slide-in panel */}
       {aiOpen && (
         <div className="w-72 border-l flex flex-col shrink-0 bg-background">
-          <div className="h-12 border-b flex items-center justify-between px-4 shrink-0">
+          <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-semibold">Asystent AI</span>
