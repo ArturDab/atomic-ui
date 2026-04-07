@@ -23,6 +23,8 @@ import CP2AllScreens from './showcase/projects/contentpilot2/AllScreens'
 import CP2AIChatScreen, { AIChatWithArtifactScreen as CP2AIChatArtifactScreen } from './showcase/projects/contentpilot2/AIChatScreen'
 import CP2AITeamsScreen from './showcase/projects/contentpilot2/AITeamsScreen'
 import CP2DocumentsScreen from './showcase/projects/contentpilot2/DocumentsScreen'
+import ManuscriptAllScreens from './showcase/projects/manuscript/AllScreens'
+import ManuscriptDashboard from './showcase/projects/manuscript/DashboardScreen'
 import CP2AIStudioScreen, { AIStudioEditorEmpty, AIStudioEditorFilled } from './showcase/projects/contentpilot2/AIStudioScreen'
 
 export default function App() {
@@ -56,6 +58,13 @@ export default function App() {
           <Route path="cp2-ai-chat-artifact"  element={<CP2AIChatArtifactScreen />} />
           <Route path="cp2-ai-teams"  element={<CP2AITeamsScreen />} />
           <Route path="cp2-documents" element={<CP2DocumentsScreen />} />
+          <Route path="dashboard" element={<ManuscriptDashboard />} />
+        </Route>
+
+        <Route path="/projects/manuscript" element={<ProjectLayout />}>
+          <Route index element={<Navigate to="all" replace />} />
+          <Route path="all"       element={<ManuscriptAllScreens />} />
+          <Route path="dashboard" element={<ManuscriptDashboard />} />
           <Route path="cp2-ai-studio"        element={<CP2AIStudioScreen />} />
           <Route path="cp2-ai-studio-empty"  element={<AIStudioEditorEmpty />} />
           <Route path="cp2-ai-studio-filled" element={<AIStudioEditorFilled />} />

@@ -3,6 +3,16 @@ import { Zap, ArrowRight, FileText, BookOpen, Layers } from 'lucide-react'
 
 const PROJECTS = [
   {
+    slug: 'manuscript',
+    name: 'Manuscript',
+    description: 'Edytor treści z AI – artykuły, opracowania i książki z inline AI, biblioteką promptów i eksportem do WordPress.',
+    icon: FileText,
+    color: 'bg-amber-50 border-amber-200',
+    iconColor: 'bg-amber-600',
+    screens: ['Dashboard', 'Edytor artykułu', 'Edytor książki'],
+    status: 'W toku',
+  },
+  {
     slug: 'contentpilot2',
     name: 'ContentPilot 2.0',
     description: 'Alternatywne podejście projektowe – nawigacja z etykietami, split pane w czacie, karty zespołów, pełnoekranowy edytor.',
