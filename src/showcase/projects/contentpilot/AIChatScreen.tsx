@@ -6,8 +6,8 @@ import { ChatMessages } from './_ChatMessage'
 import { ChatInput } from './_ChatInput'
 import type { Message } from './_ChatMessage'
 import {
-  SidePanel, SidePanelHeader, SidePanelAction, SidePanelToolbar,
-  SidePanelNote, SidePanelItem, SidePanelItemTitle, SidePanelItemMeta, SidePanelList,
+  SidePanel, SidePanelHeader, SidePanelAction, SidePanelToolbar, SidePanelToolbarButton,
+  SidePanelNote, SidePanelStarredItem, SidePanelItem, SidePanelItemTitle, SidePanelItemMeta, SidePanelList,
 } from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -15,7 +15,7 @@ import { Separator } from '@/components/ui/separator'
 import { Slider } from '@/components/ui/slider'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Plus, CheckSquare, ChevronDown, ChevronUp, SlidersHorizontal } from 'lucide-react'
+import { Plus, ChevronDown, ChevronUp, SlidersHorizontal } from 'lucide-react'
 
 const CHAT_LIST = [
   { id: '1',  title: 'Jeśli poproszę Cię tutaj o kod HTML newslettera, t...', time: '20 mar', active: true },
@@ -119,12 +119,11 @@ export default function AIChatScreen() {
               <SidePanelAction icon={Plus} label="Nowy czat" />
             </SidePanelHeader>
             <SidePanelToolbar>
-              <Button variant="ghost" size="sm" className="gap-1.5 text-sm text-muted-foreground px-2">
-                <CheckSquare className="w-4 h-4" /> Zaznacz
-              </Button>
+              <SidePanelToolbarButton label="Zaznacz" />
             </SidePanelToolbar>
             <SidePanelNote>Sortowanie aktywne · przeciąganie wyłączone</SidePanelNote>
             <SidePanelList>
+              <SidePanelStarredItem label="Jeśli poproszę Cię tutaj o kod HTML..." />
               {CHAT_LIST.map(chat => (
                 <SidePanelItem key={chat.id} active={chat.active}>
                   <div className="flex-1 min-w-0">

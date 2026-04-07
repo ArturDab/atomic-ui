@@ -5,7 +5,7 @@ import { ChatMessages } from './_ChatMessage'
 import { ChatInput } from './_ChatInput'
 import type { Message } from './_ChatMessage'
 import {
-  SidePanel, SidePanelHeader, SidePanelAction, SidePanelToolbar,
+  SidePanel, SidePanelHeader, SidePanelAction, SidePanelToolbar, SidePanelToolbarButton,
   SidePanelSection, SidePanelItem, SidePanelItemTitle, SidePanelItemMeta, SidePanelList,
 } from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
@@ -70,9 +70,7 @@ export default function AITeamsScreen() {
               <SidePanelAction icon={Plus} label="Utwórz zespół" />
             </SidePanelHeader>
             <SidePanelToolbar>
-              <Button variant="ghost" size="sm" className="gap-1.5 text-sm text-muted-foreground px-2">
-                <span className="text-xs">⊞</span> Zaznacz
-              </Button>
+              <SidePanelToolbarButton label="Zaznacz" />
             </SidePanelToolbar>
             <SidePanelList>
               {TEAMS.map(team => (

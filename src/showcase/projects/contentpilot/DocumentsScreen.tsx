@@ -2,9 +2,10 @@ import * as React from 'react'
 import { CPSidebar } from './_Sidebar'
 import { TopBar } from './_TopBar'
 import {
-  SidePanel, SidePanelHeader, SidePanelAction, SidePanelSearch,
-  SidePanelToolbar, SidePanelNote, SidePanelItem, SidePanelItemTitle,
-  SidePanelItemMeta, SidePanelList,
+  SidePanel, SidePanelHeader, SidePanelAction, SidePanelIconButton,
+  SidePanelSearch, SidePanelToolbar, SidePanelToolbarButton, SidePanelNote,
+  SidePanelStarredItem, SidePanelFolder, SidePanelDropZone,
+  SidePanelItem, SidePanelItemTitle, SidePanelItemBadge, SidePanelItemMeta, SidePanelList,
 } from '@/components/blocks/side-panel'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -14,15 +15,9 @@ import {
   Download, Wand2, Undo2, Redo2, Bold, Italic, Underline,
   Strikethrough, Code, Highlighter, List, ListOrdered, AlignLeft,
   AlignCenter, AlignRight, AlignJustify, Quote, Minus, Link2, Type,
-  ChevronRight, FolderClosed, FileText,
+  FileText,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const FOLDERS = [
-  { id: 'interia',   name: 'Interia',   count: 0, documents: [] },
-  { id: 'dokumenty', name: 'Dokumenty', count: 1,
-    documents: [{ id: 'd2', name: 'Nowy dokument', date: '27 mar', active: true }] },
-]
 
 const TOOLBAR_GROUPS = [
   [{ icon: Undo2 }, { icon: Redo2 }],
@@ -50,67 +45,47 @@ export default function DocumentsScreen() {
           <SidePanel>
             <SidePanelHeader>
               <SidePanelAction icon={FilePlus2} label="Nowy dokument" />
-              <Button variant="outline" size="icon" className="h-10 w-10 shrink-0">
-                <FolderOpen className="w-4 h-4" />
-              </Button>
+              <SidePanelIconButton icon={FolderOpen} title="Nowy folder" />
             </SidePanelHeader>
+
             <SidePanelSearch placeholder="Szukaj" />
+
             <SidePanelToolbar>
-              <button className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-foreground text-background text-xs font-medium">
-                <span className="text-[10px]">↕</span> Najnowsze
-              </button>
-              <button className="text-xs text-muted-foreground hover:text-foreground transition-colors px-2 py-1">
-                Zaznacz
-              </button>
+              <SidePanelToolbarButton icon={AlignLeft} label="Najnowsze" active />
+              <SidePanelToolbarButton label="Zaznacz" />
             </SidePanelToolbar>
+
             <SidePanelNote>Sortowanie aktywne · przeciąganie wyłączone</SidePanelNote>
+
             <SidePanelList>
-              {/* Gwiazdkowany dokument */}
-              <SidePanelItem className="bg-amber-50 hover:bg-amber-100">
-                <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 shrink-0 mt-0.5" />
-                <SidePanelItemTitle className="font-medium">Nowy dokument</SidePanelItemTitle>
-              </SidePanelItem>
+              <SidePanelStarredItem label="Nowy dokument" />
 
-              {/* Foldery */}
-              {FOLDERS.map(folder => (
-                <div key={folder.id}>
-                  <button
-                    onClick={() => toggleFolder(folder.id)}
-                    className="w-full flex items-center gap-2 px-4 py-3 border-b hover:bg-muted/50 transition-colors"
-                  >
-                    {expandedFolders.has(folder.id)
-                      ? <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                      : <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0" />}
-                    <FolderClosed className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                    <span className="text-sm flex-1 text-left">{folder.name}</span>
-                    <span className="text-xs text-muted-foreground/60">{folder.count}</span>
-                  </button>
+              <SidePanelFolder
+                label="Interia"
+                count={0}
+                expanded={expandedFolders.has('interia')}
+                onToggle={() => toggleFolder('interia')}
+              >
+                <SidePanelDropZone />
+              </SidePanelFolder>
 
-                  {expandedFolders.has(folder.id) && (
-                    <div>
-                      {folder.documents.length === 0 ? (
-                        <p className="px-8 py-3 text-xs text-muted-foreground/50 italic border-b">
-                          Przeciągnij elementy tutaj
-                        </p>
-                      ) : (
-                        folder.documents.map(doc => (
-                          <button key={doc.id}
-                            className={cn(
-                              'w-full flex items-center gap-3 px-8 py-3 border-b hover:bg-muted/50 transition-colors border-l-2',
-                              doc.active ? 'bg-muted border-l-foreground' : 'border-l-transparent'
-                            )}>
-                            <FileText className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                            <div className="flex-1 min-w-0 text-left">
-                              <p className="text-sm truncate">{doc.name}</p>
-                              <p className="text-xs text-muted-foreground">Dokumenty · {doc.date}</p>
-                            </div>
-                          </button>
-                        ))
-                      )}
+              <SidePanelFolder
+                label="Dokumenty"
+                count={1}
+                expanded={expandedFolders.has('dokumenty')}
+                onToggle={() => toggleFolder('dokumenty')}
+              >
+                <SidePanelItem indent active>
+                  <FileText className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <SidePanelItemTitle>Nowy dokument</SidePanelItemTitle>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <SidePanelItemBadge label="Dokumenty" className="bg-emerald-100 text-emerald-700" />
+                      <SidePanelItemMeta>27 mar</SidePanelItemMeta>
                     </div>
-                  )}
-                </div>
-              ))}
+                  </div>
+                </SidePanelItem>
+              </SidePanelFolder>
             </SidePanelList>
           </SidePanel>
 
@@ -126,15 +101,9 @@ export default function DocumentsScreen() {
                 Bez projektu <ChevronDown className="w-3 h-3" />
               </button>
               <div className="flex items-center gap-1 ml-auto">
-                <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm">
-                  <Wand2 className="w-3.5 h-3.5" /> AI
-                </Button>
-                <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm">
-                  <Copy className="w-3.5 h-3.5" /> Kopiuj
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <Download className="w-4 h-4" />
-                </Button>
+                <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm"><Wand2 className="w-3.5 h-3.5" /> AI</Button>
+                <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm"><Copy className="w-3.5 h-3.5" /> Kopiuj</Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8"><Download className="w-4 h-4" /></Button>
                 <Separator orientation="vertical" className="h-5 mx-1" />
                 <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive">
                   <Trash2 className="w-4 h-4" />
