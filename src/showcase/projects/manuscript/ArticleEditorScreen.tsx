@@ -238,7 +238,7 @@ export default function ArticleEditorScreen() {
             {/* Demo: simulate text selection */}
             <button
               onClick={() => handleTextSelect()}
-              className="text-xs text-foreground/55 hover:text-foreground border border-dashed rounded px-2 py-0.5 transition-colors">
+              className="text-xs text-foreground/65 hover:text-foreground border border-dashed rounded px-2 py-0.5 transition-colors">
               Zaznacz tekst →
             </button>
           </div>

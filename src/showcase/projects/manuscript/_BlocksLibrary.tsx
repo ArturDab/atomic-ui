@@ -114,7 +114,7 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
         <div className="p-3 space-y-4">
           {Object.entries(grouped).map(([cat, blocks]) => (
             <div key={cat}>
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-foreground/55 mb-2 px-1">{cat}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-foreground/65 mb-2 px-1">{cat}</p>
               <div className="space-y-1">
                 {blocks.map(block => (
                   <button key={block.id}
@@ -137,7 +137,7 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
       </ScrollArea>
 
       <div className="p-3 border-t">
-        <p className="text-xs text-foreground/55 text-center">Kliknij lub przeciągnij do edytora</p>
+        <p className="text-xs text-foreground/65 text-center">Kliknij lub przeciągnij do edytora</p>
       </div>
     </div>
   )

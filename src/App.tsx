@@ -36,8 +36,8 @@ import ManuscriptArticleEditor from './showcase/projects/manuscript/ArticleEdito
 import ManuscriptBookOverview from './showcase/projects/manuscript/BookOverviewScreen'
 import ManuscriptBookEditor from './showcase/projects/manuscript/BookEditorScreen'
 import ManuscriptStudyEditor from './showcase/projects/manuscript/StudyEditorScreen'
-import ManuscriptNewContent from './showcase/projects/manuscript/NewContentModal'
-import ManuscriptWPExport from './showcase/projects/manuscript/WordPressExportPanel'
+import ManuscriptNewContentScreen from './showcase/projects/manuscript/NewContentScreen'
+import ManuscriptWPExportScreen from './showcase/projects/manuscript/WPExportScreen'
 
 export default function App() {
   return (
@@ -86,8 +86,8 @@ export default function App() {
           <Route path="ms-book-overview" element={<ManuscriptBookOverview />} />
           <Route path="ms-book-editor"   element={<ManuscriptBookEditor />} />
           <Route path="ms-study-editor"  element={<ManuscriptStudyEditor />} />
-          <Route path="ms-new-content"   element={<div className="relative h-full bg-muted/20 flex items-center justify-center"><ManuscriptNewContent onClose={() => {}} /></div>} />
-          <Route path="ms-wp-export"     element={<div className="relative h-full bg-muted/20 flex items-center justify-center"><ManuscriptWPExport onClose={() => {}} /></div>} />
+          <Route path="ms-new-content"   element={<ManuscriptNewContentScreen />} />
+          <Route path="ms-wp-export"     element={<ManuscriptWPExportScreen />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

@@ -4,8 +4,8 @@ import ArticleEditorScreen from './ArticleEditorScreen'
 import BookOverviewScreen from './BookOverviewScreen'
 import BookEditorScreen from './BookEditorScreen'
 import StudyEditorScreen from './StudyEditorScreen'
-import NewContentModal from './NewContentModal'
-import WordPressExportPanel from './WordPressExportPanel'
+import NewContentScreen from './NewContentScreen'
+import WPExportScreen from './WPExportScreen'
 
 const SCREENS = [
   { path: 'ms-dashboard',     label: 'Dashboard',             Component: DashboardScreen },
@@ -13,24 +13,8 @@ const SCREENS = [
   { path: 'ms-study-editor',  label: 'Edytor opracowania',    Component: StudyEditorScreen },
   { path: 'ms-book-overview', label: 'Przegląd książki',      Component: BookOverviewScreen },
   { path: 'ms-book-editor',   label: 'Edytor książki',        Component: BookEditorScreen },
-  {
-    path: 'ms-new-content',
-    label: 'Nowa treść (modal)',
-    Component: () => (
-      <div className="relative h-full bg-muted/20 flex items-center justify-center">
-        <NewContentModal onClose={() => {}} />
-      </div>
-    ),
-  },
-  {
-    path: 'ms-wp-export',
-    label: 'Eksport do WordPress',
-    Component: () => (
-      <div className="relative h-full bg-muted/20 flex items-center justify-center">
-        <WordPressExportPanel onClose={() => {}} />
-      </div>
-    ),
-  },
+  { path: 'ms-new-content', label: 'Nowa treść (modal)',    Component: NewContentScreen },
+  { path: 'ms-wp-export',    label: 'Eksport do WordPress',  Component: WPExportScreen },
 ]
 
 export default function AllScreens() {

@@ -146,12 +146,12 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
 
           {/* Historia konwersacji – link do archiwum */}
           <div className="flex items-center gap-2 mt-1.5">
-            <button className="flex items-center gap-1 text-[10px] text-foreground/50 hover:text-foreground/70 transition-colors">
+            <button className="flex items-center gap-1 text-[10px] text-foreground/60 hover:text-foreground/70 transition-colors">
               <History className="w-2.5 h-2.5" />
               {contextLevel === 'chapter' ? 'Historia tego rozdziału' : 'Historia tej książki'}
             </button>
             <span className="text-foreground/25">·</span>
-            <button className="flex items-center gap-1 text-[10px] text-foreground/50 hover:text-foreground/70 transition-colors">
+            <button className="flex items-center gap-1 text-[10px] text-foreground/60 hover:text-foreground/70 transition-colors">
               <Plus className="w-2.5 h-2.5" />
               Nowa konwersacja
             </button>
@@ -213,7 +213,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
               {QUICK_ACTIONS.map(a => (
                 <button key={a.label}
                   onClick={() => { setInput(a.prompt); textareaRef.current?.focus() }}
-                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-muted hover:bg-muted/70 transition-colors text-foreground/65 hover:text-foreground">
+                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-muted hover:bg-muted/70 transition-colors text-foreground/85 hover:text-foreground">
                   <a.icon className="w-3 h-3" /> {a.label}
                 </button>
               ))}
@@ -241,12 +241,12 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
                         </span>
                       )}
                       {msg.time && (
-                        <span className="text-[10px] text-foreground/40">{msg.time}</span>
+                        <span className="text-[10px] text-foreground/55">{msg.time}</span>
                       )}
                       <div className="flex gap-1 ml-auto">
                         {[Copy, PenLine, RotateCcw].map((Icon, i) => (
                           <button key={i}
-                            className="w-5 h-5 flex items-center justify-center text-foreground/40 hover:text-foreground transition-colors rounded">
+                            className="w-5 h-5 flex items-center justify-center text-foreground/55 hover:text-foreground transition-colors rounded">
                             <Icon className="w-3 h-3" />
                           </button>
                         ))}
@@ -277,7 +277,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
             style={{ maxHeight: '120px' }}
           />
           <div className="flex items-center justify-between px-2 py-1.5 border-t bg-muted/20">
-            <span className="text-[10px] text-foreground/55">⏎ wyślij · ⇧⏎ nowa linia</span>
+            <span className="text-[10px] text-foreground/65">⏎ wyślij · ⇧⏎ nowa linia</span>
             <Button size="sm" className="h-7 gap-1.5 text-xs px-3" onClick={send} disabled={!input.trim()}>
               <Send className="w-3.5 h-3.5" /> Wyślij
             </Button>

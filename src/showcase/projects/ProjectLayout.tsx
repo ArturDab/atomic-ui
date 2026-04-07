@@ -101,7 +101,7 @@ export default function ProjectLayout() {
   return (
     <div className="flex flex-col h-screen">
       {/* Primary nav bar */}
-      <div className="h-11 bg-foreground flex items-center px-4 gap-3 shrink-0">
+      <div className="h-11 bg-foreground flex items-center px-4 gap-2 shrink-0 overflow-hidden">
         <Link
           to="/projects"
           className="flex items-center gap-1 text-xs text-background/60 hover:text-background transition-colors"
@@ -112,7 +112,7 @@ export default function ProjectLayout() {
         <div className="w-px h-4 bg-background/20" />
         <span className="text-xs font-semibold text-background">{meta.name}</span>
         <div className="w-px h-4 bg-background/20" />
-        <nav className="flex gap-0.5">
+        <nav className="flex gap-0.5 overflow-x-auto scrollbar-none flex-1 min-w-0">
           {meta.nav.map((entry, i) => {
             if (isGroup(entry)) {
               const isGroupActive = !!activeGroup && activeGroup.label === entry.label
