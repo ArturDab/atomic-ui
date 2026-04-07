@@ -23,14 +23,26 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
   contentpilot2: {
     name: 'ContentPilot 2.0',
     nav: [
-      { path: 'cp2-all',       label: 'Wszystkie widoki' },
-      { path: 'cp2-ai-chat',   label: 'AI Chat' },
+      { path: 'cp2-all', label: 'Wszystkie widoki' },
+      {
+        label: 'AI Chat',
+        defaultPath: 'cp2-ai-chat',
+        children: [
+          { path: 'cp2-ai-chat',          label: 'Czat' },
+          { path: 'cp2-ai-chat-artifact', label: 'Czat + artefakt' },
+        ],
+      },
       { path: 'cp2-ai-teams',  label: 'AI Teams' },
       { path: 'cp2-documents', label: 'Dokumenty' },
-      { path: 'cp2-ai-chat-artifact',  label: 'Chat + artefakt' },
-      { path: 'cp2-ai-studio',         label: 'AI Studio' },
-      { path: 'cp2-ai-studio-empty',   label: 'Edytor – pusty' },
-      { path: 'cp2-ai-studio-filled',  label: 'Edytor – treść' },
+      {
+        label: 'AI Studio',
+        defaultPath: 'cp2-ai-studio',
+        children: [
+          { path: 'cp2-ai-studio',        label: 'Galeria' },
+          { path: 'cp2-ai-studio-empty',  label: 'Edytor – pusty' },
+          { path: 'cp2-ai-studio-filled', label: 'Edytor – treść' },
+        ],
+      },
     ],
   },
   contentpilot: {
