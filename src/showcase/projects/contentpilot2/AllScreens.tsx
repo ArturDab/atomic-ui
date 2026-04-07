@@ -4,9 +4,9 @@ import AITeamsScreen from './AITeamsScreen'
 import DocumentsScreen from './DocumentsScreen'
 
 const SCREENS = [
-  { path: 'ai-chat',   label: 'AI Chat',    Component: AIChatScreen },
-  { path: 'ai-teams',  label: 'AI Teams',   Component: AITeamsScreen },
-  { path: 'documents', label: 'Dokumenty',  Component: DocumentsScreen },
+  { path: 'cp2-ai-chat',   label: 'AI Chat',   Component: AIChatScreen },
+  { path: 'cp2-ai-teams',  label: 'AI Teams',  Component: AITeamsScreen },
+  { path: 'cp2-documents', label: 'Dokumenty', Component: DocumentsScreen },
 ]
 
 export default function AllScreens() {

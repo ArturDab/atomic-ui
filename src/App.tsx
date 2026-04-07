@@ -47,14 +47,11 @@ export default function App() {
           <Route path="ai-studio-editor-empty" element={<AIStudioEditorEmptyScreen />} />
           <Route path="ai-studio/:genSlug"     element={<AIStudioEditorScreen />} />
           <Route path="documents"               element={<DocumentsScreen />} />
-        </Route>
-
-        <Route path="/projects/contentpilot2" element={<ProjectLayout />}>
-          <Route index element={<Navigate to="all" replace />} />
-          <Route path="all"       element={<CP2AllScreens />} />
-          <Route path="ai-chat"   element={<CP2AIChatScreen />} />
-          <Route path="ai-teams"  element={<CP2AITeamsScreen />} />
-          <Route path="documents" element={<CP2DocumentsScreen />} />
+          {/* ContentPilot 2.0 routes – shared :projectSlug handler */}
+          <Route path="cp2-all"       element={<CP2AllScreens />} />
+          <Route path="cp2-ai-chat"   element={<CP2AIChatScreen />} />
+          <Route path="cp2-ai-teams"  element={<CP2AITeamsScreen />} />
+          <Route path="cp2-documents" element={<CP2DocumentsScreen />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

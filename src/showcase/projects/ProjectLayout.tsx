@@ -23,10 +23,10 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
   contentpilot2: {
     name: 'ContentPilot 2.0',
     nav: [
-      { path: 'all',      label: 'Wszystkie widoki' },
-      { path: 'ai-chat',  label: 'AI Chat' },
-      { path: 'ai-teams', label: 'AI Teams' },
-      { path: 'documents', label: 'Dokumenty' },
+      { path: 'cp2-all',       label: 'Wszystkie widoki' },
+      { path: 'cp2-ai-chat',   label: 'AI Chat' },
+      { path: 'cp2-ai-teams',  label: 'AI Teams' },
+      { path: 'cp2-documents', label: 'Dokumenty' },
     ],
   },
   contentpilot: {
