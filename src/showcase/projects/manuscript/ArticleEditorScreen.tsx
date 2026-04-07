@@ -11,7 +11,7 @@ import {
   ArrowLeft, Star, Clock, Hash, Save, Eye, ExternalLink,
   Wand2, Sparkles, LayoutTemplate, ChevronDown, PanelLeft,
   Search, History, MoreHorizontal, Trash2, Globe, Image as ImageIcon,
-  Code2, GripVertical, Plus, AlignLeft,
+  Code2, GripVertical, Plus, AlignLeft, Maximize2,
 } from 'lucide-react'
 import { EditorToolbar } from './_Toolbar'
 import { AIPanel } from './_AIPanel'
@@ -154,7 +154,7 @@ export default function ArticleEditorScreen() {
   return (
     <div className="flex flex-col h-full bg-background">
       {/* App header */}
-      <div className="h-12 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <ArrowLeft className="w-4 h-4" />
         </Button>
@@ -180,6 +180,9 @@ export default function ArticleEditorScreen() {
           <Separator orientation="vertical" className="h-5 mx-1" />
           <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm">
             <Eye className="w-4 h-4" /> Podgląd
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Maximize2 className="w-4 h-4" />
           </Button>
           <Button variant="outline" size="sm" className="h-8 gap-1.5 text-sm">
             <Globe className="w-4 h-4" /> Eksportuj

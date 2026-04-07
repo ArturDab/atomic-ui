@@ -65,7 +65,7 @@ export default function BookOverviewScreen() {
   return (
     <div className="flex flex-col h-full bg-background">
       {/* App header */}
-      <div className="h-12 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
         <Button variant="ghost" size="icon" className="h-8 w-8"><ArrowLeft className="w-4 h-4" /></Button>
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <Badge variant="outline" className="text-[10px] border-emerald-200 bg-emerald-50 text-emerald-600 shrink-0">Książka</Badge>
