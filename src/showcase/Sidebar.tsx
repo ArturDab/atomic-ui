@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { registry } from '../registry'
-import { Layers, LayoutGrid, Blocks, FolderKanban } from 'lucide-react'
+import { Layers, LayoutGrid, Blocks, FolderKanban, BookOpen } from 'lucide-react'
 import { cn } from '../lib/utils'
 
 const CATEGORY_ORDER = ['Atoms', 'Forms', 'Feedback', 'Navigation', 'Layout'] as const
@@ -24,6 +24,7 @@ export default function Sidebar({ query }: SidebarProps) {
     { to: '/all',      icon: LayoutGrid,    label: 'Wszystkie' },
     { to: '/blocks',   icon: Blocks,        label: 'Bloki' },
     { to: '/projects', icon: FolderKanban,  label: 'Projekty' },
+    { to: '/docs',     icon: BookOpen,     label: 'Docs' },
   ]
 
   return (
