@@ -18,6 +18,10 @@ import AIStudioScreenC from './showcase/projects/contentpilot/AIStudioScreenC'
 import AIStudioEditorScreen from './showcase/projects/contentpilot/AIStudioEditorScreen'
 import AIStudioEditorEmptyScreen from './showcase/projects/contentpilot/AIStudioEditorEmptyScreen'
 import DocumentsScreen from './showcase/projects/contentpilot/DocumentsScreen'
+import CP2AllScreens from './showcase/projects/contentpilot2/AllScreens'
+import CP2AIChatScreen from './showcase/projects/contentpilot2/AIChatScreen'
+import CP2AITeamsScreen from './showcase/projects/contentpilot2/AITeamsScreen'
+import CP2DocumentsScreen from './showcase/projects/contentpilot2/DocumentsScreen'
 
 export default function App() {
   return (
@@ -43,6 +47,14 @@ export default function App() {
           <Route path="ai-studio-editor-empty" element={<AIStudioEditorEmptyScreen />} />
           <Route path="ai-studio/:genSlug"     element={<AIStudioEditorScreen />} />
           <Route path="documents"               element={<DocumentsScreen />} />
+        </Route>
+
+        <Route path="/projects/contentpilot2" element={<ProjectLayout />}>
+          <Route index element={<Navigate to="all" replace />} />
+          <Route path="all"       element={<CP2AllScreens />} />
+          <Route path="ai-chat"   element={<CP2AIChatScreen />} />
+          <Route path="ai-teams"  element={<CP2AITeamsScreen />} />
+          <Route path="documents" element={<CP2DocumentsScreen />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />

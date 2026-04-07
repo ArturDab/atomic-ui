@@ -1,7 +1,17 @@
 import { Link } from 'react-router-dom'
-import { Zap, ArrowRight, FileText, BookOpen } from 'lucide-react'
+import { Zap, ArrowRight, FileText, BookOpen, Layers } from 'lucide-react'
 
 const PROJECTS = [
+  {
+    slug: 'contentpilot2',
+    name: 'ContentPilot 2.0',
+    description: 'Alternatywne podejście projektowe – nawigacja z etykietami, split pane w czacie, karty zespołów, pełnoekranowy edytor.',
+    icon: Layers,
+    color: 'bg-slate-50 border-slate-200',
+    iconColor: 'bg-slate-700',
+    screens: ['AI Chat', 'AI Teams', 'Dokumenty'],
+    status: 'Koncepcja',
+  },
   {
     slug: 'contentpilot',
     name: 'ContentPilot',

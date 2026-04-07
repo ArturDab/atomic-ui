@@ -20,6 +20,15 @@ function isGroup(e: NavEntry): e is ScreenGroup {
 }
 
 const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
+  contentpilot2: {
+    name: 'ContentPilot 2.0',
+    nav: [
+      { path: 'all',      label: 'Wszystkie widoki' },
+      { path: 'ai-chat',  label: 'AI Chat' },
+      { path: 'ai-teams', label: 'AI Teams' },
+      { path: 'documents', label: 'Dokumenty' },
+    ],
+  },
   contentpilot: {
     name: 'ContentPilot',
     nav: [
