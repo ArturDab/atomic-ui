@@ -5,10 +5,10 @@ import BookOverviewScreen from './BookOverviewScreen'
 import BookEditorScreen from './BookEditorScreen'
 
 const SCREENS = [
-  { path: 'dashboard',      label: 'Dashboard',        Component: DashboardScreen },
-  { path: 'article-editor', label: 'Edytor artykułu',  Component: ArticleEditorScreen },
-  { path: 'book-overview',  label: 'Przegląd książki', Component: BookOverviewScreen },
-  { path: 'book-editor',    label: 'Edytor książki',   Component: BookEditorScreen },
+  { path: 'ms-dashboard',      label: 'Dashboard',        Component: DashboardScreen },
+  { path: 'ms-article', label: 'Edytor artykułu',  Component: ArticleEditorScreen },
+  { path: 'ms-book-overview',  label: 'Przegląd książki', Component: BookOverviewScreen },
+  { path: 'ms-book-editor',    label: 'Edytor książki',   Component: BookEditorScreen },
 ]
 
 export default function AllScreens() {

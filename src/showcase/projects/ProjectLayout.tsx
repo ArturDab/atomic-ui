@@ -23,11 +23,11 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
   manuscript: {
     name: 'Manuscript',
     nav: [
-      { path: 'all',           label: 'Wszystkie widoki' },
-      { path: 'dashboard',     label: 'Dashboard' },
-      { path: 'article-editor', label: 'Edytor artykułu' },
-      { path: 'book-overview',  label: 'Przegląd książki' },
-      { path: 'book-editor',    label: 'Edytor książki' },
+      { path: 'ms-all',          label: 'Wszystkie widoki' },
+      { path: 'ms-dashboard',    label: 'Dashboard' },
+      { path: 'ms-article',      label: 'Edytor artykułu' },
+      { path: 'ms-book-overview', label: 'Przegląd książki' },
+      { path: 'ms-book-editor',  label: 'Edytor książki' },
     ],
   },
   contentpilot2: {
