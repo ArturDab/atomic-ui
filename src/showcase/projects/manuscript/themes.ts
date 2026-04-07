@@ -39,6 +39,8 @@ export const THEMES: Theme[] = [
       '--input':             '40 12% 87%',
       '--ring':              '35 15% 12%',
       '--radius':            '0.375rem',
+      '--editor-font':       "'Lora', Georgia, serif",
+      '--editor-size':       '18px',
     },
   },
   {
@@ -69,6 +71,8 @@ export const THEMES: Theme[] = [
       '--input':             '220 13% 91%',
       '--ring':              '239 84% 67%',
       '--radius':            '0.5rem',
+      '--editor-font':       "'Merriweather', Georgia, serif",
+      '--editor-size':       '17px',
     },
   },
   {
@@ -99,6 +103,8 @@ export const THEMES: Theme[] = [
       '--input':             '38 14% 84%',
       '--ring':              '222 38% 28%',
       '--radius':            '0.25rem',
+      '--editor-font':       "'Source Serif 4', Georgia, serif",
+      '--editor-size':       '19px',
     },
   },
 ]

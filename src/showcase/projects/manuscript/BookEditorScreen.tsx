@@ -384,14 +384,14 @@ export default function BookEditorScreen() {
           </div>
 
           <ScrollArea className="flex-1">
-            <div className="max-w-2xl mx-auto px-8 py-10">
+            <div className="max-w-2xl mx-auto px-8 py-10" style={{ fontFamily: "var(--editor-font, inherit)" }}>
               <div className="mb-6">
                 <p className="text-xs text-foreground/65 uppercase tracking-widest mb-1">Rozdział 3</p>
                 <h1 className="text-2xl font-bold tracking-tight leading-tight">Modele językowe jako fundament</h1>
               </div>
 
               <h2 className="text-lg font-semibold mt-6 mb-3">Czym jest model językowy?</h2>
-              <p className="text-base leading-relaxed mb-4" onMouseUp={() => setShowSelection(true)}>
+              <p className="text-base leading-relaxed mb-4" style={{ fontFamily: "var(--editor-font, inherit)", fontSize: "var(--editor-size, 16px)" }} onMouseUp={() => setShowSelection(true)}>
                 Modele językowe stanowią serce współczesnych systemów agentowych. Ich zdolność do rozumienia i generowania tekstu w języku naturalnym sprawia, że mogą pełnić rolę „mózgu" agenta – interpretować polecenia, planować działania i komunikować wyniki.
               </p>
 

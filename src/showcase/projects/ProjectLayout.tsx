@@ -1,4 +1,6 @@
 import { NavLink, Navigate, Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom'
+import { useRef } from 'react'
+import { ManuscriptThemeProvider, ThemeSwitcher } from './manuscript/ThemeContext'
 import { ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -97,13 +99,16 @@ export default function ProjectLayout() {
 
   const currentPath = location.pathname.split(`/projects/${projectSlug}/`)[1] ?? ''
 
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isManuscript = projectSlug === 'manuscript'
+
   // Find active group (if any)
   const activeGroup = meta.nav
     .filter(isGroup)
     .find(g => g.children.some(c => currentPath === c.path || currentPath.startsWith(c.path + '/')))
 
-  return (
-    <div className="flex flex-col h-screen">
+  const content = (
+    <div ref={containerRef} className="flex flex-col h-screen">
       {/* Primary nav bar */}
       <div className="h-11 bg-foreground flex items-center px-4 gap-2 shrink-0 overflow-hidden">
         <Link
@@ -151,6 +156,12 @@ export default function ProjectLayout() {
             )
           })}
         </nav>
+        {isManuscript && (
+          <>
+            <div className="w-px h-4 bg-background/20 shrink-0" />
+            <ThemeSwitcher />
+          </>
+        )}
       </div>
 
       {/* Secondary nav – shown when inside a group */}
@@ -181,4 +192,14 @@ export default function ProjectLayout() {
       </div>
     </div>
   )
+
+  if (isManuscript) {
+    return (
+      <ManuscriptThemeProvider containerRef={containerRef}>
+        {content}
+      </ManuscriptThemeProvider>
+    )
+  }
+
+  return content
 }

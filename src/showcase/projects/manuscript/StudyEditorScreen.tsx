@@ -183,7 +183,7 @@ export default function StudyEditorScreen() {
           </div>
 
           <ScrollArea className="flex-1">
-            <div className="max-w-2xl mx-auto px-8 py-10">
+            <div className="max-w-2xl mx-auto px-8 py-10" style={{ fontFamily: "var(--editor-font, inherit)" }}>
               <div className="mb-8">
                 <p className="text-[10px] text-foreground/60 uppercase tracking-widest mb-1.5">
                   Sekcja 3
@@ -198,7 +198,7 @@ export default function StudyEditorScreen() {
               </div>
 
               {ACTIVE_CONTENT.map((para, i) => (
-                <p key={i} className="text-base leading-relaxed mb-4" onMouseUp={() => setShowSelection(true)}>
+                <p key={i} className="text-base leading-relaxed mb-4" style={{ fontFamily: "var(--editor-font, inherit)", fontSize: "var(--editor-size, 16px)" }} onMouseUp={() => setShowSelection(true)}>
                   {para}
                 </p>
               ))}
