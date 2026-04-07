@@ -94,3 +94,36 @@ Gdy użytkownik chce zacząć nową aplikację na bazie modułów Atomic UI:
 2. Czekaj na wybór
 3. Stwórz CLAUDE.md dla nowej aplikacji (szablon poniżej)
 4. Przenieś wybrane moduły, adaptuj design system
+
+## Moduł Manuscript (src/modules/manuscript/)
+
+### Struktura
+```
+src/modules/manuscript/
+├── index.ts          – publiczne API modułu (re-exporty)
+├── types.ts          – wszystkie interfejsy TypeScript
+├── hooks/
+│   ├── useDashboard.ts       – filtrowanie, sortowanie, widok listy/siatki
+│   ├── useArticleEditor.ts   – bloki treści, CRUD, wordCount
+│   ├── useBookEditor.ts      – drzewo struktury, aktywny rozdział, bloki per rozdział
+│   └── useAIConversation.ts  – historia konwersacji per dokument/poziom
+└── components/       – tu trafiają komponenty UI po refaktorze z showcase/
+```
+
+### Zasady przenoszenia komponentu showcase → moduł
+1. Usuń hardkodowane dane, zastąp propsami zgodnymi z types.ts
+2. Stan zarządzaj hookiem (useXxx), nie lokalnie w komponencie
+3. Callbacki (onSave, onPublish, onBlockChange) przekazuj z zewnątrz
+4. Komponent nie importuje nic z showcase/
+5. Showcase używa modułu + dostarcza mock-dane i callbacki
+
+### Użycie w nowej aplikacji
+```tsx
+import { useBookEditor, BookEditorProps } from '@/modules/manuscript'
+import BookEditorView from '@/modules/manuscript/components/BookEditorView'
+
+// W komponencie aplikacji:
+const editor = useBookEditor(parts, blocksByChapter)
+// Podłącz do Supabase, przekaż do widoku:
+<BookEditorView {...editor} onSave={saveToSupabase} />
+```
