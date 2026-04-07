@@ -17,7 +17,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import {
-  FilePlus2, FolderPlus, Search, Star, ChevronDown,
+  Plus, FolderPlus, Search, Star, ChevronDown,
   ChevronRight, FileText, FolderClosed, Trash2, Copy, Download,
   Wand2, Sparkles, Bold, Italic, Underline, List, ListOrdered,
   AlignLeft, AlignCenter, Quote, Minus, Link2, Undo2, Redo2,
@@ -61,8 +61,8 @@ export default function DocumentsScreen() {
       {leftOpen && (
         <div className="w-60 border-r flex flex-col shrink-0">
           <div className="h-14 border-b flex items-center px-3 gap-2">
-            <Button className="flex-1 gap-2 justify-start h-9 text-sm">
-              <FilePlus2 className="w-4 h-4 shrink-0 mr-0" /> Nowy dokument
+            <Button className="flex-1 gap-2 justify-start h-10">
+              <Plus className="w-4 h-4 shrink-0" /> Nowy dokument
             </Button>
             <Button variant="outline" size="icon" className="h-9 w-9 shrink-0">
               <FolderPlus className="w-4 h-4" />
