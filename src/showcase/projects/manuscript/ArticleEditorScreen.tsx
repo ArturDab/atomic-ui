@@ -268,7 +268,7 @@ export default function ArticleEditorScreen() {
         {/* AI Panel */}
         {showAI ? (
           <AIPanel
-            className="w-72 shrink-0"
+            className="w-80 shrink-0"
             onClose={() => setShowAI(false)}
             contextTitle="Jak AI Zmienia Content..."
           />

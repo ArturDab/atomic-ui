@@ -428,7 +428,7 @@ export default function BookEditorScreen() {
         {/* Kolumna 4: AI Panel */}
         {showAI ? (
           <AIPanel
-            className="w-72 shrink-0"
+            className="w-80 shrink-0"
             onClose={() => setShowAI(false)}
             contextTitle="Modele językowe jako fundament"
           />
