@@ -3,6 +3,9 @@ import DashboardScreen from './DashboardScreen'
 import ArticleEditorScreen from './ArticleEditorScreen'
 import BookOverviewScreen from './BookOverviewScreen'
 import BookEditorScreen from './BookEditorScreen'
+import StudyEditorScreen from './StudyEditorScreen'
+import NewContentModal from './NewContentModal'
+import WordPressExportPanel from './WordPressExportPanel'
 
 const SCREENS = [
   { path: 'ms-dashboard',      label: 'Dashboard',        Component: DashboardScreen },
@@ -22,7 +25,7 @@ export default function AllScreens() {
             Edytor treści z AI – artykuły, opracowania i książki.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-3 gap-5">
           {SCREENS.map(({ path, label, Component }) => (
             <Link key={path} to={`/projects/${projectSlug}/${path}`}
               className="group border rounded-xl bg-white overflow-hidden hover:border-foreground/30 hover:shadow-md transition-all">
