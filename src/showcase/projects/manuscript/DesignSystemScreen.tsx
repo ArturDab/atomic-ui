@@ -241,9 +241,9 @@ export default function DesignSystemScreen() {
   }
 
   return (
-    <div className="flex flex-col h-full" style={{ background: themeId === 'verso' ? '#1a1e2a' : '#fafafa' }}>
+    <div className="flex flex-col h-full" style={{ background: themeId === 'verso' ? `hsl(222 22% 9%)` : `#fafafa` }}>
       {/* Header */}
-      <div className={cn("border-b px-6 py-3.5 shrink-0", themeId === 'verso' ? 'bg-[#181c2a] text-white' : 'bg-white')}>
+      <div className={cn('border-b px-6 py-3.5 shrink-0', themeId === 'verso' ? 'bg-[#181c2a]' : 'bg-white')}>
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-sm font-semibold">Design System</h1>
@@ -251,34 +251,22 @@ export default function DesignSystemScreen() {
               Wybierz bazowy motyw i dostosuj tokeny. Podgląd aktualizuje się na żywo.
             </p>
           </div>
-          {/* Base theme switcher – two groups */}
-          <div className="flex flex-col gap-1.5 items-end">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] text-muted-foreground mr-1">Klasyczne</span>
-              {THEMES.filter(t => ['ink','nova','folio','lyra'].includes(t.id)).map(t => (
-                <button key={t.id} onClick={() => handleThemeSwitch(t.id)}
-                  className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs transition-all',
-                    themeId===t.id
-                      ? 'border-foreground bg-foreground text-background font-semibold shadow-sm'
-                      : 'border-border bg-white text-muted-foreground hover:border-foreground/30 hover:text-foreground')}>
-                  {themeId===t.id&&<Check className="w-3 h-3"/>}
-                  {t.name}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] text-muted-foreground mr-1">Nowe</span>
-              {THEMES.filter(t => ['verso','chalk','grove'].includes(t.id)).map(t => (
-                <button key={t.id} onClick={() => handleThemeSwitch(t.id)}
-                  className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs transition-all',
-                    themeId===t.id
-                      ? 'border-foreground bg-foreground text-background font-semibold shadow-sm'
-                      : 'border-border bg-white text-muted-foreground hover:border-foreground/30 hover:text-foreground')}>
-                  {themeId===t.id&&<Check className="w-3 h-3"/>}
-                  {t.name}
-                </button>
-              ))}
-            </div>
+          {/* Theme switcher */}
+          <div className="flex items-center gap-1.5">
+            {THEMES.map(t => (
+              <button key={t.id} onClick={() => handleThemeSwitch(t.id)}
+                className={cn(
+                  'flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-sm transition-all',
+                  themeId === t.id
+                    ? 'border-foreground bg-foreground text-background font-semibold shadow-sm'
+                    : t.id === 'verso'
+                      ? 'border-border bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+                      : 'border-border bg-white text-muted-foreground hover:border-foreground/30 hover:text-foreground'
+                )}>
+                {themeId === t.id && <Check className="w-3.5 h-3.5" />}
+                {t.name}
+              </button>
+            ))}
           </div>
         </div>
 

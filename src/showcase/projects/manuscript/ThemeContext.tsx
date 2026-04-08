@@ -7,7 +7,7 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  themeId: 'ink',
+  themeId: 'chalk',
   setThemeId: () => {},
 })
 
@@ -22,7 +22,7 @@ export function ManuscriptThemeProvider({
   children: React.ReactNode
   containerRef: React.RefObject<HTMLDivElement>
 }) {
-  const [themeId, setThemeId] = useState<ThemeId>('ink')
+  const [themeId, setThemeId] = useState<ThemeId>('chalk')
 
   useEffect(() => {
     const el = containerRef.current
@@ -52,14 +52,11 @@ export function ThemeSwitcher() {
       {THEMES.map(t => (
         <button
           key={t.id}
-          onClick={() => setThemeId(t.id)}
+          onClick={() => setThemeId(t.id as any)}
           title={`${t.name} – ${t.tagline}`}
-          className={`
-            px-2.5 py-1 rounded-md text-xs font-medium transition-all
-            ${themeId === t.id
-              ? 'bg-background text-foreground shadow-sm'
-              : 'text-background/60 hover:text-background/90'}
-          `}
+          className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+            themeId === t.id ? 'bg-background text-foreground shadow-sm' : 'text-background/60 hover:text-background/90'
+          }`}
         >
           {t.name}
         </button>
