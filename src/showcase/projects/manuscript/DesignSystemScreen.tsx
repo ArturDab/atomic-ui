@@ -52,6 +52,11 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
       style={{
         '--radius': radius,
         fontFamily: vars['--font-sans'] || 'system-ui',
+        boxShadow: vars['--card-shadow'] !== 'none' ? vars['--card-shadow'] : undefined,
+      } as React.CSSProperties}
+      style={{
+        '--radius': radius,
+        fontFamily: vars['--font-sans'] || 'system-ui',
       } as React.CSSProperties}>
 
       {/* Header */}
@@ -87,8 +92,8 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Structure */}
-        <div className="w-48 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || vars['--background'] || '0 0% 100%'})` }}>
-          <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
+        <div className="w-48 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || '0 0% 95%'})` }}>
+          <div className="h-14 border-b flex items-center justify-between px-4 shrink-0" style={{ background: `hsl(${vars['--sidebar-header'] || '0 0% 93%'})` }}>
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Struktura</span>
             <Plus className="w-4 h-4 text-muted-foreground"/>
           </div>
@@ -119,8 +124,8 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
         </div>
 
         {/* Outline */}
-        <div className="w-36 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || vars['--background'] || '0 0% 100%'})` }}>
-          <div className="h-14 border-b flex items-center px-4 shrink-0">
+        <div className="w-36 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar-light'] || vars['--sidebar'] || '0 0% 97%'})` }}>
+          <div className="h-14 border-b flex items-center px-4 shrink-0" style={{ background: `hsl(${vars['--sidebar-header'] || '0 0% 93%'})` }}>
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Rozdział</span>
           </div>
           <div className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
