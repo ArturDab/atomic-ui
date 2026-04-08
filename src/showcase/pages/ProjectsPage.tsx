@@ -1,99 +1,192 @@
+/**
+ * ProjectsPage – lista projektów z fazami.
+ * Trzy fazy: Makiety → Design System → Funkcjonalne
+ */
 import { Link } from 'react-router-dom'
-import { Zap, ArrowRight, FileText, BookOpen, Layers } from 'lucide-react'
+import { useState } from 'react'
+import {
+  BookOpen, Sparkles, FileText, Globe, Layers,
+  ChevronRight, CheckCircle2, Circle, Clock,
+  Palette, Code2, ArrowRight,
+} from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+type Phase = 'all' | 'mockups' | 'design' | 'functional'
+
+const PHASE_TABS: { id: Phase; label: string; desc: string }[] = [
+  { id: 'all',        label: 'Wszystkie',         desc: '' },
+  { id: 'mockups',    label: 'Makiety',           desc: 'Układy UI, spacing, surówki' },
+  { id: 'design',     label: 'Design System',     desc: 'Tokeny, motywy, typografia' },
+  { id: 'functional', label: 'Funkcjonalne',      desc: 'Hooki, typy, gotowe moduły' },
+]
 
 const PROJECTS = [
   {
     slug: 'manuscript',
     name: 'Manuscript',
-    description: 'Edytor treści z AI – artykuły, opracowania i książki z inline AI, biblioteką promptów i eksportem do WordPress.',
-    icon: FileText,
+    desc: 'Edytor treści z AI – artykuły, opracowania i książki z eksportem do WordPress.',
+    icon: BookOpen,
     color: 'bg-amber-50 border-amber-200',
-    iconColor: 'bg-amber-600',
-    screens: ['Dashboard', 'Edytor artykułu', 'Edytor książki'],
-    status: 'W toku',
-  },
-  {
-    slug: 'contentpilot2',
-    name: 'ContentPilot 2.0',
-    description: 'Alternatywne podejście projektowe – nawigacja z etykietami, split pane w czacie, karty zespołów, pełnoekranowy edytor.',
-    icon: Layers,
-    color: 'bg-slate-50 border-slate-200',
-    iconColor: 'bg-slate-700',
-    screens: ['AI Chat', 'AI Teams', 'Dokumenty'],
-    status: 'Koncepcja',
+    iconColor: 'text-amber-600',
+    phases: {
+      mockups:    { done: true,  count: 7,  label: '7 widoków' },
+      design:     { done: true,  count: 3,  label: '3 motywy' },
+      functional: { done: true,  count: 4,  label: '4 hooki' },
+    },
+    activePhase: 'design' as Phase,
   },
   {
     slug: 'contentpilot',
     name: 'ContentPilot',
-    description: 'Generator treści AI z edytorem i publikacją do WordPress.',
-    icon: Zap,
+    desc: 'AI workspace – chat, teams, studio, dokumenty.',
+    icon: Sparkles,
+    color: 'bg-blue-50 border-blue-200',
+    iconColor: 'text-blue-600',
+    phases: {
+      mockups:    { done: true,  count: 6,  label: '6 widoków' },
+      design:     { done: false, count: 0,  label: 'W planie' },
+      functional: { done: false, count: 0,  label: 'W planie' },
+    },
+    activePhase: 'mockups' as Phase,
+  },
+  {
+    slug: 'contentpilot2',
+    name: 'ContentPilot 2.0',
+    desc: 'Przeprojektowany CP – progressive disclosure, context-first.',
+    icon: Sparkles,
     color: 'bg-violet-50 border-violet-200',
-    iconColor: 'bg-violet-600',
-    screens: ['Dashboard', 'Dokumenty', 'Edytor', 'Prompty', 'Ustawienia'],
-    status: 'W toku',
+    iconColor: 'text-violet-600',
+    phases: {
+      mockups:    { done: true,  count: 8,  label: '8 widoków' },
+      design:     { done: false, count: 0,  label: 'W planie' },
+      functional: { done: false, count: 0,  label: 'W planie' },
+    },
+    activePhase: 'mockups' as Phase,
   },
 ]
 
-const PLACEHOLDER = [
-  { name: 'Prompt Panel', description: 'Zarządzanie promptami dla zespołów.', icon: FileText, color: 'bg-blue-50 border-blue-200', iconColor: 'bg-blue-600' },
-  { name: 'Lyreco Toolkit', description: 'Narzędzia marketingowe dla Lyreco.', icon: BookOpen, color: 'bg-orange-50 border-orange-200', iconColor: 'bg-orange-600' },
-]
+const PHASE_CONFIG = {
+  mockups:    { icon: FileText,  color: 'text-slate-500', bg: 'bg-slate-100',   label: 'Makiety' },
+  design:     { icon: Palette,   color: 'text-blue-600',  bg: 'bg-blue-100',    label: 'Design System' },
+  functional: { icon: Code2,     color: 'text-emerald-600', bg: 'bg-emerald-100', label: 'Funkcjonalne' },
+}
 
 export default function ProjectsPage() {
+  const [activeFilter, setActiveFilter] = useState<Phase>('all')
+
+  const filtered = PROJECTS.filter(p => {
+    if (activeFilter === 'all') return true
+    return p.phases[activeFilter as keyof typeof p.phases].done
+  })
+
   return (
-    <div className="max-w-3xl mx-auto px-8 py-10">
-      <div className="mb-10">
-        <h1 className="text-2xl font-semibold mb-1.5 tracking-tight">Projekty</h1>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Widoki UI dedykowane poszczególnym aplikacjom. Każdy projekt ma własny design system i zestaw ekranów.
+    <div className="max-w-4xl mx-auto px-8 py-8 space-y-6">
+
+      {/* Header */}
+      <div>
+        <h1 className="text-xl font-semibold tracking-tight">Projekty</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Każdy projekt przechodzi przez trzy fazy: Makiety → Design System → Funkcjonalne prototypy.
         </p>
       </div>
 
-      <div className="space-y-3">
-        {PROJECTS.map(p => (
-          <Link
-            key={p.slug}
-            to={`/projects/${p.slug}`}
-            className={cn(
-              "flex items-center gap-5 border rounded-xl p-5 hover:shadow-sm transition-all group",
-              p.color
-            )}
-          >
-            <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center shrink-0", p.iconColor)}>
-              <p.icon className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="font-semibold text-sm">{p.name}</span>
-                <span className="text-xs text-muted-foreground border bg-white rounded-full px-2 py-0.5">{p.status}</span>
+      {/* Fazy – info */}
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { phase: 'mockups',    title: 'Makiety',           desc: 'Układy UI i UX, surówki z neutralnymi kolorami. Weryfikacja flow i spacing.' },
+          { phase: 'design',     title: 'Design System',     desc: 'Tokeny kolorów, typografia, radiusy, motywy. Podgląd na żywo.' },
+          { phase: 'functional', title: 'Funkcjonalne',      desc: 'Hooki stanu, typy TypeScript, gotowe moduły do eksportu.' },
+        ].map((item, i) => {
+          const cfg = PHASE_CONFIG[item.phase as keyof typeof PHASE_CONFIG]
+          const Icon = cfg.icon
+          return (
+            <div key={item.phase} className="border rounded-xl p-4 bg-white">
+              <div className="flex items-center gap-2 mb-2">
+                <span className={cn('w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center text-white',
+                  i === 0 ? 'bg-slate-500' : i === 1 ? 'bg-blue-500' : 'bg-emerald-500'
+                )}>{i + 1}</span>
+                <span className="text-sm font-semibold">{item.title}</span>
               </div>
-              <p className="text-xs text-muted-foreground">{p.description}</p>
-              <p className="text-xs text-muted-foreground/70 mt-1">{p.screens.join(' · ')}</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
             </div>
-            <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-0.5 transition-transform shrink-0" />
-          </Link>
-        ))}
+          )
+        })}
+      </div>
 
-        {PLACEHOLDER.map(p => (
-          <div
-            key={p.name}
-            className={cn("flex items-center gap-5 border rounded-xl p-5 opacity-40 cursor-not-allowed", p.color)}
-          >
-            <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center shrink-0", p.iconColor)}>
-              <p.icon className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex-1">
-              <p className="font-semibold text-sm">{p.name}</p>
-              <p className="text-xs text-muted-foreground">{p.description}</p>
-            </div>
-            <span className="text-xs text-muted-foreground border bg-white rounded-full px-2 py-0.5 shrink-0">Planowany</span>
-          </div>
+      {/* Filtr faz */}
+      <div className="flex items-center gap-1 bg-muted/50 rounded-xl p-1 w-fit">
+        {PHASE_TABS.map(tab => (
+          <button key={tab.id} onClick={() => setActiveFilter(tab.id)}
+            className={cn(
+              'px-4 py-2 rounded-lg text-sm transition-all',
+              activeFilter === tab.id
+                ? 'bg-background text-foreground font-medium shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+            )}>
+            {tab.label}
+          </button>
         ))}
+      </div>
+
+      {/* Projekty */}
+      <div className="space-y-4">
+        {filtered.map(project => {
+          const Icon = project.icon
+          return (
+            <div key={project.slug} className="border rounded-2xl bg-white overflow-hidden hover:border-foreground/20 hover:shadow-sm transition-all">
+              {/* Header projektu */}
+              <div className="flex items-start gap-4 px-6 py-5 border-b">
+                <div className={cn('w-10 h-10 rounded-xl border flex items-center justify-center shrink-0', project.color)}>
+                  <Icon className={cn('w-5 h-5', project.iconColor)} />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <h3 className="text-base font-semibold">{project.name}</h3>
+                    <span className={cn(
+                      'text-[10px] px-2 py-0.5 rounded-full font-medium',
+                      PHASE_CONFIG[project.activePhase as keyof typeof PHASE_CONFIG]?.bg,
+                      PHASE_CONFIG[project.activePhase as keyof typeof PHASE_CONFIG]?.color,
+                    )}>
+                      {PHASE_CONFIG[project.activePhase as keyof typeof PHASE_CONFIG]?.label}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{project.desc}</p>
+                </div>
+                <Link to={`/projects/${project.slug}`}
+                  className="flex items-center gap-1.5 text-sm font-medium border rounded-lg px-4 py-2 hover:bg-muted transition-colors shrink-0">
+                  Otwórz <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              {/* Pasek faz */}
+              <div className="flex divide-x">
+                {(['mockups', 'design', 'functional'] as const).map(phase => {
+                  const cfg = PHASE_CONFIG[phase]
+                  const Icon2 = cfg.icon
+                  const info = project.phases[phase]
+                  const isActive = project.activePhase === phase
+                  return (
+                    <div key={phase} className={cn(
+                      'flex-1 flex items-center gap-2.5 px-5 py-3.5 transition-colors',
+                      isActive ? 'bg-muted/50' : ''
+                    )}>
+                      {info.done
+                        ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                        : <Circle className="w-4 h-4 text-muted-foreground/30 shrink-0" />}
+                      <div>
+                        <p className={cn('text-xs font-medium', isActive ? 'text-foreground' : 'text-muted-foreground')}>
+                          {cfg.label}
+                        </p>
+                        <p className="text-[10px] text-muted-foreground">{info.label}</p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
-}
-
-function cn(...classes: (string | undefined | false)[]): string {
-  return classes.filter(Boolean).join(' ')
 }

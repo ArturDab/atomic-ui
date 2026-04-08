@@ -34,6 +34,7 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
       { path: 'ms-new-content',   label: 'Nowa treść' },
       { path: 'ms-wp-export',     label: 'Eksport WP' },
       { path: 'ms-design-system', label: 'Design System' },
+      { path: 'ms-docs',          label: 'Docs & Prompty' },
     ],
   },
   contentpilot2: {

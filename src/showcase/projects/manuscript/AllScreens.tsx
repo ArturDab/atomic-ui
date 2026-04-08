@@ -7,6 +7,7 @@ import StudyEditorScreen from './StudyEditorScreen'
 import NewContentScreen from './NewContentScreen'
 import WPExportScreen from './WPExportScreen'
 import DesignSystemScreen from './DesignSystemScreen'
+import ProjectDocsScreen from './ProjectDocsScreen'
 
 const SCREENS = [
   { path: 'ms-dashboard',     label: 'Dashboard',             Component: DashboardScreen },
@@ -17,6 +18,7 @@ const SCREENS = [
   { path: 'ms-new-content', label: 'Nowa treść (modal)',    Component: NewContentScreen },
   { path: 'ms-wp-export',    label: 'Eksport do WordPress',  Component: WPExportScreen },
   { path: 'ms-design-system', label: 'Design System',          Component: DesignSystemScreen },
+  { path: 'ms-docs',          label: 'Docs & Prompty',         Component: ProjectDocsScreen },
 ]
 
 export default function AllScreens() {
