@@ -85,8 +85,10 @@ const COLOR_TOKENS = [
 ]
 
 const FONT_OPTIONS = [
-  { value: "'DM Sans', system-ui, sans-serif",       label: 'DM Sans',        type: 'sans' as const },
-  { value: "system-ui, -apple-system, sans-serif",   label: 'System UI',      type: 'sans' as const },
+  { value: "'Geist', system-ui, sans-serif",           label: 'Geist',          type: 'sans' as const },
+  { value: "'DM Sans', system-ui, sans-serif",         label: 'DM Sans',        type: 'sans' as const },
+  { value: "'Inter', system-ui, sans-serif",           label: 'Inter',          type: 'sans' as const },
+  { value: "system-ui, -apple-system, sans-serif",     label: 'System UI',      type: 'sans' as const },
   { value: "'Lora', Georgia, serif",                 label: 'Lora',           type: 'serif' as const },
   { value: "'Merriweather', Georgia, serif",         label: 'Merriweather',   type: 'serif' as const },
   { value: "'Source Serif 4', Georgia, serif",       label: 'Source Serif 4', type: 'serif' as const },
@@ -475,11 +477,14 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { label: 'Brak',     shadow: 'none' },
-                    { label: 'Subtelny', shadow: '0 1px 3px rgba(0,0,0,0.06)' },
-                    { label: 'Wyraźny', shadow: '0 4px 12px rgba(0,0,0,0.10)' },
+                    { label: 'Subtelny', shadow: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)' },
+                    { label: 'Wyraźny',  shadow: '0 4px 12px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06)' },
                   ].map(opt => (
                     <button key={opt.label}
-                      className="flex flex-col items-center gap-2 p-3 rounded-xl border hover:border-foreground/30 transition-all">
+                      onClick={() => updateVar('--card-shadow', opt.shadow)}
+                      className={cn('flex flex-col items-center gap-2 p-3 rounded-xl border transition-all',
+                        (vars['--card-shadow']||'none')===opt.shadow
+                          ?'border-foreground bg-muted/30':'border-border hover:border-foreground/30')}>
                       <div className="w-12 h-8 bg-background border rounded-lg" style={{ boxShadow: opt.shadow }} />
                       <span className="text-[10px] text-muted-foreground">{opt.label}</span>
                     </button>

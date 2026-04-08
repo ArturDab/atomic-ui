@@ -49,7 +49,10 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
   return (
     <div ref={containerRef} data-manuscript-theme="true"
       className="flex flex-col h-full bg-background text-foreground overflow-hidden rounded-xl border"
-      style={{ '--radius': radius } as React.CSSProperties}>
+      style={{
+        '--radius': radius,
+        fontFamily: vars['--font-sans'] || 'system-ui',
+      } as React.CSSProperties}>
 
       {/* Header */}
       <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-background">
@@ -84,7 +87,7 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Structure */}
-        <div className="w-48 border-r flex flex-col shrink-0 bg-background">
+        <div className="w-48 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || vars['--background'] || '0 0% 100%'})` }}>
           <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Struktura</span>
             <Plus className="w-4 h-4 text-muted-foreground"/>
@@ -116,7 +119,7 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
         </div>
 
         {/* Outline */}
-        <div className="w-36 border-r flex flex-col shrink-0 bg-background">
+        <div className="w-36 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || vars['--background'] || '0 0% 100%'})` }}>
           <div className="h-14 border-b flex items-center px-4 shrink-0">
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Rozdział</span>
           </div>
@@ -176,7 +179,7 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
         </div>
 
         {/* AI Panel */}
-        <div className="w-64 border-l flex flex-col shrink-0 bg-background">
+        <div className="w-64 border-l flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || vars['--background'] || '0 0% 100%'})` }}>
           <div className="h-14 border-b flex items-center gap-2.5 px-4 shrink-0">
             <Sparkles className="w-4 h-4 text-muted-foreground"/>
             <span className="text-sm font-semibold flex-1">Asystent AI</span>
