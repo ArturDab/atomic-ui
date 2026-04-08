@@ -32,6 +32,11 @@ export function ManuscriptThemeProvider({
     Object.entries(theme.vars).forEach(([key, val]) => {
       el.style.setProperty(key, val)
     })
+    // Apply font-family directly so it cascades to children
+    const fontSans = theme.vars['--font-sans']
+    if (fontSans) {
+      el.style.setProperty('font-family', fontSans.replace(/'/g, '').split(',')[0] + ', system-ui, sans-serif')
+    }
   }, [themeId, containerRef])
 
   return (

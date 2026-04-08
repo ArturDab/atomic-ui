@@ -228,14 +228,12 @@ function RankMathPanel({ values, onChange }: {
 // ── Główny panel ───────────────────────────────────────────────────────────
 
 interface WordPressExportPanelProps {
-  onClose: () => void
   articleTitle?: string
   wordCount?: number
   blockCount?: number
 }
 
 export default function WordPressExportPanel({
-  onClose,
   articleTitle = 'Jak AI Zmienia Content Marketing w 2025 Roku',
   wordCount = 2840,
   blockCount = 13,
@@ -264,8 +262,7 @@ export default function WordPressExportPanel({
   }
 
   return (
-    <div className="bg-background rounded-2xl shadow-2xl border w-full max-w-2xl mx-4 flex flex-col max-h-[90vh]"
-      onClick={e => e.stopPropagation()}>
+    <div className="bg-background rounded-2xl shadow-xl border w-full max-w-6xl mx-auto flex flex-col">
 
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b shrink-0">
@@ -278,13 +275,12 @@ export default function WordPressExportPanel({
             <p className="text-xs text-foreground/60 mt-0.5 truncate max-w-xs">{articleTitle}</p>
           </div>
         </div>
-        <button onClick={onClose} className="text-foreground/40 hover:text-foreground transition-colors p-1.5 hover:bg-muted rounded-lg">
-          <X className="w-4 h-4" />
-        </button>
+
       </div>
 
-      <ScrollArea className="flex-1">
-        <div className="px-6 py-5 space-y-5">
+      <div className="flex-1 overflow-hidden">
+        <div className="grid grid-cols-2 divide-x h-full">
+          <div className="overflow-y-auto px-6 py-5 space-y-5">
 
           {/* WP Connection status */}
           <div className="flex items-center justify-between p-3.5 rounded-xl border bg-emerald-50 border-emerald-200">
@@ -425,11 +421,6 @@ export default function WordPressExportPanel({
               rows={2} className="w-full text-sm border rounded-lg px-3 py-2 resize-none outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground" />
           </div>
 
-          {/* Rank Math */}
-          <RankMathPanel values={seoValues} onChange={onSeoChange} />
-
-          <Separator />
-
           {/* Publish mode */}
           <div className="space-y-3">
             <label className="text-sm font-medium">Publikacja</label>
@@ -462,8 +453,9 @@ export default function WordPressExportPanel({
             )}
           </div>
 
+          </div>
         </div>
-      </ScrollArea>
+      </div>
 
       {/* Footer */}
       <div className="px-6 py-4 border-t shrink-0 bg-muted/20">
@@ -484,7 +476,7 @@ export default function WordPressExportPanel({
           </div>
         ) : (
           <div className="flex gap-3">
-            <Button variant="outline" className="h-10" onClick={onClose}>Anuluj</Button>
+            
             <Button className="flex-1 h-10 gap-2" onClick={handleExport} disabled={exporting}>
               {exporting ? (
                 <><Loader2 className="w-4 h-4 animate-spin" /> Wysyłam...</>

@@ -66,11 +66,9 @@ function getTemplates(type: ContentType) {
   return BOOK_TEMPLATES
 }
 
-interface NewContentModalProps {
-  onClose: () => void
-}
+interface NewContentModalProps {}
 
-export default function NewContentModal({ onClose }: NewContentModalProps) {
+export default function NewContentModal(_props: NewContentModalProps = {}) {
   const [step, setStep] = React.useState<Step>('type')
   const [type, setType] = React.useState<ContentType | null>(null)
   const [template, setTemplate] = React.useState('blank')
@@ -120,9 +118,7 @@ export default function NewContentModal({ onClose }: NewContentModalProps) {
                 </div>
               ))}
             </div>
-            <button onClick={onClose} className="text-muted-foreground hover:text-foreground transition-colors p-1">
-              <X className="w-4 h-4" />
-            </button>
+
           </div>
         </div>
 
@@ -254,7 +250,7 @@ export default function NewContentModal({ onClose }: NewContentModalProps) {
               <Button variant="outline" onClick={() => { setStep('type') }}>
                 <ArrowLeft className="w-4 h-4 mr-1.5" /> Wróć
               </Button>
-              <Button onClick={onClose} disabled={!title.trim()} className="gap-2">
+              <Button disabled={!title.trim()} className="gap-2">
                 Utwórz {selectedType?.label.toLowerCase()} <ChevronRight className="w-4 h-4" />
               </Button>
             </div>

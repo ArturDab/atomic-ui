@@ -41,6 +41,7 @@ export const THEMES: Theme[] = [
       '--radius':            '0.375rem',
       '--editor-font':       "'Lora', Georgia, serif",
       '--editor-size':       '18px',
+      '--font-sans':         "'Inter', system-ui, sans-serif",
     },
   },
   {
@@ -73,6 +74,7 @@ export const THEMES: Theme[] = [
       '--radius':            '0.5rem',
       '--editor-font':       "'Merriweather', Georgia, serif",
       '--editor-size':       '17px',
+      '--font-sans':         "'Geist', system-ui, sans-serif",
     },
   },
   {
@@ -105,6 +107,7 @@ export const THEMES: Theme[] = [
       '--radius':            '0.25rem',
       '--editor-font':       "'Source Serif 4', Georgia, serif",
       '--editor-size':       '19px',
+      '--font-sans':         "'Geist', system-ui, sans-serif",
     },
   },
 ]

@@ -71,7 +71,7 @@ const STATUS_CONFIG: Record<Status, { label: string; dot: string }> = {
 
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
-    <div className="bg-white border rounded-xl px-5 py-4">
+    <div className="bg-card border rounded-xl px-5 py-4">
       <p className="text-xs text-foreground/65 mb-1">{label}</p>
       <p className="text-2xl font-semibold tracking-tight">{value}</p>
       {sub && <p className="text-xs text-foreground/60 mt-0.5">{sub}</p>}
@@ -98,7 +98,7 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
 
   if (view === 'list') {
     return (
-      <div className="group flex items-center gap-4 px-4 py-3 bg-white border rounded-xl hover:border-foreground/20 hover:shadow-sm transition-all">
+      <div className="group flex items-center gap-4 px-4 py-3 bg-card border rounded-xl hover:border-foreground/20 hover:shadow-sm transition-all">
         <div className={cn('w-8 h-8 rounded-lg border flex items-center justify-center shrink-0', TYPE_CONFIG[item.type].bg)}>
           <Icon className={cn('w-4 h-4', color)} />
         </div>
@@ -150,7 +150,7 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
   }
 
   return (
-    <div className="group bg-white border rounded-xl p-4 hover:border-foreground/20 hover:shadow-sm transition-all flex flex-col">
+    <div className="group bg-card border rounded-xl p-4 hover:border-foreground/20 hover:shadow-sm transition-all flex flex-col">
       <div className="flex items-start justify-between mb-3">
         <div className={cn('w-9 h-9 rounded-lg border flex items-center justify-center', TYPE_CONFIG[item.type].bg)}>
           <Icon className={cn('w-4 h-4', color)} />
@@ -237,9 +237,9 @@ export default function DashboardScreen() {
   ]
 
   return (
-    <div className="min-h-full bg-[#fafafa]">
+    <div className="min-h-full bg-background">
       {/* Top bar */}
-      <div className="bg-white border-b">
+      <div className="bg-background/95 border-b backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-semibold tracking-tight">Manuscript</h1>
@@ -286,7 +286,7 @@ export default function DashboardScreen() {
         {/* Filters + search + sort */}
         <div className="flex items-center gap-3">
           {/* Type tabs */}
-          <div className="flex items-center gap-1 bg-white border rounded-lg p-1 shrink-0">
+          <div className="flex items-center gap-1 bg-card border rounded-lg p-1 shrink-0">
             {FILTERS.map(f => (
               <button key={f.value} onClick={() => setFilter(f.value)}
                 className={cn(

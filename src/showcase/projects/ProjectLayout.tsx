@@ -1,5 +1,5 @@
 import { NavLink, Navigate, Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom'
-import { useRef } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import { ManuscriptThemeProvider, ThemeSwitcher } from './manuscript/ThemeContext'
 import { ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -109,6 +109,30 @@ export default function ProjectLayout() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isManuscript = projectSlug === 'manuscript'
 
+  // Collect all flat paths for arrow navigation
+  const allPaths = meta.nav.flatMap(entry =>
+    isGroup(entry) ? entry.children.map(c => c.path) : [(entry as ScreenItem).path]
+  )
+  const currentPathIdx = allPaths.findIndex(p => currentPath === p || currentPath.startsWith(p + '/'))
+
+  const navigatePrev = useCallback(() => {
+    if (currentPathIdx > 0) navigate(`/projects/${projectSlug}/${allPaths[currentPathIdx - 1]}`)
+  }, [currentPathIdx, allPaths, navigate, projectSlug])
+
+  const navigateNext = useCallback(() => {
+    if (currentPathIdx < allPaths.length - 1) navigate(`/projects/${projectSlug}/${allPaths[currentPathIdx + 1]}`)
+  }, [currentPathIdx, allPaths, navigate, projectSlug])
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+      if (e.key === 'ArrowLeft')  navigatePrev()
+      if (e.key === 'ArrowRight') navigateNext()
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [navigatePrev, navigateNext])
+
   // Find active group (if any)
   const activeGroup = meta.nav
     .filter(isGroup)
@@ -171,10 +195,10 @@ export default function ProjectLayout() {
         )}
       </div>
 
-      {/* Secondary nav – shown when inside a group */}
-      {activeGroup && (
+      {/* Secondary nav – always shown for manuscript groups */}
+      {(activeGroup || isManuscript) && meta.nav.some(isGroup) && (
         <div className="h-9 bg-neutral-800 flex items-center px-4 gap-1 shrink-0">
-          {activeGroup.children.map(child => {
+          {(activeGroup || meta.nav.filter(isGroup)[0])?.children.map(child => {
             const isActive = currentPath === child.path || currentPath.startsWith(child.path + '/')
             return (
               <NavLink
@@ -194,7 +218,22 @@ export default function ProjectLayout() {
         </div>
       )}
 
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden relative">
+        {/* Left/Right arrow navigation */}
+        {currentPathIdx > 0 && (
+          <button onClick={navigatePrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex items-center justify-center bg-background/80 hover:bg-background border border-l-0 rounded-r-lg shadow-sm transition-colors group"
+            title="Poprzedni widok (←)">
+            <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          </button>
+        )}
+        {currentPathIdx < allPaths.length - 1 && (
+          <button onClick={navigateNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex items-center justify-center bg-background/80 hover:bg-background border border-r-0 rounded-l-lg shadow-sm transition-colors group"
+            title="Następny widok (→)">
+            <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          </button>
+        )}
         <Outlet />
       </div>
     </div>
