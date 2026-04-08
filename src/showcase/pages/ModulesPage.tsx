@@ -8,11 +8,11 @@ import { cn } from '@/lib/utils'
 
 const MODULES = [
   {
-    id: 'manuscript',
-    name: 'Manuscript',
+    id: 'lyra',
+    name: 'Lyra',
     description: 'Edytor treści z AI – artykuły, opracowania i książki. Gotowy do przeniesienia do dowolnej aplikacji.',
     status: 'ready' as const,
-    path: 'src/modules/manuscript/',
+    path: 'src/modules/lyra/',
     hooks: [
       { name: 'useDashboard', desc: 'Filtrowanie, sortowanie, widok listy/siatki, stats, star/delete' },
       { name: 'useArticleEditor', desc: 'Bloki treści, CRUD, wordCount, pełny/pełnoekranowy widok' },
@@ -26,17 +26,17 @@ const MODULES = [
       'NewContentConfig',
     ],
     screens: [
-      { name: 'Dashboard', path: '/projects/manuscript/ms-dashboard' },
-      { name: 'Edytor artykułu', path: '/projects/manuscript/ms-article' },
-      { name: 'Edytor opracowania', path: '/projects/manuscript/ms-study-editor' },
-      { name: 'Przegląd książki', path: '/projects/manuscript/ms-book-overview' },
-      { name: 'Edytor książki', path: '/projects/manuscript/ms-book-editor' },
-      { name: 'Nowa treść', path: '/projects/manuscript/ms-new-content' },
-      { name: 'Eksport WordPress', path: '/projects/manuscript/ms-wp-export' },
+      { name: 'Dashboard', path: '/projects/lyra/ly-dashboard' },
+      { name: 'Edytor artykułu', path: '/projects/lyra/ly-article' },
+      { name: 'Edytor opracowania', path: '/projects/lyra/ly-study-editor' },
+      { name: 'Przegląd książki', path: '/projects/lyra/ly-book-overview' },
+      { name: 'Edytor książki', path: '/projects/lyra/ly-book-editor' },
+      { name: 'Nowa treść', path: '/projects/lyra/ly-new-content' },
+      { name: 'Eksport WordPress', path: '/projects/lyra/ly-wp-export' },
     ],
     usage: `// 1. Importuj hook i typy
-import { useBookEditor } from '@/modules/manuscript'
-import type { BookPart } from '@/modules/manuscript'
+import { useBookEditor } from '@/modules/lyra'
+import type { BookPart } from '@/modules/lyra'
 
 // 2. Dostarcz dane (z API / Supabase / mock)
 const parts: BookPart[] = await fetchPartsFromDB()
@@ -60,7 +60,7 @@ const STATUS = {
 }
 
 export default function ModulesPage() {
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({ manuscript: true })
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({ lyra: true })
   const toggle = (id: string) => setExpanded(p => ({ ...p, [id]: !p[id] }))
 
   return (
@@ -89,7 +89,7 @@ export default function ModulesPage() {
               {(layer as any).arrow && (
                 <div className="flex justify-center text-muted-foreground text-xs my-0.5">↓</div>
               )}
-              <div className={cn('rounded-lg border px-4 py-2.5 flex items-center justify-between', layer.color)}>
+              <div className={cn('rounded-lg border px-4 py-2.5 flex itely-center justify-between', layer.color)}>
                 <span className="text-sm font-semibold font-mono">{layer.label}</span>
                 <span className="text-xs opacity-70">{layer.desc}</span>
               </div>
@@ -107,10 +107,10 @@ export default function ModulesPage() {
             {/* Header */}
             <button
               onClick={() => toggle(mod.id)}
-              className="w-full flex items-center gap-3 px-5 py-4 hover:bg-muted/30 transition-colors text-left">
+              className="w-full flex itely-center gap-3 px-5 py-4 hover:bg-muted/30 transition-colors text-left">
               <BookOpen className="w-5 h-5 text-muted-foreground shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
+                <div className="flex itely-center gap-2">
                   <span className="font-semibold">{mod.name}</span>
                   <span className={cn('text-[10px] px-2 py-0.5 rounded-full border font-medium', st.color)}>
                     {st.label}
@@ -130,7 +130,7 @@ export default function ModulesPage() {
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Hooki</p>
                   <div className="space-y-2">
                     {mod.hooks.map(h => (
-                      <div key={h.name} className="flex items-start gap-3">
+                      <div key={h.name} className="flex itely-start gap-3">
                         <code className="text-xs font-mono bg-muted px-2 py-0.5 rounded text-foreground shrink-0">{h.name}</code>
                         <span className="text-xs text-muted-foreground leading-relaxed">{h.desc}</span>
                       </div>
@@ -154,7 +154,7 @@ export default function ModulesPage() {
                   <div className="flex flex-wrap gap-2">
                     {mod.screens.map(s => (
                       <a key={s.name} href={s.path}
-                        className="text-xs px-3 py-1.5 rounded-lg border hover:border-foreground/30 hover:bg-muted/30 transition-colors flex items-center gap-1.5 text-foreground/70 hover:text-foreground">
+                        className="text-xs px-3 py-1.5 rounded-lg border hover:border-foreground/30 hover:bg-muted/30 transition-colors flex itely-center gap-1.5 text-foreground/70 hover:text-foreground">
                         {s.name} <ExternalLink className="w-2.5 h-2.5 opacity-50" />
                       </a>
                     ))}
@@ -185,7 +185,7 @@ export default function ModulesPage() {
           ))}
         </div>
         <p className="text-xs text-muted-foreground mt-3">
-          Wyekstrahowane z ContentPilot 2.0 gdy zakończą fazę prototypowania.
+          Wyekstrahowane z Altair 2.0 gdy zakończą fazę prototypowania.
         </p>
       </div>
     </div>

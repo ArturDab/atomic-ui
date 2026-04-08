@@ -26,7 +26,7 @@ export function PromptCard({ category, title, description, paramCount, onUse }: 
 
   return (
     <div className='border rounded-xl bg-white p-5 hover:border-foreground/20 hover:shadow-sm transition-all flex flex-col gap-3 group'>
-      <div className='flex items-center justify-between'>
+      <div className='flex itely-center justify-between'>
         <Badge variant='outline' className={cn('text-xs font-medium', colorClass)}>
           {category}
         </Badge>
@@ -37,8 +37,8 @@ export function PromptCard({ category, title, description, paramCount, onUse }: 
         <p className='text-xs text-muted-foreground leading-relaxed line-clamp-2'>{description}</p>
       </div>
 
-      <div className='flex items-center justify-between pt-2 border-t mt-auto'>
-        <span className='flex items-center gap-1.5 text-xs text-muted-foreground'>
+      <div className='flex itely-center justify-between pt-2 border-t mt-auto'>
+        <span className='flex itely-center gap-1.5 text-xs text-muted-foreground'>
           <Sliders className='w-3 h-3' />
           {paramCount} {paramCount === 1 ? 'parametr' : paramCount < 5 ? 'parametry' : 'parametrów'}
         </span>

@@ -95,11 +95,11 @@ Gdy użytkownik chce zacząć nową aplikację na bazie modułów Atomic UI:
 3. Stwórz CLAUDE.md dla nowej aplikacji (szablon poniżej)
 4. Przenieś wybrane moduły, adaptuj design system
 
-## Moduł Manuscript (src/modules/manuscript/)
+## Moduł Lyra (src/modules/lyra/)
 
 ### Struktura
 ```
-src/modules/manuscript/
+src/modules/lyra/
 ├── index.ts          – publiczne API modułu (re-exporty)
 ├── types.ts          – wszystkie interfejsy TypeScript
 ├── hooks/
@@ -119,8 +119,8 @@ src/modules/manuscript/
 
 ### Użycie w nowej aplikacji
 ```tsx
-import { useBookEditor, BookEditorProps } from '@/modules/manuscript'
-import BookEditorView from '@/modules/manuscript/components/BookEditorView'
+import { useBookEditor, BookEditorProps } from '@/modules/lyra'
+import BookEditorView from '@/modules/lyra/components/BookEditorView'
 
 // W komponencie aplikacji:
 const editor = useBookEditor(parts, blocksByChapter)

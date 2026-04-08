@@ -30,7 +30,7 @@ export default function Sidebar({ query }: SidebarProps) {
 
   return (
     <aside className="w-56 border-r flex flex-col shrink-0 bg-white">
-      <div className="h-13 border-b flex items-center px-4 gap-2.5 shrink-0">
+      <div className="h-13 border-b flex itely-center px-4 gap-2.5 shrink-0">
         <Layers className="w-4 h-4 text-foreground" strokeWidth={1.75} />
         <span className="font-semibold text-sm tracking-tight">Atomic UI</span>
       </div>
@@ -44,7 +44,7 @@ export default function Sidebar({ query }: SidebarProps) {
               to={to}
               end={end}
               className={({ isActive }) => cn(
-                'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors',
+                'flex itely-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors',
                 isActive
                   ? 'bg-foreground text-background font-medium'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'

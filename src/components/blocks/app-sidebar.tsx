@@ -23,11 +23,11 @@ interface AppSidebarProps {
   appName?: string
 }
 
-export function AppSidebar({ activeHref = '/documents', user, appName = 'ContentPilot' }: AppSidebarProps) {
+export function AppSidebar({ activeHref = '/documents', user, appName = 'Altair' }: AppSidebarProps) {
   return (
     <aside className='w-56 border-r bg-white flex flex-col h-full'>
-      <div className='h-14 border-b flex items-center px-4 gap-2.5 shrink-0'>
-        <div className='w-6 h-6 rounded bg-foreground flex items-center justify-center'>
+      <div className='h-14 border-b flex itely-center px-4 gap-2.5 shrink-0'>
+        <div className='w-6 h-6 rounded bg-foreground flex itely-center justify-center'>
           <Zap className='w-3.5 h-3.5 text-background' />
         </div>
         <span className='font-semibold text-sm tracking-tight'>{appName}</span>
@@ -41,7 +41,7 @@ export function AppSidebar({ activeHref = '/documents', user, appName = 'Content
               key={item.href}
               href={item.href}
               className={cn(
-                'flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors',
+                'flex itely-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors',
                 isActive
                   ? 'bg-foreground text-background font-medium'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -61,7 +61,7 @@ export function AppSidebar({ activeHref = '/documents', user, appName = 'Content
 
       <div className='border-t px-2 py-2'>
         <a href='/settings' className={cn(
-          'flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors',
+          'flex itely-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors',
           activeHref === '/settings'
             ? 'bg-foreground text-background font-medium'
             : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -72,8 +72,8 @@ export function AppSidebar({ activeHref = '/documents', user, appName = 'Content
       </div>
 
       {user && (
-        <div className='border-t px-4 py-3 flex items-center gap-2.5'>
-          <div className='w-7 h-7 rounded-full bg-muted flex items-center justify-center text-xs font-semibold shrink-0'>
+        <div className='border-t px-4 py-3 flex itely-center gap-2.5'>
+          <div className='w-7 h-7 rounded-full bg-muted flex itely-center justify-center text-xs font-semibold shrink-0'>
             {user.initials}
           </div>
           <div className='flex-1 min-w-0'>

@@ -15,33 +15,33 @@ import AllPreviewPage from './showcase/pages/AllPreviewPage'
 
 import ProjectLayout, { ProjectIndex } from './showcase/projects/ProjectLayout'
 
-// ContentPilot v1
-import AllScreens from './showcase/projects/contentpilot/AllScreens'
-import AIChatScreen from './showcase/projects/contentpilot/AIChatScreen'
-import AITeamsScreen from './showcase/projects/contentpilot/AITeamsScreen'
-import AIStudioScreenC from './showcase/projects/contentpilot/AIStudioScreenC'
-import AIStudioEditorScreen from './showcase/projects/contentpilot/AIStudioEditorScreen'
-import AIStudioEditorEmptyScreen from './showcase/projects/contentpilot/AIStudioEditorEmptyScreen'
-import DocumentsScreen from './showcase/projects/contentpilot/DocumentsScreen'
+// Altair v1
+import AllScreens from './showcase/projects/altair/AllScreens'
+import AIChatScreen from './showcase/projects/altair/AIChatScreen'
+import AITeamsScreen from './showcase/projects/altair/AITeamsScreen'
+import AIStudioScreenC from './showcase/projects/altair/AIStudioScreenC'
+import AIStudioEditorScreen from './showcase/projects/altair/AIStudioEditorScreen'
+import AIStudioEditorEmptyScreen from './showcase/projects/altair/AIStudioEditorEmptyScreen'
+import DocumentsScreen from './showcase/projects/altair/DocumentsScreen'
 
-// ContentPilot 2.0
-import CP2AllScreens from './showcase/projects/contentpilot2/AllScreens'
-import CP2AIChatScreen, { AIChatWithArtifactScreen as CP2AIChatArtifactScreen } from './showcase/projects/contentpilot2/AIChatScreen'
-import CP2AITeamsScreen from './showcase/projects/contentpilot2/AITeamsScreen'
-import CP2DocumentsScreen from './showcase/projects/contentpilot2/DocumentsScreen'
-import CP2AIStudioScreen, { AIStudioEditorEmpty, AIStudioEditorFilled } from './showcase/projects/contentpilot2/AIStudioScreen'
+// Altair 2.0
+import CP2AllScreens from './showcase/projects/altair2/AllScreens'
+import CP2AIChatScreen, { AIChatWithArtifactScreen as CP2AIChatArtifactScreen } from './showcase/projects/altair2/AIChatScreen'
+import CP2AITeamsScreen from './showcase/projects/altair2/AITeamsScreen'
+import CP2DocumentsScreen from './showcase/projects/altair2/DocumentsScreen'
+import CP2AIStudioScreen, { AIStudioEditorEmpty, AIStudioEditorFilled } from './showcase/projects/altair2/AIStudioScreen'
 
-// Manuscript
-import ManuscriptAllScreens from './showcase/projects/manuscript/AllScreens'
-import ManuscriptDashboard from './showcase/projects/manuscript/DashboardScreen'
-import ManuscriptArticleEditor from './showcase/projects/manuscript/ArticleEditorScreen'
-import ManuscriptBookOverview from './showcase/projects/manuscript/BookOverviewScreen'
-import ManuscriptBookEditor from './showcase/projects/manuscript/BookEditorScreen'
-import ManuscriptStudyEditor from './showcase/projects/manuscript/StudyEditorScreen'
-import ManuscriptNewContentScreen from './showcase/projects/manuscript/NewContentScreen'
-import ManuscriptWPExportScreen from './showcase/projects/manuscript/WPExportScreen'
-import ManuscriptDesignSystem from './showcase/projects/manuscript/DesignSystemScreen'
-import ManuscriptDocs from './showcase/projects/manuscript/ProjectDocsScreen'
+// Lyra
+import LyraAllScreens from './showcase/projects/lyra/AllScreens'
+import LyraDashboard from './showcase/projects/lyra/DashboardScreen'
+import LyraArticleEditor from './showcase/projects/lyra/ArticleEditorScreen'
+import LyraBookOverview from './showcase/projects/lyra/BookOverviewScreen'
+import LyraBookEditor from './showcase/projects/lyra/BookEditorScreen'
+import LyraStudyEditor from './showcase/projects/lyra/StudyEditorScreen'
+import LyraNewContentScreen from './showcase/projects/lyra/NewContentScreen'
+import LyraWPExportScreen from './showcase/projects/lyra/WPExportScreen'
+import LyraDesignSystem from './showcase/projects/lyra/DesignSystemScreen'
+import LyraDocs from './showcase/projects/lyra/ProjectDocsScreen'
 
 export default function App() {
   return (
@@ -66,7 +66,7 @@ export default function App() {
         <Route path="/projects/:projectSlug" element={<ProjectLayout />}>
           <Route index element={<ProjectIndex />} />
 
-          {/* ContentPilot v1 */}
+          {/* Altair v1 */}
           <Route path="all"                    element={<AllScreens />} />
           <Route path="ai-chat"                element={<AIChatScreen />} />
           <Route path="ai-teams"               element={<AITeamsScreen />} />
@@ -75,30 +75,30 @@ export default function App() {
           <Route path="ai-studio/:genSlug"     element={<AIStudioEditorScreen />} />
           <Route path="documents"              element={<DocumentsScreen />} />
 
-          {/* ContentPilot 2.0 – prefiks cp2- */}
-          <Route path="cp2-all"            element={<CP2AllScreens />} />
-          <Route path="cp2-ai-chat"        element={<CP2AIChatScreen />} />
-          <Route path="cp2-ai-chat-artifact" element={<CP2AIChatArtifactScreen />} />
-          <Route path="cp2-ai-teams"       element={<CP2AITeamsScreen />} />
-          <Route path="cp2-documents"      element={<CP2DocumentsScreen />} />
-          <Route path="cp2-ai-studio"        element={<CP2AIStudioScreen />} />
-          <Route path="cp2-ai-studio-empty"  element={<AIStudioEditorEmpty />} />
-          <Route path="cp2-ai-studio-filled" element={<AIStudioEditorFilled />} />
+          {/* Altair 2.0 – prefiks al2- */}
+          <Route path="al2-all"            element={<CP2AllScreens />} />
+          <Route path="al2-ai-chat"        element={<CP2AIChatScreen />} />
+          <Route path="al2-ai-chat-artifact" element={<CP2AIChatArtifactScreen />} />
+          <Route path="al2-ai-teams"       element={<CP2AITeamsScreen />} />
+          <Route path="al2-documents"      element={<CP2DocumentsScreen />} />
+          <Route path="al2-ai-studio"        element={<CP2AIStudioScreen />} />
+          <Route path="al2-ai-studio-empty"  element={<AIStudioEditorEmpty />} />
+          <Route path="al2-ai-studio-filled" element={<AIStudioEditorFilled />} />
 
-          {/* Manuscript – prefiks ms- */}
-          <Route path="ms-all"           element={<ManuscriptAllScreens />} />
-          <Route path="ms-dashboard"     element={<ManuscriptDashboard />} />
-          <Route path="ms-article"       element={<ManuscriptArticleEditor />} />
-          <Route path="ms-book-overview" element={<ManuscriptBookOverview />} />
-          <Route path="ms-book-editor"   element={<ManuscriptBookEditor />} />
-          <Route path="ms-study-editor"  element={<ManuscriptStudyEditor />} />
-          <Route path="ms-new-content"   element={<ManuscriptNewContentScreen />} />
-          <Route path="ms-wp-export"     element={<ManuscriptWPExportScreen />} />
-          <Route path="ms-design-system" element={<ManuscriptDesignSystem />} />
-          <Route path="ms-docs"          element={<ManuscriptDocs />} />
+          {/* Lyra – prefiks ly- */}
+          <Route path="ly-all"           element={<LyraAllScreens />} />
+          <Route path="ly-dashboard"     element={<LyraDashboard />} />
+          <Route path="ly-article"       element={<LyraArticleEditor />} />
+          <Route path="ly-book-overview" element={<LyraBookOverview />} />
+          <Route path="ly-book-editor"   element={<LyraBookEditor />} />
+          <Route path="ly-study-editor"  element={<LyraStudyEditor />} />
+          <Route path="ly-new-content"   element={<LyraNewContentScreen />} />
+          <Route path="ly-wp-export"     element={<LyraWPExportScreen />} />
+          <Route path="ly-design-system" element={<LyraDesignSystem />} />
+          <Route path="ly-docs"          element={<LyraDocs />} />
         </Route>
 
-        <Route path="/screens/*" element={<Navigate to="/projects/contentpilot/all" replace />} />
+        <Route path="/screens/*" element={<Navigate to="/projects/altair/all" replace />} />
       </Routes>
     </TooltipProvider>
   )

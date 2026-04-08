@@ -10,7 +10,7 @@ export default function Layout() {
     <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar query={query} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-13 border-b flex items-center px-6 gap-4 shrink-0 bg-white">
+        <header className="h-13 border-b flex itely-center px-6 gap-4 shrink-0 bg-white">
           <div className="relative flex-1 max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" />
             <input

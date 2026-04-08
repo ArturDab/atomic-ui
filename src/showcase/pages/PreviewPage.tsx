@@ -8,7 +8,7 @@ export default function PreviewPage() {
   const entry = registry.find(c => c.slug === slug)
 
   if (!entry) return (
-    <div className="flex items-center justify-center h-64 text-sm text-muted-foreground">
+    <div className="flex itely-center justify-center h-64 text-sm text-muted-foreground">
       Nie znaleziono komponentu.
     </div>
   )
@@ -20,7 +20,7 @@ export default function PreviewPage() {
           {entry.examples.map((ex, i) => (
             <div key={i}>
               <p className="text-xs text-muted-foreground mb-4 uppercase tracking-widest">{ex.title}</p>
-              <div className="flex items-center justify-center">
+              <div className="flex itely-center justify-center">
                 <ex.render />
               </div>
             </div>

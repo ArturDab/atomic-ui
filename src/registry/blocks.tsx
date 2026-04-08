@@ -56,7 +56,7 @@ export const blockRegistry: RegistryEntry[] = ([
     props: [
       { name: 'activeHref', type: 'string', description: 'Aktywna ścieżka' },
       { name: 'user', type: '{ name, email, initials }', description: 'Dane użytkownika' },
-      { name: 'appName', type: 'string', default: 'ContentPilot', description: 'Nazwa aplikacji' },
+      { name: 'appName', type: 'string', default: 'Altair', description: 'Nazwa aplikacji' },
     ],
     examples: [
       {
@@ -350,7 +350,7 @@ export const blockRegistry: RegistryEntry[] = ([
   {
     slug: 'block-side-panel',
     title: 'Side Panel',
-    description: 'Lewy panel nawigacyjny. Prymitywy z ujednoliconymi tokenami: w-72, px-4 py-3, text-sm/text-xs, hover/active. Spójny we wszystkich modułach ContentPilot.',
+    description: 'Lewy panel nawigacyjny. Prymitywy z ujednoliconymi tokenami: w-72, px-4 py-3, text-sm/text-xs, hover/active. Spójny we wszystkich modułach Altair.',
     category: 'Blocks',
     props: [
       { name: 'SidePanel', type: 'wrapper', description: 'Kontener: w-72 border-r flex flex-col shrink-0' },

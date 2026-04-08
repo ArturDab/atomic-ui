@@ -27,7 +27,7 @@ export default function AllPreviewPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {items.map(comp => (
                     <div key={comp.slug} className="border rounded-xl overflow-hidden">
-                      <div className="px-6 py-8 flex items-center justify-center min-h-24 bg-muted/10 border-b">
+                      <div className="px-6 py-8 flex itely-center justify-center min-h-24 bg-muted/10 border-b">
                         {(() => { const Ex = comp.examples[0]?.render; return Ex ? <Ex /> : null })()}
                       </div>
                       <div className="px-4 py-3">

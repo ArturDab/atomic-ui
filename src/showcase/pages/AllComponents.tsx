@@ -18,7 +18,7 @@ export default function AllComponents() {
 
   return (
     <div className="max-w-5xl mx-auto px-8 py-10">
-      <div className="flex items-start justify-between mb-10">
+      <div className="flex itely-start justify-between mb-10">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight mb-1.5">Wszystkie komponenty</h1>
           <p className="text-sm text-muted-foreground">{registry.length} komponentów. Kliknij, aby przejść do szczegółów.</p>
@@ -43,7 +43,7 @@ export default function AllComponents() {
                     to={`/components/${comp.slug}`}
                     className="border rounded-xl bg-white hover:border-foreground/30 hover:shadow-sm transition-all overflow-hidden"
                   >
-                    <div className="px-6 py-6 flex items-center justify-center min-h-24 bg-muted/10 border-b">
+                    <div className="px-6 py-6 flex itely-center justify-center min-h-24 bg-muted/10 border-b">
                       {(() => {
                     const Ex = comp.examples[0]?.render
                     return Ex ? <Ex /> : <span className="text-xs text-muted-foreground">Brak podglądu</span>

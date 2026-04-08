@@ -1,6 +1,6 @@
 import { NavLink, Navigate, Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { useRef, useEffect, useCallback } from 'react'
-import { ManuscriptThemeProvider, ThemeSwitcher } from './manuscript/ThemeContext'
+import { LyraThemeProvider, ThemeSwitcher } from './lyra/ThemeContext'
 import { ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -22,54 +22,54 @@ function isGroup(e: NavEntry): e is ScreenGroup {
 }
 
 const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
-  manuscript: {
-    name: 'Manuscript',
+  lyra: {
+    name: 'Lyra',
     nav: [
-      { path: 'ms-all',          label: 'Wszystkie' },
+      { path: 'ly-all',          label: 'Wszystkie' },
       {
         label: 'Widoki',
-        defaultPath: 'ms-dashboard',
+        defaultPath: 'ly-dashboard',
         children: [
-          { path: 'ms-dashboard',     label: 'Dashboard' },
-          { path: 'ms-article',       label: 'Edytor artykułu' },
-          { path: 'ms-study-editor',  label: 'Edytor opracowania' },
-          { path: 'ms-book-overview', label: 'Przegląd książki' },
-          { path: 'ms-book-editor',   label: 'Edytor książki' },
-          { path: 'ms-new-content',   label: 'Nowa treść' },
-          { path: 'ms-wp-export',     label: 'Eksport WP' },
+          { path: 'ly-dashboard',     label: 'Dashboard' },
+          { path: 'ly-article',       label: 'Edytor artykułu' },
+          { path: 'ly-study-editor',  label: 'Edytor opracowania' },
+          { path: 'ly-book-overview', label: 'Przegląd książki' },
+          { path: 'ly-book-editor',   label: 'Edytor książki' },
+          { path: 'ly-new-content',   label: 'Nowa treść' },
+          { path: 'ly-wp-export',     label: 'Eksport WP' },
         ],
       },
-      { path: 'ms-design-system', label: 'Design System' },
-      { path: 'ms-docs',          label: 'Docs' },
+      { path: 'ly-design-system', label: 'Design System' },
+      { path: 'ly-docs',          label: 'Docs' },
     ],
   },
-  contentpilot2: {
-    name: 'ContentPilot 2.0',
+  altair2: {
+    name: 'Altair 2.0',
     nav: [
-      { path: 'cp2-all', label: 'Wszystkie widoki' },
+      { path: 'al2-all', label: 'Wszystkie widoki' },
       {
         label: 'AI Chat',
-        defaultPath: 'cp2-ai-chat',
+        defaultPath: 'al2-ai-chat',
         children: [
-          { path: 'cp2-ai-chat',          label: 'Czat' },
-          { path: 'cp2-ai-chat-artifact', label: 'Czat + artefakt' },
+          { path: 'al2-ai-chat',          label: 'Czat' },
+          { path: 'al2-ai-chat-artifact', label: 'Czat + artefakt' },
         ],
       },
-      { path: 'cp2-ai-teams',  label: 'AI Teams' },
-      { path: 'cp2-documents', label: 'Dokumenty' },
+      { path: 'al2-ai-teams',  label: 'AI Teams' },
+      { path: 'al2-documents', label: 'Dokumenty' },
       {
         label: 'AI Studio',
-        defaultPath: 'cp2-ai-studio',
+        defaultPath: 'al2-ai-studio',
         children: [
-          { path: 'cp2-ai-studio',        label: 'Galeria' },
-          { path: 'cp2-ai-studio-empty',  label: 'Edytor – pusty' },
-          { path: 'cp2-ai-studio-filled', label: 'Edytor – treść' },
+          { path: 'al2-ai-studio',        label: 'Galeria' },
+          { path: 'al2-ai-studio-empty',  label: 'Edytor – pusty' },
+          { path: 'al2-ai-studio-filled', label: 'Edytor – treść' },
         ],
       },
     ],
   },
-  contentpilot: {
-    name: 'ContentPilot',
+  altair: {
+    name: 'Altair',
     nav: [
       { path: 'all',      label: 'Wszystkie widoki' },
       { path: 'ai-chat',  label: 'AI Chat' },
@@ -107,7 +107,7 @@ export default function ProjectLayout() {
   const currentPath = location.pathname.split(`/projects/${projectSlug}/`)[1] ?? ''
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const isManuscript = projectSlug === 'manuscript'
+  const isLyra = projectSlug === 'lyra'
 
   // Collect all flat paths for arrow navigation
   const allPaths = meta.nav.flatMap(entry =>
@@ -141,10 +141,10 @@ export default function ProjectLayout() {
   const content = (
     <div ref={containerRef} className="flex flex-col h-screen">
       {/* Primary nav bar */}
-      <div className="h-11 bg-foreground flex items-center px-4 gap-2 shrink-0 overflow-hidden">
+      <div className="h-11 bg-foreground flex itely-center px-4 gap-2 shrink-0 overflow-hidden">
         <Link
           to="/projects"
-          className="flex items-center gap-1 text-xs text-background/60 hover:text-background transition-colors"
+          className="flex itely-center gap-1 text-xs text-background/60 hover:text-background transition-colors"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
           Projekty
@@ -187,7 +187,7 @@ export default function ProjectLayout() {
             )
           })}
         </nav>
-        {isManuscript && (
+        {isLyra && (
           <>
             <div className="w-px h-4 bg-background/20 shrink-0" />
             <ThemeSwitcher />
@@ -195,9 +195,9 @@ export default function ProjectLayout() {
         )}
       </div>
 
-      {/* Secondary nav – always shown for manuscript groups */}
-      {(activeGroup || isManuscript) && meta.nav.some(isGroup) && (
-        <div className="h-9 bg-neutral-800 flex items-center px-4 gap-1 shrink-0">
+      {/* Secondary nav – always shown for lyra groups */}
+      {(activeGroup || isLyra) && meta.nav.some(isGroup) && (
+        <div className="h-9 bg-neutral-800 flex itely-center px-4 gap-1 shrink-0">
           {(activeGroup || meta.nav.filter(isGroup)[0])?.children.map(child => {
             const isActive = currentPath === child.path || currentPath.startsWith(child.path + '/')
             return (
@@ -222,14 +222,14 @@ export default function ProjectLayout() {
         {/* Left/Right arrow navigation */}
         {currentPathIdx > 0 && (
           <button onClick={navigatePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex items-center justify-center bg-background/80 hover:bg-background border border-l-0 rounded-r-lg shadow-sm transition-colors group"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex itely-center justify-center bg-background/80 hover:bg-background border border-l-0 rounded-r-lg shadow-sm transition-colors group"
             title="Poprzedni widok (←)">
             <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
         )}
         {currentPathIdx < allPaths.length - 1 && (
           <button onClick={navigateNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex items-center justify-center bg-background/80 hover:bg-background border border-r-0 rounded-l-lg shadow-sm transition-colors group"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex itely-center justify-center bg-background/80 hover:bg-background border border-r-0 rounded-l-lg shadow-sm transition-colors group"
             title="Następny widok (→)">
             <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>
@@ -239,11 +239,11 @@ export default function ProjectLayout() {
     </div>
   )
 
-  if (isManuscript) {
+  if (isLyra) {
     return (
-      <ManuscriptThemeProvider containerRef={containerRef}>
+      <LyraThemeProvider containerRef={containerRef}>
         {content}
-      </ManuscriptThemeProvider>
+      </LyraThemeProvider>
     )
   }
 

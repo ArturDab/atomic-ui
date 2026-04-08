@@ -24,7 +24,7 @@ const STATUS_LABELS: Record<DocumentStatus, string> = {
 
 export function EditorToolbar({ title, status = 'draft', onBack, onSave, onPublish, onTitleChange, isSaving, className }: EditorToolbarProps) {
   return (
-    <div className={cn('h-14 border-b bg-white flex items-center px-4 gap-3', className)}>
+    <div className={cn('h-14 border-b bg-white flex itely-center px-4 gap-3', className)}>
       <Button variant='ghost' size='icon' className='h-8 w-8 shrink-0' onClick={onBack}>
         <ChevronLeft className='w-4 h-4' />
       </Button>
@@ -37,7 +37,7 @@ export function EditorToolbar({ title, status = 'draft', onBack, onSave, onPubli
         className='flex-1 text-sm font-medium bg-transparent outline-none placeholder:text-muted-foreground min-w-0'
       />
 
-      <div className='flex items-center gap-2 shrink-0'>
+      <div className='flex itely-center gap-2 shrink-0'>
         <Badge variant='outline' className='text-xs text-muted-foreground'>
           {STATUS_LABELS[status]}
         </Badge>

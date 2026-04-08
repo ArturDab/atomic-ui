@@ -21,7 +21,7 @@ export function PageHeader({ title, breadcrumbs, actions, description, className
   return (
     <div className={cn('border-b bg-white px-6 py-4', className)}>
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <div className='flex items-center gap-1 mb-1'>
+        <div className='flex itely-center gap-1 mb-1'>
           {breadcrumbs.map((crumb, i) => (
             <React.Fragment key={i}>
               {i > 0 && <ChevronLeft className='w-3 h-3 text-muted-foreground rotate-180' />}
@@ -32,12 +32,12 @@ export function PageHeader({ title, breadcrumbs, actions, description, className
           ))}
         </div>
       )}
-      <div className='flex items-center justify-between gap-4'>
+      <div className='flex itely-center justify-between gap-4'>
         <div>
           <h1 className='text-xl font-semibold tracking-tight'>{title}</h1>
           {description && <p className='text-sm text-muted-foreground mt-0.5'>{description}</p>}
         </div>
-        {actions && <div className='flex items-center gap-2 shrink-0'>{actions}</div>}
+        {actions && <div className='flex itely-center gap-2 shrink-0'>{actions}</div>}
       </div>
     </div>
   )

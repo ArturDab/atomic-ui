@@ -39,7 +39,7 @@ export default function BlocksPage() {
         <div className="space-y-12">
           {filtered.map(block => (
             <div key={block.slug} className="space-y-3">
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex itely-start justify-between gap-4">
                 <div>
                   <h2 className="text-sm font-semibold">{block.title}</h2>
                   <p className="text-xs text-muted-foreground mt-0.5">{block.description}</p>
@@ -56,7 +56,7 @@ export default function BlocksPage() {
                 </Button>
               </div>
               {block.examples.map((ex, i) => (
-                <div key={i} className="border rounded-xl bg-white px-8 py-10 flex items-center justify-center min-h-28">
+                <div key={i} className="border rounded-xl bg-white px-8 py-10 flex itely-center justify-center min-h-28">
                   <ex.render />
                 </div>
               ))}

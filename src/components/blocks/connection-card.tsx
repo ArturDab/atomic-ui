@@ -27,13 +27,13 @@ export function ConnectionCard({ platform, url, status, meta, icon: Icon = Globe
   const StatusIcon = cfg.icon
 
   return (
-    <div className='border rounded-xl bg-white p-4 flex items-center gap-4'>
-      <div className='w-10 h-10 rounded-lg bg-muted/60 flex items-center justify-center shrink-0'>
+    <div className='border rounded-xl bg-white p-4 flex itely-center gap-4'>
+      <div className='w-10 h-10 rounded-lg bg-muted/60 flex itely-center justify-center shrink-0'>
         <Icon className='w-5 h-5 text-muted-foreground' />
       </div>
 
       <div className='flex-1 min-w-0'>
-        <div className='flex items-center gap-2 mb-0.5'>
+        <div className='flex itely-center gap-2 mb-0.5'>
           <p className='font-medium text-sm'>{platform}</p>
           <Badge variant='outline' className={cn('text-xs gap-1', cfg.className)}>
             <StatusIcon className='w-3 h-3' />
