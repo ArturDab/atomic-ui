@@ -1,136 +1,134 @@
-/**
- * DesignSystemScreen – trzy warianty design systemu dla Manuscript.
- * Pełny podgląd edytora książki w każdym motywie.
- * Przełącznik motywu nad podglądem.
- */
 import * as React from 'react'
 import { THEMES, type ThemeId } from './themes'
+import { useManuscriptTheme } from './ThemeContext'
+import DesignConfigPanel from './DesignConfigPanel'
 import { cn } from '@/lib/utils'
-import { Check, Palette, ChevronDown, ChevronRight, CheckCircle2, Timer, Circle,
-  Sparkles, Hash, Search, History, Star, Settings, Eye, ExternalLink,
-  PanelLeft, AlignLeft, ArrowLeft, Maximize2, X, Plus, Clock, Heading1, Heading2, Heading3 } from 'lucide-react'
+import {
+  Check, ChevronDown, ChevronRight, CheckCircle2, Timer,
+  Circle, Sparkles, Hash, Search, History, Star, Settings,
+  Eye, ExternalLink, PanelLeft, AlignLeft, Heading1, Heading2, Heading3,
+  Plus, X,
+} from 'lucide-react'
 
-// ── Pełny podgląd edytora w danym motywie ──────────────────────────────────
+// ── Mini Book Editor with theme vars ─────────────────────────────────────────
 
-function ThemedBookEditor({ themeId }: { themeId: ThemeId }) {
-  const theme = THEMES.find(t => t.id === themeId)!
+function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
   const containerRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
-    if (!containerRef.current) return
-    Object.entries(theme.vars).forEach(([key, val]) => {
-      containerRef.current!.style.setProperty(key, val)
-    })
-  }, [themeId, theme.vars])
+    const el = containerRef.current
+    if (!el) return
+    Object.entries(vars).forEach(([k, v]) => el.style.setProperty(k, v))
+    const fontSans = vars['--font-sans']
+    if (fontSans) el.setAttribute('data-manuscript-theme', 'true')
+  }, [vars])
 
-  // Mock structure data
   const chapters = [
-    { id: 'c1', title: 'Wprowadzenie do agentów AI', status: 'done', words: 3200 },
-    { id: 'c2', title: 'Architektura systemów agentowych', status: 'done', words: 2800 },
-    { id: 'c3', title: 'Modele językowe jako fundament', status: 'in-progress', words: 2400, active: true },
-    { id: 'c4', title: 'Projektowanie przepływów pracy', status: 'in-progress', words: 1800 },
-    { id: 'c5', title: 'Integracja z systemami', status: 'draft', words: 600 },
+    { id:'c1', title:'Wprowadzenie do agentów AI',      status:'done',        words:3200 },
+    { id:'c2', title:'Architektura systemów agentowych', status:'done',        words:2800 },
+    { id:'c3', title:'Modele językowe jako fundament',   status:'in-progress', words:2400, active:true },
+    { id:'c4', title:'Projektowanie przepływów pracy',   status:'in-progress', words:1800 },
+    { id:'c5', title:'Integracja z systemami',           status:'draft',       words:600 },
   ]
   const headings = [
-    { level: 1, title: 'Modele językowe jako fundament' },
-    { level: 2, title: 'Czym jest model językowy?' },
-    { level: 2, title: 'Function calling i narzędzia' },
-    { level: 3, title: 'Porównanie modeli' },
-    { level: 3, title: 'Koszty i latency' },
-    { level: 2, title: 'Context window' },
+    {level:1, title:'Modele językowe jako fundament'},
+    {level:2, title:'Czym jest model językowy?'},
+    {level:2, title:'Function calling i narzędzia'},
+    {level:3, title:'Porównanie modeli'},
+    {level:2, title:'Context window'},
   ]
-
-  const StatusIcon = ({ status }: { status: string }) => {
-    const Icon = status === 'done' ? CheckCircle2 : status === 'in-progress' ? Timer : Circle
-    const color = status === 'done' ? 'text-emerald-500' : status === 'in-progress' ? 'text-blue-500' : 'opacity-30'
-    return <Icon className={cn('w-2.5 h-2.5 shrink-0', color)} />
+  const SIcon = ({s}:{s:string}) => {
+    const I = s==='done'?CheckCircle2:s==='in-progress'?Timer:Circle
+    return <I className={cn('w-2.5 h-2.5 shrink-0',s==='done'?'text-emerald-500':s==='in-progress'?'text-blue-500':'opacity-20')}/>
   }
-
-  const HIcon: Record<number, React.ComponentType<{className?: string}>> = { 1: Heading1, 2: Heading2, 3: Heading3 }
+  const HI:{[k:number]:React.ComponentType<{className?:string}>} = {1:Heading1,2:Heading2,3:Heading3}
+  const editorFont = vars['--editor-font'] || "'Lora', serif"
+  const editorSize = vars['--editor-size'] || '17px'
+  const radius = vars['--radius'] || '0.375rem'
 
   return (
-    <div ref={containerRef} className="flex flex-col h-full bg-background text-foreground overflow-hidden rounded-xl border shadow-lg"
-      style={{ fontFamily: 'system-ui, sans-serif' }}>
+    <div ref={containerRef} data-manuscript-theme="true"
+      className="flex flex-col h-full bg-background text-foreground overflow-hidden rounded-xl border"
+      style={{ '--radius': radius } as React.CSSProperties}>
 
       {/* Header */}
       <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-background">
-        <div className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center">
-          <ArrowLeft className="w-3 h-3 text-primary" />
+        <div className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center"
+          style={{ borderRadius: radius }}>
+          <ChevronRight className="w-3 h-3 text-primary rotate-180"/>
         </div>
         <div className="flex items-center gap-2 flex-1 min-w-0">
-          <span className="text-[10px] px-1.5 py-0.5 rounded border border-primary/20 bg-primary/5 text-primary font-medium shrink-0">
-            Książka
-          </span>
-          <span className="text-xs text-muted-foreground hidden lg:block truncate">Strategie Contentowe</span>
-          <ChevronRight className="w-3 h-3 text-muted-foreground shrink-0 hidden lg:block" />
-          <span className="text-sm font-medium truncate">Modele językowe jako fundament</span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded border text-muted-foreground shrink-0">W trakcie</span>
+          <span className="text-[10px] px-1.5 py-0.5 rounded border border-emerald-200 bg-emerald-50 text-emerald-600 font-medium shrink-0"
+            style={{ borderRadius: `calc(${radius} * 0.7)` }}>Książka</span>
+          <span className="text-xs text-muted-foreground hidden lg:block">Strategie Contentowe</span>
+          <ChevronRight className="w-3 h-3 text-muted-foreground shrink-0 hidden lg:block"/>
+          <span className="text-sm font-medium truncate">Modele językowe</span>
         </div>
-        <div className="flex items-center gap-1 shrink-0">
-          <div className="w-8 h-8 rounded flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer"><Search className="w-4 h-4" /></div>
-          <div className="w-8 h-8 rounded flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer"><History className="w-4 h-4" /></div>
-          <div className="w-8 h-8 rounded flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer"><Settings className="w-4 h-4" /></div>
-          <div className="w-px h-5 bg-border mx-1" />
-          <div className="flex items-center gap-1.5 px-3 h-8 rounded border text-xs font-medium cursor-pointer text-muted-foreground hover:bg-muted">
-            <Eye className="w-3.5 h-3.5" /> Podgląd
+        <div className="flex items-center gap-1">
+          {[Search,History,Settings].map((I,i) => (
+            <div key={i} className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:bg-muted rounded cursor-pointer"
+              style={{ borderRadius: radius }}>
+              <I className="w-4 h-4"/>
+            </div>
+          ))}
+          <div className="flex items-center gap-1.5 px-3 h-8 rounded border text-xs font-medium cursor-pointer text-muted-foreground hover:bg-muted"
+            style={{ borderRadius: radius }}>
+            <Eye className="w-3.5 h-3.5"/> Podgląd
           </div>
-          <div className="flex items-center gap-1.5 px-3 h-8 rounded bg-primary text-primary-foreground text-xs font-medium cursor-pointer">
-            <ExternalLink className="w-3.5 h-3.5" /> Eksportuj
+          <div className="flex items-center gap-1.5 px-3 h-8 rounded bg-primary text-primary-foreground text-xs font-medium cursor-pointer"
+            style={{ borderRadius: radius }}>
+            <ExternalLink className="w-3.5 h-3.5"/> Eksportuj
           </div>
         </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Struktura */}
-        <div className="w-52 border-r flex flex-col shrink-0 bg-background">
+        {/* Structure */}
+        <div className="w-48 border-r flex flex-col shrink-0 bg-background">
           <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Struktura</span>
-            <div className="w-6 h-6 rounded flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer"><Plus className="w-3.5 h-3.5" /></div>
+            <Plus className="w-4 h-4 text-muted-foreground"/>
           </div>
           <div className="px-3 py-2 border-b">
             <div className="flex justify-between text-[10px] text-muted-foreground mb-1">
-              <span>18 400 słów</span><span>50 000 cel</span>
+              <span>18 400</span><span>50 000 cel</span>
             </div>
             <div className="h-1 bg-muted rounded-full overflow-hidden">
-              <div className="h-full bg-primary/40 rounded-full transition-all" style={{ width: '28%' }} />
+              <div className="h-full bg-primary/40 rounded-full" style={{width:'28%'}}/>
             </div>
           </div>
-          <div className="flex-1 overflow-y-auto">
-            <div className="py-1">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 text-xs">
-                <ChevronDown className="w-3 h-3 text-muted-foreground" />
-                <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500" />
-                <span className="font-medium text-muted-foreground text-[11px]">Część I: Fundamenty</span>
-              </div>
-              {chapters.map(ch => (
-                <div key={ch.id} className={cn(
-                  'flex items-center gap-2 px-3 py-1.5 pl-7 text-[11px] border-l-2 mx-0 cursor-pointer',
-                  ch.active ? 'bg-muted border-l-primary font-medium' : 'border-l-transparent text-muted-foreground hover:bg-muted/50'
-                )}>
-                  <StatusIcon status={ch.status} />
-                  <span className="flex-1 line-clamp-1">{ch.title}</span>
-                  {ch.words > 0 && <span className="text-[10px] text-muted-foreground tabular-nums">{ch.words}</span>}
-                </div>
-              ))}
+          <div className="flex-1 overflow-y-auto py-1">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 text-[11px]">
+              <ChevronDown className="w-3 h-3 text-muted-foreground"/>
+              <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500"/>
+              <span className="font-medium text-muted-foreground">Część I: Fundamenty</span>
             </div>
+            {chapters.map(ch => (
+              <div key={ch.id} className={cn(
+                'flex items-center gap-2 px-3 py-1.5 pl-7 text-[11px] border-l-2',
+                (ch as any).active?'bg-muted border-l-primary font-medium':'border-l-transparent text-muted-foreground')}>
+                <SIcon s={ch.status}/>
+                <span className="flex-1 line-clamp-1">{ch.title}</span>
+                {ch.words>0&&<span className="text-[10px] text-muted-foreground">{ch.words}</span>}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Nagłówki */}
-        <div className="w-44 border-r flex flex-col shrink-0 bg-background">
+        {/* Outline */}
+        <div className="w-36 border-r flex flex-col shrink-0 bg-background">
           <div className="h-14 border-b flex items-center px-4 shrink-0">
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Rozdział</span>
           </div>
           <div className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
-            {headings.map((h, i) => {
-              const Icon = HIcon[h.level]
+            {headings.map((h,i) => {
+              const Icon = HI[h.level]
               return (
-                <div key={i} className={cn(
-                  'flex items-start gap-1.5 px-2 py-1.5 rounded-md cursor-pointer text-xs',
-                  h.level === 1 ? 'pl-2' : h.level === 2 ? 'pl-4' : 'pl-6',
-                  i === 1 ? 'bg-muted font-medium text-foreground' : 'text-muted-foreground hover:bg-muted/50'
-                )}>
-                  <Icon className={cn('shrink-0 mt-0.5', h.level === 1 ? 'w-3.5 h-3.5' : 'w-3 h-3')} />
+                <div key={i} className={cn('flex items-start gap-1.5 px-2 py-1.5 rounded-md text-[11px] cursor-pointer',
+                  h.level===1?'pl-2':h.level===2?'pl-3':'pl-5',
+                  i===1?'bg-muted font-medium':'text-muted-foreground hover:bg-muted/50')}
+                  style={{ borderRadius: `calc(${radius} * 0.7)` }}>
+                  <Icon className="w-3 h-3 shrink-0 mt-0.5"/>
                   <span className="leading-snug">{h.title}</span>
                 </div>
               )
@@ -138,95 +136,84 @@ function ThemedBookEditor({ themeId }: { themeId: ThemeId }) {
           </div>
         </div>
 
-        {/* Edytor */}
+        {/* Editor */}
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
-          {/* Toolbar */}
-          <div className="h-11 border-b flex items-center px-4 gap-1 bg-background overflow-x-auto shrink-0">
-            {['H1','H2','H3','B','I','U','≡','⋮','"','—'].map(t => (
-              <div key={t} className="w-7 h-7 rounded text-[10px] flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer font-mono">{t}</div>
+          <div className="h-11 border-b flex items-center px-4 gap-1 bg-background shrink-0 overflow-hidden">
+            {['H1','H2','B','I','U','≡','⋮'].map(t=>(
+              <div key={t} className="w-7 h-7 rounded text-[10px] flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer font-mono"
+                style={{ borderRadius: `calc(${radius} * 0.5)` }}>{t}</div>
             ))}
           </div>
-          {/* Sub-toolbar */}
-          <div className="h-9 border-b flex items-center px-4 gap-2 bg-muted/20 shrink-0">
-            <span className="text-xs text-muted-foreground flex items-center gap-1.5">
-              <Hash className="w-3 h-3" /> 2 400 / 3 000 słów
-            </span>
+          <div className="h-9 border-b flex items-center px-4 text-xs text-muted-foreground bg-muted/20 shrink-0">
+            <Hash className="w-3 h-3 mr-1.5"/> 2 400 / 3 000 słów
           </div>
-          {/* Content */}
           <div className="flex-1 overflow-y-auto">
-            <div className="max-w-xl mx-auto px-8 py-8">
+            <div className="max-w-md mx-auto px-6 py-8">
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">Rozdział 3</p>
-              <h1 className="font-bold leading-tight mb-4 text-foreground"
-                style={{ fontFamily: theme.editorFont, fontSize: '22px' }}>
+              <h1 className="font-bold leading-tight mb-4"
+                style={{ fontFamily: editorFont, fontSize:'20px' }}>
                 Modele językowe jako fundament
               </h1>
-              <h2 className="font-semibold mb-2 text-foreground mt-5"
-                style={{ fontFamily: theme.editorFont, fontSize: '16px' }}>
+              <h2 className="font-semibold mb-2 mt-5"
+                style={{ fontFamily: editorFont, fontSize:'15px' }}>
                 Czym jest model językowy?
               </h2>
               <p className="leading-relaxed mb-3 text-foreground/90"
-                style={{ fontFamily: theme.editorFont, fontSize: theme.editorFontSize, lineHeight: '1.8' }}>
-                Modele językowe stanowią serce współczesnych systemów agentowych. Ich zdolność do rozumienia i generowania tekstu w języku naturalnym sprawia, że mogą pełnić rolę „mózgu" agenta – interpretować polecenia, planować działania i komunikować wyniki.
+                style={{ fontFamily: editorFont, fontSize: editorSize, lineHeight:1.8 }}>
+                Modele językowe stanowią serce współczesnych systemów agentowych. Ich zdolność do rozumienia tekstu sprawia, że mogą pełnić rolę „mózgu" agenta.
               </p>
-              <p className="leading-relaxed mb-3 text-foreground/90"
-                style={{ fontFamily: theme.editorFont, fontSize: theme.editorFontSize, lineHeight: '1.8' }}>
-                Kluczowym aspektem odróżniającym modele odpowiednie dla systemów agentowych jest zdolność do tzw. function calling – wywoływania zewnętrznych narzędzi i API na podstawie konwersacji.
+              <p className="leading-relaxed text-foreground/90"
+                style={{ fontFamily: editorFont, fontSize: editorSize, lineHeight:1.8 }}>
+                Kluczowym aspektem jest zdolność do function calling – wywoływania zewnętrznych narzędzi i API.
               </p>
-              {/* Skeleton loader - shows loading state */}
-              <div className="mt-6 space-y-2 animate-pulse">
-                <div className="h-3 bg-muted rounded-full w-full" />
-                <div className="h-3 bg-muted/70 rounded-full w-4/5" />
-                <div className="h-3 bg-muted/50 rounded-full w-3/5" />
+              <div className="mt-5 space-y-1.5 animate-pulse">
+                <div className="h-2.5 bg-muted rounded-full w-full"/>
+                <div className="h-2.5 bg-muted/70 rounded-full w-4/5"/>
+                <div className="h-2.5 bg-muted/50 rounded-full w-3/5"/>
               </div>
             </div>
           </div>
         </div>
 
         {/* AI Panel */}
-        <div className="w-72 border-l flex flex-col shrink-0 bg-background">
+        <div className="w-64 border-l flex flex-col shrink-0 bg-background">
           <div className="h-14 border-b flex items-center gap-2.5 px-4 shrink-0">
-            <Sparkles className="w-4 h-4 text-muted-foreground" />
+            <Sparkles className="w-4 h-4 text-muted-foreground"/>
             <span className="text-sm font-semibold flex-1">Asystent AI</span>
-            <div className="w-7 h-7 rounded flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer">
-              <X className="w-4 h-4" />
-            </div>
+            <X className="w-4 h-4 text-muted-foreground cursor-pointer"/>
           </div>
-          <div className="border-b px-4 py-2 bg-muted/20">
-            <div className="flex items-center gap-1 bg-muted rounded-lg p-0.5 text-xs w-fit">
-              <div className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-background shadow-sm font-medium text-foreground text-[11px]">
-                Rozdział
-              </div>
-              <div className="flex items-center gap-1 px-2.5 py-1 text-muted-foreground text-[11px]">
-                Książka
-              </div>
+          <div className="border-b px-3 py-2 bg-muted/20">
+            <div className="flex items-center gap-1 bg-muted rounded-lg p-0.5 text-[11px] w-fit">
+              <div className="px-2.5 py-1 rounded-md bg-background shadow-sm font-medium"
+                style={{ borderRadius: `calc(${radius} * 0.7)` }}>Rozdział</div>
+              <div className="px-2.5 py-1 text-muted-foreground">Książka</div>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-1">Modele językowe jako fundament</p>
+            <p className="text-[10px] text-muted-foreground mt-1">Modele językowe...</p>
           </div>
-          <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3">
+          <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3">
             <div className="flex gap-2">
               <div className="w-6 h-6 rounded-full bg-muted border flex items-center justify-center shrink-0">
-                <Sparkles className="w-3 h-3" />
+                <Sparkles className="w-3 h-3"/>
               </div>
-              <div className="bg-muted/50 border rounded-xl px-3 py-2 text-sm leading-relaxed max-w-[85%]">
-                Implementacja agentów AI w małych firmach to dziś nie tylko możliwość, ale coraz częściej konieczność konkurencyjna.
+              <div className="bg-muted/50 border rounded-xl px-3 py-2 text-[11px] leading-relaxed"
+                style={{ borderRadius: radius }}>
+                Implementacja agentów AI to coraz częściej konieczność konkurencyjna.
               </div>
             </div>
             <div className="flex justify-end">
-              <div className="bg-primary text-primary-foreground rounded-xl px-3 py-2 text-sm max-w-[85%]">
-                Napisz wstęp do rozdziału o implementacji agentów.
+              <div className="bg-primary text-primary-foreground rounded-xl px-3 py-2 text-[11px]"
+                style={{ borderRadius: radius }}>
+                Napisz wstęp do rozdziału.
               </div>
             </div>
           </div>
           <div className="p-3 border-t shrink-0">
-            <div className="border rounded-xl overflow-hidden">
-              <div className="px-3 py-2 text-sm text-muted-foreground bg-transparent">
-                Zapytaj o ten rozdział...
-              </div>
+            <div className="border rounded-xl overflow-hidden" style={{ borderRadius: radius }}>
+              <div className="px-3 py-2 text-[11px] text-muted-foreground">Zapytaj...</div>
               <div className="flex items-center justify-between px-2 py-1.5 border-t bg-muted/20">
                 <span className="text-[10px] text-muted-foreground">⏎ wyślij</span>
-                <div className="flex items-center gap-1.5 px-3 h-7 rounded bg-primary text-primary-foreground text-xs cursor-pointer">
-                  Wyślij
-                </div>
+                <div className="flex items-center gap-1 px-2.5 py-1 rounded bg-primary text-primary-foreground text-[11px] cursor-pointer"
+                  style={{ borderRadius: `calc(${radius} * 0.7)` }}>Wyślij</div>
               </div>
             </div>
           </div>
@@ -236,64 +223,77 @@ function ThemedBookEditor({ themeId }: { themeId: ThemeId }) {
   )
 }
 
-// ── Główny widok ────────────────────────────────────────────────────────────
+// ── Główny ekran ──────────────────────────────────────────────────────────────
 
 export default function DesignSystemScreen() {
-  const [active, setActive] = React.useState<ThemeId>('ink')
-  const theme = THEMES.find(t => t.id === active)!
+  const { themeId, setThemeId } = useManuscriptTheme()
+  const [customVars, setCustomVars] = React.useState<Record<string,string>>({})
+  const baseTheme = THEMES.find(t => t.id === themeId)!
+  const activeVars = { ...baseTheme.vars, ...customVars }
+
+  const handleThemeSwitch = (id: ThemeId) => {
+    setThemeId(id)
+    setCustomVars({}) // reset customizations when switching base theme
+  }
 
   return (
     <div className="flex flex-col h-full bg-[#fafafa]">
-      {/* Nagłówek z przełącznikiem */}
-      <div className="border-b bg-white px-8 py-4 shrink-0">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="border-b bg-white px-6 py-3.5 shrink-0">
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-base font-semibold">Design System – podgląd</h1>
+            <h1 className="text-sm font-semibold">Design System</h1>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Pełny podgląd Edytora książki w każdym wariancie. Kliknij motyw żeby przełączyć.
+              Wybierz bazowy motyw i dostosuj tokeny. Podgląd aktualizuje się na żywo.
             </p>
           </div>
-          {/* Theme switcher */}
+          {/* Base theme switcher */}
           <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground mr-1">Baza:</span>
             {THEMES.map(t => (
-              <button key={t.id} onClick={() => setActive(t.id)}
-                className={cn(
-                  'flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all',
-                  active === t.id
+              <button key={t.id} onClick={() => handleThemeSwitch(t.id)}
+                className={cn('flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-sm transition-all',
+                  themeId===t.id
                     ? 'border-foreground bg-foreground text-background font-semibold shadow-sm'
-                    : 'border-border bg-white text-muted-foreground hover:border-foreground/30 hover:text-foreground'
-                )}>
-                {active === t.id && <Check className="w-3.5 h-3.5" />}
+                    : 'border-border bg-white text-muted-foreground hover:border-foreground/30 hover:text-foreground')}>
+                {themeId===t.id&&<Check className="w-3.5 h-3.5"/>}
                 {t.name}
               </button>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Theme info bar */}
-      <div className="border-b bg-white/60 px-8 py-2.5 shrink-0">
-        <div className="max-w-7xl mx-auto flex items-center gap-6 text-xs text-muted-foreground">
-          <span className="font-medium text-foreground">{theme.name} – {theme.tagline}</span>
-          <span>Edytor: {theme.editorFont.split(',')[0].replace(/'/g, '')} {theme.editorFontSize}</span>
-          <span>Radius: {theme.radius}</span>
-          {/* Color dots */}
-          <div className="flex items-center gap-1.5">
-            {Object.entries(theme.vars)
-              .filter(([k]) => ['--primary', '--accent', '--muted', '--background', '--border'].includes(k))
-              .map(([k, v]) => (
-                <div key={k} className="w-4 h-4 rounded-full border border-black/10"
-                  style={{ background: `hsl(${v})` }} title={k} />
-              ))}
+        {/* Info bar */}
+        <div className="flex items-center gap-5 mt-2 text-xs text-muted-foreground">
+          <span className="font-medium text-foreground">{baseTheme.tagline}</span>
+          <span>Edytor: {baseTheme.editorFont.split(',')[0].replace(/'/g,'')} {customVars['--editor-size']||baseTheme.editorFontSize}</span>
+          <span>Radius: {customVars['--radius']||baseTheme.radius}</span>
+          <div className="flex items-center gap-1">
+            {['--primary','--accent','--background','--muted','--border'].map(k=>(
+              <div key={k} className="w-4 h-4 rounded-full border border-black/10"
+                style={{background:`hsl(${activeVars[k]||'0 0% 50%'})`}} title={k}/>
+            ))}
           </div>
+          {Object.keys(customVars).length>0 && (
+            <span className="text-amber-600 font-medium">
+              {Object.keys(customVars).length} modyfikacji
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Full preview */}
-      <div className="flex-1 overflow-hidden px-6 py-6">
-        <div className="max-w-7xl mx-auto h-full">
-          <ThemedBookEditor themeId={active} />
+      {/* Main content: preview + config panel */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Preview */}
+        <div className="flex-1 overflow-hidden p-5">
+          <ThemedBookEditor vars={activeVars} />
         </div>
+
+        {/* Config panel */}
+        <DesignConfigPanel
+          themeId={themeId}
+          onVarsChange={setCustomVars}
+        />
       </div>
     </div>
   )
