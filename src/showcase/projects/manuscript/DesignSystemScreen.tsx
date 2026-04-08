@@ -52,11 +52,7 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
       style={{
         '--radius': radius,
         fontFamily: vars['--font-sans'] || 'system-ui',
-        boxShadow: vars['--card-shadow'] !== 'none' ? vars['--card-shadow'] : undefined,
-      } as React.CSSProperties}
-      style={{
-        '--radius': radius,
-        fontFamily: vars['--font-sans'] || 'system-ui',
+        boxShadow: vars['--card-shadow'] && vars['--card-shadow'] !== 'none' ? vars['--card-shadow'] : undefined,
       } as React.CSSProperties}>
 
       {/* Header */}
