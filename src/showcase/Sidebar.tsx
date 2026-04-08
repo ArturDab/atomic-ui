@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { registry } from '../registry'
-import { Layers, LayoutGrid, Blocks, FolderKanban, BookOpen, Box } from 'lucide-react'
+import { Layers, LayoutGrid, Blocks, FolderKanban, BookOpen, Box, Home } from 'lucide-react'
 import { cn } from '../lib/utils'
 
 const CATEGORY_ORDER = ['Atoms', 'Forms', 'Feedback', 'Navigation', 'Layout'] as const
@@ -21,11 +21,11 @@ export default function Sidebar({ query }: SidebarProps) {
   }, {} as Record<string, typeof registry>)
 
   const topLinks = [
-    { to: '/all',      icon: LayoutGrid,    label: 'Wszystkie' },
-    { to: '/blocks',   icon: Blocks,        label: 'Bloki' },
+    { to: '/',         icon: Home,          label: 'Przegląd', end: true },
     { to: '/projects', icon: FolderKanban,  label: 'Projekty' },
-    { to: '/docs',     icon: BookOpen,     label: 'Docs' },
-    { to: '/modules',  icon: Box,          label: 'Modules' },
+    { to: '/modules',  icon: Box,           label: 'Moduły' },
+    { to: '/blocks',   icon: Blocks,        label: 'Bloki' },
+    { to: '/all',      icon: LayoutGrid,    label: 'Komponenty' },
   ]
 
   return (
@@ -38,10 +38,11 @@ export default function Sidebar({ query }: SidebarProps) {
       <nav className="flex-1 overflow-y-auto py-3 px-2">
         {/* Top nav */}
         <div className="mb-4 space-y-0.5">
-          {topLinks.map(({ to, icon: Icon, label }) => (
+          {topLinks.map(({ to, icon: Icon, label, end }) => (
             <NavLink
               key={to}
               to={to}
+              end={end}
               className={({ isActive }) => cn(
                 'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors',
                 isActive

@@ -86,7 +86,7 @@ export default function NewContentModal({ onClose }: NewContentModalProps) {
   const selectedType = TYPES.find(t => t.id === type)
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div className="flex items-center justify-center w-full h-full">
       <div className="bg-background rounded-2xl shadow-2xl border w-full max-w-2xl mx-4 overflow-hidden">
 
         {/* Header */}

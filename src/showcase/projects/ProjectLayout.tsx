@@ -25,16 +25,22 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
   manuscript: {
     name: 'Manuscript',
     nav: [
-      { path: 'ms-all',           label: 'Wszystkie widoki' },
-      { path: 'ms-dashboard',     label: 'Dashboard' },
-      { path: 'ms-article',       label: 'Edytor artykułu' },
-      { path: 'ms-study-editor',  label: 'Edytor opracowania' },
-      { path: 'ms-book-overview', label: 'Przegląd książki' },
-      { path: 'ms-book-editor',   label: 'Edytor książki' },
-      { path: 'ms-new-content',   label: 'Nowa treść' },
-      { path: 'ms-wp-export',     label: 'Eksport WP' },
+      { path: 'ms-all',          label: 'Wszystkie' },
+      {
+        label: 'Widoki',
+        defaultPath: 'ms-dashboard',
+        children: [
+          { path: 'ms-dashboard',     label: 'Dashboard' },
+          { path: 'ms-article',       label: 'Edytor artykułu' },
+          { path: 'ms-study-editor',  label: 'Edytor opracowania' },
+          { path: 'ms-book-overview', label: 'Przegląd książki' },
+          { path: 'ms-book-editor',   label: 'Edytor książki' },
+          { path: 'ms-new-content',   label: 'Nowa treść' },
+          { path: 'ms-wp-export',     label: 'Eksport WP' },
+        ],
+      },
       { path: 'ms-design-system', label: 'Design System' },
-      { path: 'ms-docs',          label: 'Docs & Prompty' },
+      { path: 'ms-docs',          label: 'Docs' },
     ],
   },
   contentpilot2: {
