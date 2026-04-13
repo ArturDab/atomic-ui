@@ -5,7 +5,7 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import {
-  BookOpen, Sparkles, FileText, Globe, Layers,
+  BookOpen, Sparkles, FileText, Globe, Layers, Wind,
   ChevronRight, CheckCircle2, Circle, Clock,
   Palette, Code2, ArrowRight,
 } from 'lucide-react'
@@ -21,6 +21,20 @@ const PHASE_TABS: { id: Phase; label: string; desc: string }[] = [
 ]
 
 const PROJECTS = [
+  {
+    slug: 'zephyr',
+    name: 'Zephyr',
+    desc: 'Kreator newsletterów z konfiguracją per klient, biblioteką sekcji HTML i generacją AI.',
+    icon: Wind,
+    color: 'bg-sky-50 border-sky-200',
+    iconColor: 'text-sky-500',
+    phases: {
+      mockups:    { done: true,  count: 6, label: '6 widoków' },
+      design:     { done: false, count: 0, label: 'W planie' },
+      functional: { done: false, count: 0, label: 'W planie' },
+    },
+    activePhase: 'mockups' as Phase,
+  },
   {
     slug: 'lyra',
     name: 'Lyra',
