@@ -9,6 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { StatCard } from '@/components/blocks/stat-card'
 import { PageHeader } from '@/components/blocks/page-header'
+import { useClients } from '@/modules/zephyr'
 import { EmptyState } from '@/components/blocks/empty-state'
 import { FilterBar } from '@/components/blocks/filter-bar'
 import { Plus, Settings, Clock, Calendar, Zap, MoreHorizontal, Mail, Pause, Play, Users } from 'lucide-react'
@@ -128,11 +129,13 @@ function ClientCard({ client }: { client: Client }) {
 // ── Ekran ─────────────────────────────────────────────────────────────────────
 
 export default function ClientsScreen() {
-  const [search, setSearch] = React.useState('')
-  const filtered = CLIENTS.filter(c =>
-    c.name.toLowerCase().includes(search.toLowerCase())
-  )
-  const active = CLIENTS.filter(c => c.status === 'active').length
+  const {
+    clients: filtered, stats,
+    search, setSearch,
+    statusFilter, setStatusFilter,
+    toggleStatus, deleteClient,
+    isLoading,
+  } = useClients()
 
   return (
     <div className="flex flex-col h-full bg-background">
@@ -151,9 +154,9 @@ export default function ClientsScreen() {
 
           {/* ── StatCard z blocks/ ── */}
           <div className="grid grid-cols-4 gap-3">
-            <StatCard label="Klientów" value={CLIENTS.length} />
-            <StatCard label="Newsletterów" value={CLIENTS.reduce((s, c) => s + c.newsletterCount, 0)} />
-            <StatCard label="Aktywnych" value={active} />
+            <StatCard label="Klientów" value={stats.total} />
+            <StatCard label="Newsletterów" value={stats.totalNewsletters} />
+            <StatCard label="Aktywnych" value={stats.active} />
             <StatCard label="Ten miesiąc" value={8} />
           </div>
 
@@ -161,6 +164,7 @@ export default function ClientsScreen() {
           <FilterBar
             placeholder="Szukaj klienta..."
             onSearch={setSearch}
+            onFilter={(_, v) => setStatusFilter(v as any)}
             filters={[{
               key: 'status',
               label: 'Status',

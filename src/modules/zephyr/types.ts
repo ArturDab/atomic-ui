@@ -1,5 +1,4 @@
 // ── Zephyr – typy domenowe ────────────────────────────────────────────────────
-// Skopiuj do: src/modules/zephyr/types.ts
 
 // ── Klienci ───────────────────────────────────────────────────────────────────
 
@@ -9,7 +8,7 @@ export interface Client {
   id: string
   name: string
   slug: string
-  color: string            // hex, używany jako accent w UI i w generowanym HTML
+  color: string
   status: ClientStatus
   newsletterCount: number
   lastSentAt: string | null
@@ -20,23 +19,25 @@ export interface Client {
 // ── Konfiguracja klienta ──────────────────────────────────────────────────────
 
 export interface ClientAppearance {
-  primaryColor: string     // hex
-  secondaryColor: string   // hex
-  font: 'inter' | 'dm-sans' | 'georgia' | 'merriweather'
+  primaryColor: string
+  accentColor: string
+  emailBackground: string
+  textColor: string
+  font: 'inter' | 'dm-sans' | 'georgia' | 'merriweather' | 'helvetica'
   logoUrl?: string
 }
 
 export interface ClientAIConfig {
-  systemPrompt: string     // instrukcje dla modelu
-  guidelines: string       // wytyczne copywriterskie
+  systemPrompt: string
+  guidelines: string
 }
 
 export interface UTMPreset {
   id: string
-  name: string             // np. "Kampania wiosenna"
-  source: string           // newsletter
-  medium: string           // email
-  campaign: string         // wiosna-2025
+  name: string
+  source: string
+  medium: string
+  campaign: string
   content?: string
 }
 
@@ -61,9 +62,9 @@ export interface Section {
   name: string
   type: SectionType
   description: string
-  htmlContent: string      // surowy HTML sekcji
+  htmlContent: string
   scope: SectionScope
-  clientId?: string        // null gdy globalna
+  clientId?: string
   usedCount?: number
   createdAt: string
 }
@@ -80,7 +81,7 @@ export interface SelectedSection {
 export interface UploadedImage {
   id: string
   name: string
-  cfUrl: string            // Cloudflare CDN URL
+  url: string        // S3-compatible URL (Railway Bucket)
   size: number
 }
 
@@ -95,28 +96,30 @@ export interface NewsletterBrief {
   clientId: string
   subject: string
   preheader: string
-  brief: string            // opis tematu dla AI
+  brief: string
   selectedSections: SelectedSection[]
   uploadedImages: UploadedImage[]
   urls: URLEntry[]
   campaignSlug: string
 }
 
-// ── Newsletter (wynik) ────────────────────────────────────────────────────────
+// ── Newsletter ────────────────────────────────────────────────────────────────
 
 export type NewsletterStatus = 'draft' | 'generated' | 'exported'
 
 export interface Newsletter {
   id: string
   clientId: string
+  clientName?: string
   subject: string
   preheader: string
   brief: string
-  htmlOutput: string       // wygenerowany HTML
+  htmlOutput: string
   status: NewsletterStatus
   sectionsUsed: { sectionId: string; order: number }[]
   tokensUsed: number
   campaignSlug: string
+  sectionsCount: number
   createdAt: string
 }
 
@@ -126,17 +129,52 @@ export interface AIMessage {
   id: string
   role: 'user' | 'assistant'
   content: string
+  tokens?: number
   createdAt: string
 }
 
 export interface GenerationRequest {
   brief: NewsletterBrief
   clientConfig: ClientConfig
-  sectionsHtml: string[]   // HTML każdej wybranej sekcji
+  sectionsHtml: string[]
 }
 
 export interface GenerationResult {
   html: string
   tokensUsed: number
   model: string
+}
+
+// ── Adaptery API (implementowane w Next.js, mockowane w Atomic UI) ─────────────
+
+export interface ClientsAdapter {
+  fetchClients: () => Promise<Client[]>
+  createClient: (data: Omit<Client, 'id' | 'newsletterCount' | 'createdAt'>) => Promise<Client>
+  updateClient: (id: string, data: Partial<Client>) => Promise<Client>
+  deleteClient: (id: string) => Promise<void>
+}
+
+export interface NewsletterAdapter {
+  fetchNewsletters: (clientId?: string) => Promise<Newsletter[]>
+  createNewsletter: (brief: NewsletterBrief) => Promise<Newsletter>
+  updateStatus: (id: string, status: NewsletterStatus) => Promise<Newsletter>
+  deleteNewsletter: (id: string) => Promise<void>
+  generateHTML: (req: GenerationRequest) => Promise<GenerationResult>
+}
+
+export interface SectionAdapter {
+  fetchSections: (scope?: SectionScope, clientId?: string) => Promise<Section[]>
+  createSection: (data: Omit<Section, 'id' | 'createdAt'>) => Promise<Section>
+  updateSection: (id: string, data: Partial<Section>) => Promise<Section>
+  deleteSection: (id: string) => Promise<void>
+}
+
+export interface ClientConfigAdapter {
+  fetchConfig: (clientId: string) => Promise<ClientConfig>
+  saveConfig: (clientId: string, config: Omit<ClientConfig, 'clientId' | 'updatedAt'>) => Promise<ClientConfig>
+}
+
+export interface UploadAdapter {
+  uploadImage: (file: File) => Promise<UploadedImage>
+  deleteImage: (id: string) => Promise<void>
 }

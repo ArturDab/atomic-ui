@@ -1,79 +1,87 @@
-// Skopiuj do: src/modules/zephyr/hooks/useArtifact.ts
-import { useState } from 'react'
-import type { AIMessage } from '../types'
+import { useState, useCallback } from 'react'
+import type { AIMessage, NewsletterAdapter, Newsletter, NewsletterStatus } from '../types'
 
 type ViewMode = 'desktop' | 'mobile'
-type ActiveTab = 'preview' | 'html' | 'chat'
 
-export function useArtifact(initialHtml: string) {
-  const [html, setHtml] = useState(initialHtml)
-  const [viewMode, setViewMode] = useState<ViewMode>('desktop')
-  const [activeTab, setActiveTab] = useState<ActiveTab>('preview')
-  const [messages, setMessages] = useState<AIMessage[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [copied, setCopied] = useState(false)
+export function useArtifact(
+  initialNewsletter: Pick<Newsletter, 'id' | 'subject' | 'htmlOutput' | 'status'>,
+  adapter?: NewsletterAdapter
+) {
+  const [html, setHtml]               = useState(initialNewsletter.htmlOutput)
+  const [viewMode, setViewMode]       = useState<ViewMode>('desktop')
+  const [activeTab, setActiveTab]     = useState<'preview' | 'html'>('preview')
+  const [messages, setMessages]       = useState<AIMessage[]>([])
+  const [isAiLoading, setIsAiLoading] = useState(false)
+  const [status, setStatus]           = useState<NewsletterStatus>(initialNewsletter.status)
+  const [copied, setCopied]           = useState(false)
 
-  const copyHtml = () => {
+  // ── Kopiuj / pobierz ──────────────────────────────────────────────────────
+  const copyHtml = useCallback(() => {
     navigator.clipboard.writeText(html)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
-  }
+  }, [html])
 
-  const downloadHtml = (subject: string) => {
+  const downloadHtml = useCallback(() => {
     const blob = new Blob([html], { type: 'text/html' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${subject.replace(/\s+/g, '-').toLowerCase()}.html`
+    const url  = URL.createObjectURL(blob)
+    const a    = document.createElement('a')
+    a.href     = url
+    a.download = `${initialNewsletter.subject.replace(/\s+/g, '-').toLowerCase()}.html`
     a.click()
     URL.revokeObjectURL(url)
-  }
+  }, [html, initialNewsletter.subject])
 
-  const sendMessage = async (
+  // ── Eksport (zmiana statusu) ──────────────────────────────────────────────
+  const markExported = useCallback(async () => {
+    if (adapter) await adapter.updateStatus(initialNewsletter.id, 'exported')
+    setStatus('exported')
+  }, [adapter, initialNewsletter.id])
+
+  // ── AI chat ───────────────────────────────────────────────────────────────
+  const sendMessage = useCallback(async (
     content: string,
     apiCall?: (msgs: AIMessage[], currentHtml: string) => Promise<string>
   ) => {
     const userMsg: AIMessage = {
       id: Date.now().toString(),
-      role: 'user',
-      content,
+      role: 'user', content,
       createdAt: new Date().toISOString(),
     }
     setMessages(prev => [...prev, userMsg])
-    setIsLoading(true)
+    setIsAiLoading(true)
 
     try {
       const reply = apiCall
         ? await apiCall([...messages, userMsg], html)
-        : 'Demo: skonfiguruj Anthropic API key.'
+        : '[Demo] Skonfiguruj ANTHROPIC_API_KEY aby używać asystenta AI.'
 
-      // Jeśli odpowiedź zawiera HTML - zaktualizuj podgląd
+      // Jeśli odpowiedź zawiera HTML – zaktualizuj podgląd
       const htmlMatch = reply.match(/```html\n([\s\S]*?)\n```/)
-      if (htmlMatch) {
-        setHtml(htmlMatch[1])
-      }
+      if (htmlMatch) setHtml(htmlMatch[1])
 
       const assistantMsg: AIMessage = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: reply,
+        role: 'assistant', content: reply,
         createdAt: new Date().toISOString(),
       }
       setMessages(prev => [...prev, assistantMsg])
+      return assistantMsg
     } finally {
-      setIsLoading(false)
+      setIsAiLoading(false)
     }
-  }
+  }, [html, messages])
+
+  const clearMessages = useCallback(() => setMessages([]), [])
 
   return {
     html, setHtml,
     viewMode, setViewMode,
     activeTab, setActiveTab,
-    messages,
-    isLoading,
+    messages, isAiLoading,
+    status,
     copied,
-    copyHtml,
-    downloadHtml,
-    sendMessage,
+    copyHtml, downloadHtml, markExported,
+    sendMessage, clearMessages,
   }
 }
