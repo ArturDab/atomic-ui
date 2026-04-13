@@ -96,7 +96,7 @@ function MiniEditor({ system }: { system: typeof SYSTEMS[0] }) {
   return (
     <div className="rounded-xl overflow-hidden border shadow-sm" style={{ borderColor: colors.border }}>
       {/* App header */}
-      <div className="flex itely-center gap-2 px-3 py-2 border-b" style={{ background: colors.bg, borderColor: colors.border }}>
+      <div className="flex items-center gap-2 px-3 py-2 border-b" style={{ background: colors.bg, borderColor: colors.border }}>
         <div className="w-2 h-2 rounded-full" style={{ background: colors.accent }} />
         <span className="text-[10px] font-semibold" style={{ color: colors.text }}>Lyra</span>
         <div className="flex-1" />
@@ -180,12 +180,12 @@ export default function DesignSystemsPage() {
             )}
           >
             {/* Card header */}
-            <div className="flex itely-start gap-4 px-6 py-4 border-b bg-muted/20">
+            <div className="flex items-start gap-4 px-6 py-4 border-b bg-muted/20">
               <div className="flex-1">
-                <div className="flex itely-center gap-3">
+                <div className="flex items-center gap-3">
                   <h2 className="text-lg font-bold tracking-tight">{system.name}</h2>
                   {selected === system.id && (
-                    <span className="flex itely-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
                       <Check className="w-3 h-3" /> Wybrany
                     </span>
                   )}
@@ -206,7 +206,7 @@ export default function DesignSystemsPage() {
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Paleta</p>
                   <div className="flex gap-1.5 flex-wrap">
                     {system.tokens.map(t => (
-                      <div key={t.name} className="flex flex-col itely-center gap-1">
+                      <div key={t.name} className="flex flex-col items-center gap-1">
                         <div className="w-8 h-8 rounded-lg border shadow-sm"
                           style={{ background: t.value, borderColor: 'rgba(0,0,0,0.1)' }} />
                         <span className="text-[8px] text-muted-foreground">{t.name}</span>
@@ -241,7 +241,7 @@ export default function DesignSystemsPage() {
       </div>
 
       {selected && (
-        <div className="flex itely-center justify-between p-4 bg-foreground text-background rounded-xl">
+        <div className="flex items-center justify-between p-4 bg-foreground text-background rounded-xl">
           <div>
             <p className="font-semibold">Wybrany: {SYSTEMS.find(s => s.id === selected)?.name}</p>
             <p className="text-sm opacity-70 mt-0.5">Claude użyje tego design systemu tworząc nową aplikację.</p>

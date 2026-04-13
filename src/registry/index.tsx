@@ -82,7 +82,7 @@ const _base: RegistryEntry[] = [
       {
         title: 'Rozmiary',
         render: () => (
-          <div className="flex flex-wrap itely-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Button size="sm">Small</Button>
             <Button size="default">Default</Button>
             <Button size="lg">Large</Button>
@@ -147,7 +147,7 @@ const _base: RegistryEntry[] = [
       {
         title: 'Pionowy',
         render: () => (
-          <div className="flex itely-center gap-4 h-8">
+          <div className="flex items-center gap-4 h-8">
             <span className="text-sm">Lewo</span>
             <Separator orientation="vertical" />
             <span className="text-sm">Prawo</span>
@@ -170,7 +170,7 @@ const _base: RegistryEntry[] = [
       {
         title: 'Ze zdjęciem i fallback',
         render: () => (
-          <div className="flex gap-4 itely-center">
+          <div className="flex gap-4 items-center">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
               <AvatarFallback>CN</AvatarFallback>
@@ -197,7 +197,7 @@ const _base: RegistryEntry[] = [
       {
         title: 'Karta',
         render: () => (
-          <div className="flex itely-center space-x-4 w-72">
+          <div className="flex items-center space-x-4 w-72">
             <Skeleton className="h-12 w-12 rounded-full" />
             <div className="space-y-2 flex-1">
               <Skeleton className="h-4 w-full" />
@@ -250,7 +250,7 @@ const _base: RegistryEntry[] = [
         render: () => (
           <div className="w-72">
             <AspectRatio ratio={16 / 9} className="bg-muted rounded-lg overflow-hidden">
-              <div className="flex itely-center justify-center h-full text-sm text-muted-foreground">16 / 9</div>
+              <div className="flex items-center justify-center h-full text-sm text-muted-foreground">16 / 9</div>
             </AspectRatio>
           </div>
         ),
@@ -352,15 +352,15 @@ const _base: RegistryEntry[] = [
         title: 'Z labelką',
         render: () => (
           <div className="space-y-2">
-            <div className="flex itely-center space-x-2">
+            <div className="flex items-center space-x-2">
               <Checkbox id="ex-terms" />
               <Label htmlFor="ex-terms">Akceptuję regulamin</Label>
             </div>
-            <div className="flex itely-center space-x-2">
+            <div className="flex items-center space-x-2">
               <Checkbox id="ex-newsletter" defaultChecked />
               <Label htmlFor="ex-newsletter">Zapisz do newslettera</Label>
             </div>
-            <div className="flex itely-center space-x-2 opacity-50">
+            <div className="flex items-center space-x-2 opacity-50">
               <Checkbox id="ex-disabled" disabled />
               <Label htmlFor="ex-disabled">Wyłączona opcja</Label>
             </div>
@@ -385,7 +385,7 @@ const _base: RegistryEntry[] = [
         render: () => (
           <RadioGroup defaultValue="option-1" className="space-y-2">
             {['Opcja pierwsza', 'Opcja druga', 'Opcja trzecia'].map((label, i) => (
-              <div key={i} className="flex itely-center space-x-2">
+              <div key={i} className="flex items-center space-x-2">
                 <RadioGroupItem value={`option-${i + 1}`} id={`ex-radio-${i}`} />
                 <Label htmlFor={`ex-radio-${i}`}>{label}</Label>
               </div>
@@ -443,11 +443,11 @@ const _base: RegistryEntry[] = [
         title: 'Podstawowy',
         render: () => (
           <div className="space-y-3">
-            <div className="flex itely-center space-x-3">
+            <div className="flex items-center space-x-3">
               <Switch id="ex-sw1" />
               <Label htmlFor="ex-sw1">Powiadomienia email</Label>
             </div>
-            <div className="flex itely-center space-x-3">
+            <div className="flex items-center space-x-3">
               <Switch id="ex-sw2" defaultChecked />
               <Label htmlFor="ex-sw2">Tryb ciemny</Label>
             </div>
@@ -721,7 +721,7 @@ const _base: RegistryEntry[] = [
             <PopoverContent className="w-64">
               <div className="space-y-2">
                 <p className="text-sm font-medium">Ustawienia</p>
-                <div className="flex itely-center justify-between">
+                <div className="flex items-center justify-between">
                   <Label htmlFor="ex-pop-sw" className="text-sm">Powiadomienia</Label>
                   <Switch id="ex-pop-sw" />
                 </div>
@@ -804,7 +804,7 @@ const _base: RegistryEntry[] = [
         title: 'Kliknij prawym przyciskiem',
         render: () => (
           <ContextMenu>
-            <ContextMenuTrigger className="flex itely-center justify-center w-64 h-24 rounded-lg border-2 border-dashed text-sm text-muted-foreground">
+            <ContextMenuTrigger className="flex items-center justify-center w-64 h-24 rounded-lg border-2 border-dashed text-sm text-muted-foreground">
               Kliknij prawym przyciskiem
             </ContextMenuTrigger>
             <ContextMenuContent className="w-48">
@@ -974,7 +974,7 @@ const _base: RegistryEntry[] = [
           const [open, setOpen] = useState(false)
           return (
             <Collapsible open={open} onOpenChange={setOpen} className="w-64 space-y-2">
-              <div className="flex itely-center justify-between">
+              <div className="flex items-center justify-between">
                 <p className="text-sm font-medium">Lista plików</p>
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" size="sm">
@@ -1047,11 +1047,11 @@ const _base: RegistryEntry[] = [
                 <SheetDescription>Skonfiguruj swoje preferencje.</SheetDescription>
               </SheetHeader>
               <div className="mt-6 space-y-3">
-                <div className="flex itely-center justify-between">
+                <div className="flex items-center justify-between">
                   <Label>Powiadomienia</Label>
                   <Switch />
                 </div>
-                <div className="flex itely-center justify-between">
+                <div className="flex items-center justify-between">
                   <Label>Marketing</Label>
                   <Switch defaultChecked />
                 </div>
@@ -1190,7 +1190,7 @@ const _base: RegistryEntry[] = [
             <CarouselContent>
               {Array.from({ length: 5 }, (_, i) => (
                 <CarouselItem key={i}>
-                  <div className="flex itely-center justify-center h-32 bg-muted rounded-lg text-2xl font-bold text-muted-foreground">
+                  <div className="flex items-center justify-center h-32 bg-muted rounded-lg text-2xl font-bold text-muted-foreground">
                     {i + 1}
                   </div>
                 </CarouselItem>

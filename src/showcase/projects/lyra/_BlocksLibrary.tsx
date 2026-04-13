@@ -75,7 +75,7 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
 
   return (
     <div className={cn('flex flex-col bg-background border-r', className)}>
-      <div className="h-14 border-b flex itely-center gap-2 px-4 shrink-0">
+      <div className="h-14 border-b flex items-center gap-2 px-4 shrink-0">
         <LayoutTemplate className="w-4 h-4 text-muted-foreground" />
         <span className="text-sm font-semibold flex-1">Bloki treści</span>
         {onClose && (
@@ -95,7 +95,7 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
       </div>
 
       {/* Category filter */}
-      <div className="px-3 py-2 border-b flex itely-center gap-1 overflow-x-auto">
+      <div className="px-3 py-2 border-b flex items-center gap-1 overflow-x-auto">
         <button onClick={() => setActiveCategory(null)}
           className={cn('text-xs px-2.5 py-1 rounded-md whitespace-nowrap transition-colors',
             !activeCategory ? 'bg-foreground text-background font-medium' : 'text-muted-foreground hover:bg-muted')}>
@@ -119,8 +119,8 @@ export function BlocksLibrary({ onInsert, onClose, className }: BlocksLibraryPro
                 {blocks.map(block => (
                   <button key={block.id}
                     onClick={() => onInsert?.(block.id)}
-                    className="w-full flex itely-center gap-3 px-3 py-2.5 rounded-xl border bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
-                    <div className={cn('w-8 h-8 rounded-lg flex itely-center justify-center shrink-0', block.color)}>
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
+                    <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', block.color)}>
                       <block.icon className="w-4 h-4" />
                     </div>
                     <div className="flex-1 min-w-0">

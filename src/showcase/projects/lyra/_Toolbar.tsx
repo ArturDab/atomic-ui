@@ -30,7 +30,7 @@ function ToolBtn({ icon: Icon, label, onClick, active, className }: {
         <button
           onClick={onClick}
           className={cn(
-            'h-7 w-7 rounded flex itely-center justify-center transition-colors',
+            'h-7 w-7 rounded flex items-center justify-center transition-colors',
             active ? 'bg-foreground text-background' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
             className
           )}
@@ -45,7 +45,7 @@ function ToolBtn({ icon: Icon, label, onClick, active, className }: {
 
 export function EditorToolbar({ wordCount, chapterWordCount, onInsertBlock, className }: ToolbarProps) {
   return (
-    <div className={cn('h-11 border-b flex itely-center px-4 gap-1 bg-background overflow-x-auto shrink-0', className)}>
+    <div className={cn('h-11 border-b flex items-center px-4 gap-1 bg-background overflow-x-auto shrink-0', className)}>
       <ToolBtn icon={Undo2} label="Cofnij (Ctrl+Z)" />
       <ToolBtn icon={Redo2} label="Ponów (Ctrl+Y)" />
       <div className="w-px h-5 bg-border mx-1 shrink-0" />

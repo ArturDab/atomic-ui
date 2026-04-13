@@ -29,7 +29,7 @@ export function DocumentCard({ title, excerpt, status, updatedAt, platform, cate
 
   return (
     <div className='border rounded-xl bg-white p-5 hover:border-foreground/20 hover:shadow-sm transition-all group'>
-      <div className='flex itely-start justify-between gap-3 mb-3'>
+      <div className='flex items-start justify-between gap-3 mb-3'>
         <Badge variant='outline' className={cn('gap-1 text-xs font-medium', cfg.className)}>
           <StatusIcon className='w-3 h-3' />
           {cfg.label}
@@ -49,10 +49,10 @@ export function DocumentCard({ title, excerpt, status, updatedAt, platform, cate
         <p className='text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-3'>{excerpt}</p>
       )}
 
-      <div className='flex itely-center justify-between mt-3 pt-3 border-t'>
-        <div className='flex itely-center gap-2 text-xs text-muted-foreground'>
+      <div className='flex items-center justify-between mt-3 pt-3 border-t'>
+        <div className='flex items-center gap-2 text-xs text-muted-foreground'>
           {platform && (
-            <span className='flex itely-center gap-1'>
+            <span className='flex items-center gap-1'>
               <Globe className='w-3 h-3' />
               {platform}
             </span>
@@ -64,7 +64,7 @@ export function DocumentCard({ title, excerpt, status, updatedAt, platform, cate
             <span key={c} className='text-muted-foreground/80'>{c}</span>
           ))}
         </div>
-        <div className='flex itely-center gap-2'>
+        <div className='flex items-center gap-2'>
           <span className='text-xs text-muted-foreground'>{updatedAt}</span>
           <Button size='sm' variant='outline' className='h-7 text-xs' onClick={onEdit}>
             Edytuj

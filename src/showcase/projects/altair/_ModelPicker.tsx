@@ -43,11 +43,11 @@ const MODELS: Model[] = [
 ]
 
 const PROVIDER_ICONS: Record<string, React.ReactNode> = {
-  OpenAI:    <span className="w-4 h-4 rounded-full bg-foreground flex itely-center justify-center text-[8px] font-bold text-background shrink-0">O</span>,
-  Anthropic: <span className="w-4 h-4 rounded-full bg-orange-500 flex itely-center justify-center text-[8px] font-bold text-white shrink-0">A</span>,
-  Google:    <span className="w-4 h-4 rounded-full bg-blue-500 flex itely-center justify-center text-[8px] font-bold text-white shrink-0">G</span>,
-  Meta:      <span className="w-4 h-4 rounded-full bg-blue-700 flex itely-center justify-center text-[8px] font-bold text-white shrink-0">M</span>,
-  Mistral:   <span className="w-4 h-4 rounded-full bg-orange-700 flex itely-center justify-center text-[8px] font-bold text-white shrink-0">M</span>,
+  OpenAI:    <span className="w-4 h-4 rounded-full bg-foreground flex items-center justify-center text-[8px] font-bold text-background shrink-0">O</span>,
+  Anthropic: <span className="w-4 h-4 rounded-full bg-orange-500 flex items-center justify-center text-[8px] font-bold text-white shrink-0">A</span>,
+  Google:    <span className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[8px] font-bold text-white shrink-0">G</span>,
+  Meta:      <span className="w-4 h-4 rounded-full bg-blue-700 flex items-center justify-center text-[8px] font-bold text-white shrink-0">M</span>,
+  Mistral:   <span className="w-4 h-4 rounded-full bg-orange-700 flex items-center justify-center text-[8px] font-bold text-white shrink-0">M</span>,
 }
 
 interface ModelPickerProps {
@@ -78,7 +78,7 @@ export function ModelPicker({ value, onChange }: ModelPickerProps) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-9 gap-2 text-sm min-w-36 justify-between">
-          <span className="flex itely-center gap-1.5 truncate">
+          <span className="flex items-center gap-1.5 truncate">
             {selected && PROVIDER_ICONS[selected.provider]}
             <span className="truncate">{selected?.name ?? 'Wybierz model'}</span>
           </span>
@@ -87,7 +87,7 @@ export function ModelPicker({ value, onChange }: ModelPickerProps) {
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0" align="start">
         {/* Search */}
-        <div className="flex itely-center gap-2 px-3 py-2.5 border-b">
+        <div className="flex items-center gap-2 px-3 py-2.5 border-b">
           <Search className="w-4 h-4 text-muted-foreground shrink-0" />
           <Input
             placeholder="Szukaj modelu..."
@@ -105,7 +105,7 @@ export function ModelPicker({ value, onChange }: ModelPickerProps) {
               key={p}
               onClick={() => setActiveProvider(p)}
               className={cn(
-                'flex itely-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-colors shrink-0',
+                'flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-colors shrink-0',
                 activeProvider === p
                   ? 'bg-foreground text-background'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -124,7 +124,7 @@ export function ModelPicker({ value, onChange }: ModelPickerProps) {
           ) : (
             Object.entries(grouped).map(([provider, models]) => (
               <div key={provider}>
-                <div className="flex itely-center gap-2 px-3 py-2 bg-muted/30">
+                <div className="flex items-center gap-2 px-3 py-2 bg-muted/30">
                   {PROVIDER_ICONS[provider]}
                   <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{provider}</span>
                 </div>
@@ -133,12 +133,12 @@ export function ModelPicker({ value, onChange }: ModelPickerProps) {
                     key={model.id}
                     onClick={() => { onChange(model.id); setOpen(false) }}
                     className={cn(
-                      'w-full flex itely-center justify-between px-3 py-2.5 hover:bg-muted/50 transition-colors',
+                      'w-full flex items-center justify-between px-3 py-2.5 hover:bg-muted/50 transition-colors',
                       value === model.id && 'bg-muted'
                     )}
                   >
                     <div className="text-left">
-                      <div className="flex itely-center gap-2">
+                      <div className="flex items-center gap-2">
                         <span className="text-sm font-medium">{model.name}</span>
                         {model.tag && (
                           <span className="text-[10px] bg-muted border rounded-full px-1.5 py-0.5 text-muted-foreground font-medium">{model.tag}</span>

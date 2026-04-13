@@ -42,7 +42,7 @@ export default function EditorScreen() {
         <div className="w-64 border-r bg-white flex flex-col shrink-0 overflow-y-auto">
           <div className="p-4 border-b">
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">Szablon</p>
-            <div className="border rounded-lg px-3 py-2 flex itely-center justify-between cursor-pointer hover:bg-muted/40 transition-colors">
+            <div className="border rounded-lg px-3 py-2 flex items-center justify-between cursor-pointer hover:bg-muted/40 transition-colors">
               <div>
                 <p className="text-xs font-medium">Artykuł blogowy SEO</p>
                 <p className="text-xs text-muted-foreground">3 parametry</p>
@@ -86,9 +86,9 @@ export default function EditorScreen() {
 
         {/* Center: Editor */}
         <div className="flex-1 flex flex-col overflow-hidden bg-white">
-          <div className="flex itely-center justify-between px-6 py-2.5 border-b bg-muted/20">
+          <div className="flex items-center justify-between px-6 py-2.5 border-b bg-muted/20">
             <span className="text-xs text-muted-foreground">~620 słów · ok. 4 min czytania</span>
-            <div className="flex itely-center gap-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
               Zapisano automatycznie
             </div>
@@ -107,8 +107,8 @@ export default function EditorScreen() {
         {/* Right: AI chat */}
         <div className="w-72 border-l bg-white flex flex-col shrink-0">
           <div className="px-4 py-3 border-b">
-            <div className="flex itely-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-foreground flex itely-center justify-center">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-foreground flex items-center justify-center">
                 <Sparkles className="w-3.5 h-3.5 text-background" />
               </div>
               <p className="text-sm font-medium">Asystent AI</p>

@@ -60,7 +60,7 @@ function ParamsPopover() {
         <div className="space-y-5">
           <p className="text-sm font-semibold">Parametry modelu</p>
           <div className="space-y-2">
-            <div className="flex itely-center justify-between">
+            <div className="flex items-center justify-between">
               <Label className="text-sm">Temperatura</Label>
               <span className="text-sm font-mono text-muted-foreground">{temp[0]}</span>
             </div>
@@ -69,7 +69,7 @@ function ParamsPopover() {
           </div>
           <Separator />
           <div className="space-y-2">
-            <div className="flex itely-center justify-between">
+            <div className="flex items-center justify-between">
               <Label className="text-sm">Max tokenów</Label>
               <span className="text-sm font-mono text-muted-foreground">{maxTokens[0]}</span>
             </div>
@@ -77,7 +77,7 @@ function ParamsPopover() {
           </div>
           <Separator />
           <div className="space-y-2">
-            <div className="flex itely-center justify-between">
+            <div className="flex items-center justify-between">
               <Label className="text-sm">Top P</Label>
               <span className="text-sm font-mono text-muted-foreground">{topP[0]}</span>
             </div>
@@ -94,7 +94,7 @@ export default function AIChatScreen() {
   const [model, setModel] = React.useState('OPENAI/GPT-4O')
 
   const configBar = (
-    <div className="flex itely-center gap-2">
+    <div className="flex items-center gap-2">
       <Tabs defaultValue="chat">
         <TabsList className="h-9">
           <TabsTrigger value="chat" className="text-sm h-8 px-4">Chat</TabsTrigger>
@@ -136,13 +136,13 @@ export default function AIChatScreen() {
           </SidePanel>
 
           <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="h-14 border-b flex itely-center px-6 gap-3 shrink-0">
+            <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
               <h1 className="text-base font-semibold flex-1 truncate">
                 Jeśli poproszę Cię tutaj o kod HTML newslettera, t...
               </h1>
             </div>
             <div className="border-b">
-              <button className="w-full flex itely-center justify-between px-6 py-3 hover:bg-muted/40 transition-colors"
+              <button className="w-full flex items-center justify-between px-6 py-3 hover:bg-muted/40 transition-colors"
                 onClick={() => setSystemPromptOpen(o => !o)}>
                 <span className="text-sm text-muted-foreground">Prompt systemowy</span>
                 {systemPromptOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}

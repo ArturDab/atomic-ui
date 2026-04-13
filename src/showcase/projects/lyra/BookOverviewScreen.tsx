@@ -65,9 +65,9 @@ export default function BookOverviewScreen() {
   return (
     <div className="flex flex-col h-full bg-background">
       {/* App header */}
-      <div className="h-14 border-b flex itely-center px-4 gap-3 shrink-0 bg-white">
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
         <Button variant="ghost" size="icon" className="h-8 w-8"><ArrowLeft className="w-4 h-4" /></Button>
-        <div className="flex itely-center gap-2 flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
           <Badge variant="outline" className="text-[10px] border-emerald-200 bg-emerald-50 text-emerald-600 shrink-0">Książka</Badge>
           <span className="text-sm font-semibold truncate">Strategie Contentowe dla Ekspertów</span>
         </div>
@@ -77,13 +77,13 @@ export default function BookOverviewScreen() {
       </div>
 
       {/* Tab bar */}
-      <div className="border-b flex itely-center justify-center overflow-x-auto bg-white">
+      <div className="border-b flex items-center justify-center overflow-x-auto bg-white">
         {TABS.map(tab => {
           const Icon = tab.icon
           return (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={cn(
-                'flex itely-center gap-1.5 px-3 py-3 text-sm border-b-2 transition-colors whitespace-nowrap',
+                'flex items-center gap-1.5 px-3 py-3 text-sm border-b-2 transition-colors whitespace-nowrap',
                 activeTab === tab.id
                   ? 'border-foreground text-foreground font-medium'
                   : 'border-transparent text-muted-foreground hover:text-foreground'
@@ -118,7 +118,7 @@ export default function BookOverviewScreen() {
 
               {/* Progress bar */}
               <div className="bg-white border rounded-xl p-4">
-                <div className="flex itely-center justify-between mb-2">
+                <div className="flex items-center justify-between mb-2">
                   <p className="text-sm font-medium">Postęp pracy</p>
                   <p className="text-xs text-muted-foreground">{totalWords.toLocaleString()} / {totalGoal.toLocaleString()} słów</p>
                 </div>
@@ -127,7 +127,7 @@ export default function BookOverviewScreen() {
                   {Object.entries(STATUS_CONFIG).map(([key, cfg]) => {
                     const count = CHAPTERS.flatMap(p => (p as any).children || []).filter(c => c.status === key).length
                     return (
-                      <div key={key} className="flex itely-center gap-2">
+                      <div key={key} className="flex items-center gap-2">
                         <cfg.icon className={cn('w-3.5 h-3.5', cfg.color)} />
                         <span className="text-xs text-muted-foreground">{cfg.label}</span>
                         <span className="text-xs font-semibold ml-auto">{count}</span>
@@ -146,7 +146,7 @@ export default function BookOverviewScreen() {
                     { title: 'Projektowanie przepływów pracy', time: 'wczoraj, 18:05', words: '+180' },
                     { title: 'Wprowadzenie do agentów AI', time: '2 dni temu', words: '+0' },
                   ].map(item => (
-                    <div key={item.title} className="flex itely-center gap-3 py-2 border-b last:border-0">
+                    <div key={item.title} className="flex items-center gap-3 py-2 border-b last:border-0">
                       <BookOpen className="w-4 h-4 text-muted-foreground shrink-0" />
                       <p className="text-sm flex-1 truncate">{item.title}</p>
                       <span className="text-xs text-emerald-600 shrink-0">{item.words}</span>
@@ -161,7 +161,7 @@ export default function BookOverviewScreen() {
           {/* KONSPEKT */}
           {activeTab === 'outline' && (
             <div className="space-y-2">
-              <div className="flex itely-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-muted-foreground">{totalChapters} rozdziałów · {CHAPTERS.length} części</p>
                 <Button size="sm" variant="outline" className="h-8 gap-1.5 text-sm">
                   <Plus className="w-4 h-4" /> Dodaj część
@@ -173,17 +173,17 @@ export default function BookOverviewScreen() {
                     onClick={() => setExpandedParts(prev => {
                       const n = new Set(prev); n.has(part.id) ? n.delete(part.id) : n.add(part.id); return n
                     })}
-                    className="w-full flex itely-center gap-3 px-4 py-3 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
+                    className="w-full flex items-center gap-3 px-4 py-3 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
                     {expandedParts.has(part.id) ? <ChevronDown className="w-4 h-4 text-muted-foreground" /> : <ChevronRight className="w-4 h-4 text-muted-foreground" />}
                     <StatusIcon status={part.status} />
                     <span className="text-sm font-semibold flex-1 text-left">{part.title}</span>
                     <span className="text-xs text-muted-foreground">{(part as any).words?.toLocaleString()} słów</span>
                   </button>
                   {expandedParts.has(part.id) && (part as any).children?.map((ch: any) => (
-                    <div key={ch.id} className="flex itely-center gap-3 px-4 py-2.5 ml-4 border-b hover:bg-muted/30 transition-colors group">
+                    <div key={ch.id} className="flex items-center gap-3 px-4 py-2.5 ml-4 border-b hover:bg-muted/30 transition-colors group">
                       <StatusIcon status={ch.status} />
                       <span className="text-sm flex-1">{ch.title}</span>
-                      <div className="flex itely-center gap-3 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
                         {ch.words > 0 && (
                           <div className="w-16 h-1 bg-muted rounded-full overflow-hidden">
                             <div className="h-full bg-foreground/25 rounded-full" style={{ width: `${Math.min(ch.words / ch.goal * 100, 100)}%` }} />
@@ -205,7 +205,7 @@ export default function BookOverviewScreen() {
           {activeTab === 'ai' && (
             <div className="space-y-6">
               <div className="bg-white border rounded-xl p-5">
-                <h3 className="text-sm font-semibold flex itely-center gap-2 mb-1">
+                <h3 className="text-sm font-semibold flex items-center gap-2 mb-1">
                   <Sparkles className="w-4 h-4" /> Instrukcje dla AI
                 </h3>
                 <p className="text-xs text-foreground/85 mb-4">
@@ -236,8 +236,8 @@ export default function BookOverviewScreen() {
 
           {/* Prosty placeholder dla innych tabów */}
           {!['overview', 'outline', 'ai'].includes(activeTab) && (
-            <div className="flex flex-col itely-center justify-center py-20 text-center">
-              <div className="w-12 h-12 rounded-xl bg-muted flex itely-center justify-center mb-4">
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center mb-4">
                 {(() => { const Tab = TABS.find(t => t.id === activeTab); return Tab ? <Tab.icon className="w-6 h-6 text-muted-foreground" strokeWidth={1.5} /> : null })()}
               </div>
               <p className="text-sm font-medium text-muted-foreground">

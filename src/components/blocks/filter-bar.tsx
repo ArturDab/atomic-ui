@@ -16,7 +16,7 @@ interface FilterBarProps {
 
 export function FilterBar({ placeholder = 'Szukaj...', filters, onSearch, className }: FilterBarProps) {
   return (
-    <div className={cn('flex itely-center gap-2', className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       <div className='relative flex-1 max-w-xs'>
         <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none' />
         <input

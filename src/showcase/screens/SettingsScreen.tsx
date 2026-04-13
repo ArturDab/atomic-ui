@@ -22,8 +22,8 @@ export default function SettingsScreen() {
             <h2 className="text-sm font-semibold mb-1">Konto</h2>
             <p className="text-xs text-muted-foreground mb-4">Twoje dane osobowe i ustawienia logowania.</p>
             <div className="bg-white border rounded-xl p-5 space-y-4">
-              <div className="flex itely-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-foreground flex itely-center justify-center text-background text-lg font-semibold shrink-0">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-foreground flex items-center justify-center text-background text-lg font-semibold shrink-0">
                   AK
                 </div>
                 <div>
@@ -53,7 +53,7 @@ export default function SettingsScreen() {
 
           {/* Integrations */}
           <section>
-            <div className="flex itely-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-1">
               <h2 className="text-sm font-semibold">Integracje</h2>
               <Button variant="outline" size="sm" className="h-7 text-xs gap-1.5">
                 <Plus className="w-3 h-3" /> Dodaj witrynę
@@ -87,7 +87,7 @@ export default function SettingsScreen() {
           <section>
             <h2 className="text-sm font-semibold text-destructive mb-1">Strefa niebezpieczna</h2>
             <p className="text-xs text-muted-foreground mb-4">Nieodwracalne operacje na koncie.</p>
-            <div className="bg-white border border-destructive/20 rounded-xl p-5 flex itely-center justify-between">
+            <div className="bg-white border border-destructive/20 rounded-xl p-5 flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium">Usuń konto</p>
                 <p className="text-xs text-muted-foreground">Trwałe usunięcie wszystkich danych i dokumentów.</p>

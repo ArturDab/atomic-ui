@@ -13,7 +13,7 @@ export default function ComponentPage() {
 
   if (!entry) {
     return (
-      <div className="flex itely-center justify-center h-64 text-sm text-muted-foreground">
+      <div className="flex items-center justify-center h-64 text-sm text-muted-foreground">
         Nie znaleziono komponentu.
       </div>
     )
@@ -32,9 +32,9 @@ export default function ComponentPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10">
-      <div className="flex itely-start justify-between gap-4 mb-6">
+      <div className="flex items-start justify-between gap-4 mb-6">
         <div>
-          <div className="flex itely-baseline gap-3 mb-1.5">
+          <div className="flex items-baseline gap-3 mb-1.5">
             <h1 className="text-2xl font-semibold tracking-tight">{entry.title}</h1>
             <span className="text-xs text-muted-foreground border rounded-full px-2.5 py-0.5 bg-white">
               {entry.category}
@@ -42,7 +42,7 @@ export default function ComponentPage() {
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">{entry.description}</p>
         </div>
-        <div className="flex itely-center gap-2 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           <Button size="sm" variant="outline" onClick={handleCopy} className="gap-1.5">
             {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             {copied ? 'Skopiowano!' : 'Kopiuj kod'}
@@ -69,7 +69,7 @@ export default function ComponentPage() {
               {example.description && (
                 <p className="text-xs text-muted-foreground -mt-2 mb-3 leading-relaxed">{example.description}</p>
               )}
-              <div className="border rounded-xl bg-white px-8 py-10 flex itely-center justify-center min-h-28">
+              <div className="border rounded-xl bg-white px-8 py-10 flex items-center justify-center min-h-28">
                 <example.render />
               </div>
             </div>

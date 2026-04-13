@@ -48,7 +48,7 @@ export function ThemeSwitcher() {
   const { themeId, setThemeId } = useLyraTheme()
 
   return (
-    <div className="flex itely-center gap-1 bg-white/10 rounded-lg p-0.5">
+    <div className="flex items-center gap-1 bg-white/10 rounded-lg p-0.5">
       {THEMES.map(t => (
         <button
           key={t.id}

@@ -58,19 +58,19 @@ export default function StudyEditorScreen() {
     <div className={fullscreen ? 'fixed inset-0 z-50 flex flex-col bg-background' : 'flex flex-col h-full bg-background'}>
 
       {/* Header */}
-      <div className="h-14 border-b flex itely-center px-4 gap-3 shrink-0 bg-white">
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <ArrowLeft className="w-4 h-4" />
         </Button>
-        <div className="flex itely-center gap-2 flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
           <Badge variant="outline" className="text-[10px] border-violet-200 bg-violet-50 text-violet-600 shrink-0">
             Opracowanie
           </Badge>
           <span className="text-sm font-medium truncate">Raport: AI w polskim e-commerce 2025</span>
           <Badge variant="outline" className="text-[10px] ml-1 shrink-0">W trakcie</Badge>
         </div>
-        <div className="flex itely-center gap-1 shrink-0">
-          <span className="text-xs text-foreground/60 hidden lg:flex itely-center gap-1">
+        <div className="flex items-center gap-1 shrink-0">
+          <span className="text-xs text-foreground/60 hidden lg:flex items-center gap-1">
             <Clock className="w-3 h-3" /> Autozapis
           </span>
           <Separator orientation="vertical" className="h-5 mx-1 hidden lg:block" />
@@ -95,7 +95,7 @@ export default function StudyEditorScreen() {
         {/* Lewy panel: lista sekcji */}
         {showSections && !fullscreen && (
           <div className="w-64 border-r flex flex-col shrink-0 bg-background">
-            <div className="h-14 border-b flex itely-center justify-between px-4 shrink-0">
+            <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
               <div>
                 <p className="text-xs font-semibold text-foreground/65 uppercase tracking-wider">Sekcje</p>
                 <p className="text-[10px] text-foreground/60 mt-0.5">
@@ -125,14 +125,14 @@ export default function StudyEditorScreen() {
                     <button key={s.id}
                       onClick={() => setActiveSection(s.id)}
                       className={cn(
-                        'w-full flex itely-center gap-2.5 px-4 py-2.5 text-sm transition-colors border-l-2 group',
+                        'w-full flex items-center gap-2.5 px-4 py-2.5 text-sm transition-colors border-l-2 group',
                         activeSection === s.id
                           ? 'bg-muted border-l-foreground font-medium text-foreground'
                           : 'border-l-transparent hover:bg-muted/40 text-foreground/85'
                       )}>
                       <SIcon className={cn('w-3 h-3 shrink-0', SC[s.status])} />
                       <span className="flex-1 text-left leading-snug text-xs">{s.title}</span>
-                      <div className="flex itely-center gap-1 shrink-0">
+                      <div className="flex items-center gap-1 shrink-0">
                         {s.words > 0 && (
                           <span className="text-[10px] text-foreground/55 tabular-nums">{s.words}</span>
                         )}
@@ -146,7 +146,7 @@ export default function StudyEditorScreen() {
 
             {/* Spis treści auto */}
             <div className="p-3 border-t">
-              <button className="w-full flex itely-center gap-2 text-xs text-foreground/65 hover:text-foreground transition-colors px-2 py-1.5 rounded-lg hover:bg-muted">
+              <button className="w-full flex items-center gap-2 text-xs text-foreground/65 hover:text-foreground transition-colors px-2 py-1.5 rounded-lg hover:bg-muted">
                 <AlignLeft className="w-3.5 h-3.5" />
                 Podgląd spisu treści
               </button>
@@ -158,7 +158,7 @@ export default function StudyEditorScreen() {
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
           <EditorToolbar wordCount={totalWords} chapterWordCount={1240} />
 
-          <div className="h-9 border-b flex itely-center px-4 gap-2 bg-muted/20 shrink-0">
+          <div className="h-9 border-b flex items-center px-4 gap-2 bg-muted/20 shrink-0">
             {(!showSections || fullscreen) && (
               <Button variant="ghost" size="icon" className="h-7 w-7"
                 onClick={() => { setShowSections(true); setFullscreen(false) }}>
@@ -191,7 +191,7 @@ export default function StudyEditorScreen() {
                 <h2 className="text-2xl font-bold leading-tight tracking-tight">
                   Rynek AI w Polsce 2025
                 </h2>
-                <div className="flex itely-center gap-2 mt-2">
+                <div className="flex items-center gap-2 mt-2">
                   <Badge variant="outline" className="text-[10px]">W trakcie</Badge>
                   <span className="text-xs text-foreground/65">1 240 słów</span>
                 </div>
@@ -205,7 +205,7 @@ export default function StudyEditorScreen() {
 
               {/* Blok danych / wykres placeholder */}
               <div className="my-6 rounded-xl border bg-muted/20 p-5">
-                <div className="flex itely-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-3">
                   <div className="w-2 h-2 rounded-full bg-blue-500" />
                   <span className="text-xs font-medium text-foreground/85">Dane do wykresu</span>
                 </div>
@@ -235,7 +235,7 @@ export default function StudyEditorScreen() {
           />
         ) : (
           <button onClick={() => setShowAI(true)}
-            className="w-9 border-l flex flex-col itely-center justify-center hover:bg-muted/40 transition-colors shrink-0">
+            className="w-9 border-l flex flex-col items-center justify-center hover:bg-muted/40 transition-colors shrink-0">
             <Sparkles className="w-4 h-4 text-foreground/55" />
           </button>
         )}

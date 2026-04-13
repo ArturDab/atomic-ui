@@ -49,7 +49,7 @@ export default function AllScreens() {
                   </div>
                 </div>
               </div>
-              <div className="px-4 py-3 border-t flex itely-center justify-between">
+              <div className="px-4 py-3 border-t flex items-center justify-between">
                 <span className="text-sm font-medium">{label}</span>
                 <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
                   Otwórz →

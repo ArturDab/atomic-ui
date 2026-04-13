@@ -14,7 +14,7 @@ function CopyPromptButton({ label, getText }: { label: string; getText: () => st
   }
   return (
     <button onClick={copy}
-      className="inline-flex itely-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-white hover:bg-muted transition-colors font-medium">
+      className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-white hover:bg-muted transition-colors font-medium">
       {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <ClipboardCopy className="w-3.5 h-3.5" />}
       {copied ? 'Skopiowano!' : label}
     </button>
@@ -63,7 +63,7 @@ function EditableCode({ template, fields }: { template: string; fields: string[]
           const val = values[field] || ''
           if (editing === field) {
             return (
-              <span key={i} className="inline-flex itely-center gap-1">
+              <span key={i} className="inline-flex items-center gap-1">
                 <input
                   autoFocus
                   value={draft}
@@ -81,7 +81,7 @@ function EditableCode({ template, fields }: { template: string; fields: string[]
           return (
             <button key={i} onClick={() => startEdit(field)}
               className={cn(
-                'inline-flex itely-center gap-1 px-1.5 rounded border transition-colors group',
+                'inline-flex items-center gap-1 px-1.5 rounded border transition-colors group',
                 val
                   ? 'bg-emerald-50 border-emerald-200 text-emerald-800 hover:bg-emerald-100'
                   : 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100 animate-pulse'
@@ -232,7 +232,7 @@ git add -A && git commit -m "opis" && git push origin main
               'Showcase używa teraz modułu z przykładowymi danymi',
             ].map((step, i) => (
               <li key={i} className="flex gap-3">
-                <span className="w-5 h-5 rounded-full bg-muted flex itely-center justify-center text-xs font-semibold shrink-0 mt-0.5">{i + 1}</span>
+                <span className="w-5 h-5 rounded-full bg-muted flex items-center justify-center text-xs font-semibold shrink-0 mt-0.5">{i + 1}</span>
                 <span className="text-muted-foreground">{step}</span>
               </li>
             ))}
@@ -257,7 +257,7 @@ git add -A && git commit -m "opis" && git push origin main
               'Nie zmieniaj logiki UI – tylko warstwa danych',
             ].map((step, i) => (
               <li key={i} className="flex gap-3">
-                <span className="w-5 h-5 rounded-full bg-muted flex itely-center justify-center text-xs font-semibold shrink-0 mt-0.5">{i + 1}</span>
+                <span className="w-5 h-5 rounded-full bg-muted flex items-center justify-center text-xs font-semibold shrink-0 mt-0.5">{i + 1}</span>
                 <span className="text-muted-foreground">{step}</span>
               </li>
             ))}
@@ -376,7 +376,7 @@ Dodatkowe zasady tej aplikacji:
               'Claude klonuje repo, czyta CLAUDE.md, zaczyna',
             ].map((step, i) => (
               <li key={i} className="flex gap-3">
-                <span className="w-5 h-5 rounded-full bg-muted flex itely-center justify-center text-xs font-semibold shrink-0">{i + 1}</span>
+                <span className="w-5 h-5 rounded-full bg-muted flex items-center justify-center text-xs font-semibold shrink-0">{i + 1}</span>
                 <span className="text-muted-foreground">{step}</span>
               </li>
             ))}

@@ -84,12 +84,12 @@ export default function NewContentModal(_props: NewContentModalProps = {}) {
   const selectedType = TYPES.find(t => t.id === type)
 
   return (
-    <div className="flex itely-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full">
       <div className="bg-background rounded-2xl shadow-2xl border w-full max-w-2xl mx-4 overflow-hidden">
 
         {/* Header */}
-        <div className="flex itely-center justify-between px-6 py-4 border-b">
-          <div className="flex itely-center gap-3">
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <div className="flex items-center gap-3">
             {step === 'details' && (
               <button onClick={() => { setStep('type'); setType(null) }}
                 className="text-muted-foreground hover:text-foreground transition-colors">
@@ -105,12 +105,12 @@ export default function NewContentModal(_props: NewContentModalProps = {}) {
               </p>
             </div>
           </div>
-          <div className="flex itely-center gap-3">
+          <div className="flex items-center gap-3">
             {/* Steps */}
-            <div className="flex itely-center gap-1.5">
+            <div className="flex items-center gap-1.5">
               {(['type', 'details'] as Step[]).map((s, i) => (
                 <div key={s} className={cn(
-                  'w-5 h-5 rounded-full text-[10px] font-semibold flex itely-center justify-center',
+                  'w-5 h-5 rounded-full text-[10px] font-semibold flex items-center justify-center',
                   step === s ? 'bg-foreground text-background' : (step === 'done' || (s === 'type' && step === 'details'))
                     ? 'bg-emerald-500 text-white' : 'bg-muted text-foreground/40'
                 )}>
@@ -129,16 +129,16 @@ export default function NewContentModal(_props: NewContentModalProps = {}) {
               <button key={t.id}
                 onClick={() => setType(t.id)}
                 className={cn(
-                  'w-full flex itely-start gap-4 p-4 rounded-xl border-2 text-left transition-all',
+                  'w-full flex items-start gap-4 p-4 rounded-xl border-2 text-left transition-all',
                   type === t.id
                     ? `border-foreground bg-muted/30`
                     : 'border-border hover:border-foreground/30 hover:bg-muted/20'
                 )}>
-                <div className={cn('w-10 h-10 rounded-xl border flex itely-center justify-center shrink-0 mt-0.5', t.bg, t.border)}>
+                <div className={cn('w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 mt-0.5', t.bg, t.border)}>
                   <t.icon className={cn('w-5 h-5', t.color)} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex itely-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="text-sm font-semibold">{t.label}</span>
                     {type === t.id && <Check className="w-4 h-4 text-emerald-500" />}
                   </div>
@@ -186,11 +186,11 @@ export default function NewContentModal(_props: NewContentModalProps = {}) {
                   <button key={tmpl.id}
                     onClick={() => setTemplate(tmpl.id)}
                     className={cn(
-                      'flex itely-start gap-2 p-3 rounded-lg border text-left transition-all',
+                      'flex items-start gap-2 p-3 rounded-lg border text-left transition-all',
                       template === tmpl.id ? 'border-foreground bg-muted/30' : 'border-border hover:border-foreground/30'
                     )}>
                     <div className={cn(
-                      'w-4 h-4 rounded-full border-2 mt-0.5 shrink-0 flex itely-center justify-center',
+                      'w-4 h-4 rounded-full border-2 mt-0.5 shrink-0 flex items-center justify-center',
                       template === tmpl.id ? 'border-foreground bg-foreground' : 'border-muted-foreground/30'
                     )}>
                       {template === tmpl.id && <div className="w-1.5 h-1.5 rounded-full bg-background" />}
@@ -206,11 +206,11 @@ export default function NewContentModal(_props: NewContentModalProps = {}) {
 
             {/* Cel słów (opcjonalnie) */}
             <div className="space-y-1.5">
-              <label className="text-sm font-medium flex itely-center gap-2">
+              <label className="text-sm font-medium flex items-center gap-2">
                 Cel słów
                 <span className="text-xs text-foreground/50 font-normal">(opcjonalnie)</span>
               </label>
-              <div className="flex itely-center gap-2">
+              <div className="flex items-center gap-2">
                 <Input
                   value={wordGoal}
                   onChange={e => setWordGoal(e.target.value)}
@@ -230,8 +230,8 @@ export default function NewContentModal(_props: NewContentModalProps = {}) {
             </div>
 
             {/* AI asystent */}
-            <div className="flex itely-center justify-between p-3 rounded-xl border bg-muted/20">
-              <div className="flex itely-center gap-2.5">
+            <div className="flex items-center justify-between p-3 rounded-xl border bg-muted/20">
+              <div className="flex items-center gap-2.5">
                 <Sparkles className="w-4 h-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm font-medium">Zacznij z pomocą AI</p>

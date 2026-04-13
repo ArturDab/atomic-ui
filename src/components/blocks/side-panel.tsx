@@ -37,7 +37,7 @@ export function SidePanel({ children, className }: { children: React.ReactNode; 
 
 export function SidePanelHeader({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn('p-3 border-b flex itely-center gap-2', className)}>
+    <div className={cn('p-3 border-b flex items-center gap-2', className)}>
       {children}
     </div>
   )
@@ -103,7 +103,7 @@ export function SidePanelSearch({
 
 export function SidePanelToolbar({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-3 py-2 border-b flex itely-center gap-1.5 flex-wrap">
+    <div className="px-3 py-2 border-b flex items-center gap-1.5 flex-wrap">
       {children}
     </div>
   )
@@ -124,7 +124,7 @@ export function SidePanelToolbarButton({
     <button
       onClick={onClick}
       className={cn(
-        'inline-flex itely-center gap-1 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors',
+        'inline-flex items-center gap-1 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors',
         active
           ? 'bg-foreground text-background border-foreground'
           : 'text-muted-foreground border-border hover:bg-muted/50 hover:text-foreground'
@@ -149,7 +149,7 @@ export function SidePanelSortButton({
     <button
       onClick={onClick}
       className={cn(
-        'inline-flex itely-center gap-1 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors',
+        'inline-flex items-center gap-1 h-7 px-2.5 rounded-md border text-xs font-medium transition-colors',
         active
           ? 'text-foreground border-foreground/40 bg-muted'
           : 'text-muted-foreground border-border hover:bg-muted/50 hover:text-foreground'
@@ -192,7 +192,7 @@ export function SidePanelStarredItem({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-4 py-2.5 flex itely-center gap-2.5 border-b bg-amber-50 hover:bg-amber-100 transition-colors"
+      className="w-full text-left px-4 py-2.5 flex items-center gap-2.5 border-b bg-amber-50 hover:bg-amber-100 transition-colors"
     >
       <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 shrink-0" />
       <span className="text-sm font-medium truncate">{label}</span>
@@ -215,7 +215,7 @@ export function SidePanelFolder({
     <div>
       <button
         onClick={onToggle}
-        className="w-full flex itely-center gap-2 px-4 py-2.5 border-b hover:bg-muted/50 transition-colors group"
+        className="w-full flex items-center gap-2 px-4 py-2.5 border-b hover:bg-muted/50 transition-colors group"
       >
         {expanded
           ? <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
@@ -261,7 +261,7 @@ export function SidePanelItem({
     <button
       onClick={onClick}
       className={cn(
-        'w-full text-left border-b flex itely-start gap-2.5 hover:bg-muted/50 transition-colors',
+        'w-full text-left border-b flex items-start gap-2.5 hover:bg-muted/50 transition-colors',
         indent ? 'pl-10 pr-4 py-2.5' : 'px-4 py-2.5',
         active && 'bg-muted',
         className

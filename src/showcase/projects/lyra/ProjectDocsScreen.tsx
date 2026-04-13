@@ -33,7 +33,7 @@ function EditableField({ fieldKey, placeholder, values, onChange }: {
 
   if (editing) {
     return (
-      <span className="inline-flex itely-center gap-1">
+      <span className="inline-flex items-center gap-1">
         <input autoFocus value={draft}
           onChange={e => setDraft(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') confirm(); if (e.key === 'Escape') setEditing(false) }}
@@ -50,7 +50,7 @@ function EditableField({ fieldKey, placeholder, values, onChange }: {
   return (
     <button onClick={start}
       className={cn(
-        'inline-flex itely-center gap-1 px-1.5 rounded border transition-colors group text-xs font-mono',
+        'inline-flex items-center gap-1 px-1.5 rounded border transition-colors group text-xs font-mono',
         val ? 'bg-emerald-50 border-emerald-200 text-emerald-800 hover:bg-emerald-100'
             : 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100'
       )}
@@ -97,7 +97,7 @@ function CopyButton({ label, getText }: { label: string; getText: () => string }
   }
   return (
     <button onClick={copy}
-      className="inline-flex itely-center gap-1.5 text-xs px-4 py-2 rounded-lg border bg-white hover:bg-muted transition-colors font-medium">
+      className="inline-flex items-center gap-1.5 text-xs px-4 py-2 rounded-lg border bg-white hover:bg-muted transition-colors font-medium">
       {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <ClipboardCopy className="w-3.5 h-3.5" />}
       {copied ? 'Skopiowano!' : label}
     </button>
@@ -250,7 +250,7 @@ src/
           {SECTIONS.map(s => (
             <button key={s.id} onClick={() => setActive(s.id)}
               className={cn(
-                'w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex itely-center gap-2',
+                'w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2',
                 active === s.id
                   ? 'bg-foreground text-background font-medium'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -313,9 +313,9 @@ src/
                   { label: 'Moduły', value: '4 hooki, 12 typów TS', done: true },
                   { label: 'Komponenty UI do modułów', value: 'W toku', done: false },
                 ].map(item => (
-                  <div key={item.label} className="flex itely-center justify-between py-2 border-b last:border-0">
+                  <div key={item.label} className="flex items-center justify-between py-2 border-b last:border-0">
                     <span className="text-sm text-foreground/80">{item.label}</span>
-                    <div className="flex itely-center gap-2">
+                    <div className="flex items-center gap-2">
                       <span className="text-xs text-muted-foreground">{item.value}</span>
                       {item.done
                         ? <div className="w-2 h-2 rounded-full bg-emerald-500" />

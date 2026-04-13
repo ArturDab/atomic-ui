@@ -111,8 +111,8 @@ export default function AIStudioScreen() {
         {/* Slide-in form panel */}
         {editorOpen && (
           <div className="w-80 border-r flex flex-col shrink-0 bg-background">
-            <div className="h-14 border-b flex itely-center gap-3 px-4 shrink-0">
-              <div className="w-8 h-8 rounded-lg bg-muted flex itely-center justify-center">
+            <div className="h-14 border-b flex items-center gap-3 px-4 shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
                 <Wand2 className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
               </div>
               <span className="font-semibold text-sm flex-1">Artykuł blogowy</span>
@@ -173,11 +173,11 @@ export default function AIStudioScreen() {
 
         {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="h-14 border-b flex itely-center px-6 gap-3 shrink-0">
+          <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
             <h1 className="text-base font-semibold">AI Studio</h1>
             {editorOpen && hasContent && (
-              <div className="flex itely-center gap-2 ml-auto">
-                <span className="text-xs text-muted-foreground flex itely-center gap-1.5">
+              <div className="flex items-center gap-2 ml-auto">
+                <span className="text-xs text-muted-foreground flex items-center gap-1.5">
                   <Coins className="w-3.5 h-3.5" /> 978 tok
                   <Clock className="w-3.5 h-3.5 ml-1" /> 18.6s
                 </span>
@@ -212,8 +212,8 @@ export default function AIStudioScreen() {
               </div>
             </ScrollArea>
           ) : editorOpen ? (
-            <div className="flex-1 flex flex-col itely-center justify-center gap-4 text-center px-8">
-              <div className="w-14 h-14 rounded-2xl bg-muted flex itely-center justify-center">
+            <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
+              <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center">
                 <Wand2 className="w-7 h-7 text-muted-foreground" strokeWidth={1.5} />
               </div>
               <div>
@@ -243,8 +243,8 @@ export default function AIStudioScreen() {
                       <p className="text-sm text-muted-foreground text-center py-8">Brak wyników dla „{search}"</p>
                     ) : searchResults.map(item => (
                       <button key={item.slug} onClick={() => openEditor(item.slug)}
-                        className="w-full flex itely-center gap-3 px-4 py-3 rounded-xl border bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
-                        <div className="w-8 h-8 rounded-lg bg-muted flex itely-center justify-center shrink-0">
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left group">
+                        <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
                           <item.icon className="w-4 h-4 text-muted-foreground" />
                         </div>
                         <p className="font-medium text-sm flex-1">{item.name}</p>
@@ -259,7 +259,7 @@ export default function AIStudioScreen() {
                     <div>
                       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Przypięte</p>
                       {pinnedGenerators.length === 0 ? (
-                        <div className="border border-dashed rounded-xl bg-white/60 flex flex-col itely-center py-7 text-center px-6">
+                        <div className="border border-dashed rounded-xl bg-white/60 flex flex-col items-center py-7 text-center px-6">
                           <Pin className="w-5 h-5 text-muted-foreground/40 mb-2" />
                           <p className="text-sm font-medium text-muted-foreground">Brak przypiętych generatorów</p>
                           <p className="text-xs text-muted-foreground/60 mt-1">Kliknij ikonę pinezki przy dowolnym generatorze poniżej.</p>
@@ -269,8 +269,8 @@ export default function AIStudioScreen() {
                           {pinnedGenerators.map(gen => (
                             <div key={gen.slug} className="relative group/pin">
                               <button onClick={() => openEditor(gen.slug)}
-                                className="w-full flex flex-col itely-start p-4 border rounded-xl bg-white hover:border-foreground/25 hover:shadow-sm transition-all text-left">
-                                <div className="w-9 h-9 rounded-lg bg-muted flex itely-center justify-center mb-3">
+                                className="w-full flex flex-col items-start p-4 border rounded-xl bg-white hover:border-foreground/25 hover:shadow-sm transition-all text-left">
+                                <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center mb-3">
                                   <gen.icon className="w-4 h-4 text-foreground" />
                                 </div>
                                 <p className="font-semibold text-sm">{gen.name}</p>
@@ -278,7 +278,7 @@ export default function AIStudioScreen() {
                               </button>
                               <button
                                 onClick={e => togglePin(gen.slug, e)}
-                                className="absolute top-2 right-2 w-6 h-6 rounded-md flex itely-center justify-center bg-muted text-foreground opacity-0 group-hover/pin:opacity-100 transition-opacity"
+                                className="absolute top-2 right-2 w-6 h-6 rounded-md flex items-center justify-center bg-muted text-foreground opacity-0 group-hover/pin:opacity-100 transition-opacity"
                               >
                                 <PinOff className="w-3 h-3" />
                               </button>
@@ -290,9 +290,9 @@ export default function AIStudioScreen() {
 
                     {/* Historia – inny wzorzec niż kafle */}
                     <div>
-                      <div className="flex itely-center justify-between mb-3">
+                      <div className="flex items-center justify-between mb-3">
                         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Ostatnie generacje</p>
-                        <button className="text-xs text-muted-foreground hover:text-foreground transition-colors flex itely-center gap-1">
+                        <button className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
                           Pełna historia <ArrowRight className="w-3 h-3" />
                         </button>
                       </div>
@@ -304,18 +304,18 @@ export default function AIStudioScreen() {
                             {i > 0 && <div className="h-px bg-border mx-4" />}
                             <button
                               onClick={() => openEditor(item.slug)}
-                              className="w-full text-left px-4 py-3.5 hover:bg-muted/40 transition-colors group flex itely-start gap-4"
+                              className="w-full text-left px-4 py-3.5 hover:bg-muted/40 transition-colors group flex items-start gap-4"
                             >
                               {/* Lewa kreska kolorystyczna – timeline accent */}
                               <div className="w-0.5 h-full bg-muted rounded-full self-stretch shrink-0 mt-1 min-h-[2.5rem]" />
 
                               <div className="flex-1 min-w-0">
-                                <div className="flex itely-center gap-2 mb-1">
+                                <div className="flex items-center gap-2 mb-1">
                                   <Badge variant="secondary" className="text-[10px] h-4 px-1.5 font-medium shrink-0">
                                     {item.type}
                                   </Badge>
                                   <span className="text-[10px] text-muted-foreground/60">{item.date}</span>
-                                  <span className="text-[10px] text-muted-foreground/60 ml-auto flex itely-center gap-1">
+                                  <span className="text-[10px] text-muted-foreground/60 ml-auto flex items-center gap-1">
                                     <Hash className="w-3 h-3" />{item.words}
                                   </span>
                                 </div>
@@ -345,8 +345,8 @@ export default function AIStudioScreen() {
                                 {items.map(gen => (
                                   <div key={gen.slug} className="relative group/tile">
                                     <button onClick={() => openEditor(gen.slug)}
-                                      className="w-full flex itely-center gap-2.5 px-3 py-2.5 border rounded-xl bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left">
-                                      <div className="w-7 h-7 rounded-lg bg-muted flex itely-center justify-center shrink-0">
+                                      className="w-full flex items-center gap-2.5 px-3 py-2.5 border rounded-xl bg-white hover:border-foreground/20 hover:shadow-sm transition-all text-left">
+                                      <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center shrink-0">
                                         <gen.icon className="w-3.5 h-3.5 text-muted-foreground" />
                                       </div>
                                       <p className="font-medium text-sm flex-1">{gen.name}</p>
@@ -354,7 +354,7 @@ export default function AIStudioScreen() {
                                     <button
                                       onClick={e => togglePin(gen.slug, e)}
                                       className={cn(
-                                        'absolute top-1.5 right-1.5 w-6 h-6 rounded-md flex itely-center justify-center transition-all',
+                                        'absolute top-1.5 right-1.5 w-6 h-6 rounded-md flex items-center justify-center transition-all',
                                         pinned.has(gen.slug)
                                           ? 'bg-muted text-foreground opacity-100'
                                           : 'text-muted-foreground opacity-0 group-hover/tile:opacity-100 hover:bg-muted'
@@ -429,8 +429,8 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
         {/* Formularz – slide-in z lewej, chowa się po wygenerowaniu */}
         {!hasContent && (
           <div className="w-80 border-r flex flex-col shrink-0 bg-background">
-            <div className="h-14 border-b flex itely-center gap-3 px-4 shrink-0">
-              <div className="w-8 h-8 rounded-lg bg-muted flex itely-center justify-center">
+            <div className="h-14 border-b flex items-center gap-3 px-4 shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
                 <Wand2 className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
               </div>
               <span className="font-semibold text-sm flex-1">Artykuł blogowy</span>
@@ -490,7 +490,7 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
         <div className="flex-1 flex flex-col overflow-hidden">
 
           {/* Header – identyczny jak w Dokumentach */}
-          <div className="h-14 border-b flex itely-center px-5 gap-3 shrink-0">
+          <div className="h-14 border-b flex items-center px-5 gap-3 shrink-0">
             {hasContent && (
               <Button
                 variant="ghost" size="icon"
@@ -503,7 +503,7 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
             )}
             <div className="flex-1 min-w-0">
               {hasContent ? (
-                <div className="flex itely-center gap-1.5 text-xs text-muted-foreground">
+                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <span>AI Studio</span>
                   <ChevronRight className="w-3 h-3" />
                   <span className="text-foreground font-medium truncate">Jak Stworzyć Skuteczny Zespół Agentów AI?</span>
@@ -513,8 +513,8 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
               )}
             </div>
             {hasContent && (
-              <div className="flex itely-center gap-2 shrink-0">
-                <span className="text-[10px] text-muted-foreground flex itely-center gap-1">
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="text-[10px] text-muted-foreground flex items-center gap-1">
                   <Clock className="w-3 h-3" /> 18.6s
                   <Hash className="w-3 h-3 ml-1" /> 980 słów
                 </span>
@@ -534,12 +534,12 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
           {hasContent ? (
             <>
               {/* Toolbar – identyczny jak w Dokumentach */}
-              <div className="border-b flex itely-center px-5 gap-0.5 h-10 shrink-0 overflow-x-auto">
+              <div className="border-b flex items-center px-5 gap-0.5 h-10 shrink-0 overflow-x-auto">
                 {TOOLBAR.map((group, gi) => (
                   <React.Fragment key={gi}>
                     {gi > 0 && <div className="w-px h-4 bg-border mx-1.5 shrink-0" />}
                     {group.map((Icon, bi) => (
-                      <button key={bi} className="h-7 w-7 rounded flex itely-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground transition-colors shrink-0">
+                      <button key={bi} className="h-7 w-7 rounded flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground transition-colors shrink-0">
                         <Icon className="w-3.5 h-3.5" />
                       </button>
                     ))}
@@ -567,8 +567,8 @@ function AIStudioEditorBase({ hasContent }: { hasContent: boolean }) {
               </ScrollArea>
             </>
           ) : (
-            <div className="flex-1 flex flex-col itely-center justify-center gap-4 text-center px-8">
-              <div className="w-14 h-14 rounded-2xl bg-muted flex itely-center justify-center">
+            <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
+              <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center">
                 <Wand2 className="w-7 h-7 text-muted-foreground" strokeWidth={1.5} />
               </div>
               <div>

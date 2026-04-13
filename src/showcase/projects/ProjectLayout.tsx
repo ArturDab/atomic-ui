@@ -165,10 +165,10 @@ export default function ProjectLayout() {
   const content = (
     <div ref={containerRef} className="flex flex-col h-screen">
       {/* Primary nav bar */}
-      <div className="h-11 bg-foreground flex itely-center px-4 gap-2 shrink-0 overflow-hidden">
+      <div className="h-11 bg-foreground flex items-center px-4 gap-2 shrink-0 overflow-hidden">
         <Link
           to="/projects"
-          className="flex itely-center gap-1 text-xs text-background/60 hover:text-background transition-colors"
+          className="flex items-center gap-1 text-xs text-background/60 hover:text-background transition-colors"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
           Projekty
@@ -221,7 +221,7 @@ export default function ProjectLayout() {
 
       {/* Secondary nav – always shown for lyra groups */}
       {(activeGroup || isLyra) && meta.nav.some(isGroup) && (
-        <div className="h-9 bg-neutral-800 flex itely-center px-4 gap-1 shrink-0">
+        <div className="h-9 bg-neutral-800 flex items-center px-4 gap-1 shrink-0">
           {(activeGroup || meta.nav.filter(isGroup)[0])?.children.map(child => {
             const isActive = currentPath === child.path || currentPath.startsWith(child.path + '/')
             return (
@@ -246,14 +246,14 @@ export default function ProjectLayout() {
         {/* Left/Right arrow navigation */}
         {currentPathIdx > 0 && (
           <button onClick={navigatePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex itely-center justify-center bg-background/80 hover:bg-background border border-l-0 rounded-r-lg shadow-sm transition-colors group"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex items-center justify-center bg-background/80 hover:bg-background border border-l-0 rounded-r-lg shadow-sm transition-colors group"
             title="Poprzedni widok (←)">
             <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
         )}
         {currentPathIdx < allPaths.length - 1 && (
           <button onClick={navigateNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex itely-center justify-center bg-background/80 hover:bg-background border border-r-0 rounded-l-lg shadow-sm transition-colors group"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-16 flex items-center justify-center bg-background/80 hover:bg-background border border-r-0 rounded-l-lg shadow-sm transition-colors group"
             title="Następny widok (→)">
             <svg className="w-4 h-4 text-muted-foreground group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>

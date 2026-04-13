@@ -55,14 +55,14 @@ export function ChatInput({
             className="w-full resize-none px-4 py-3 text-base outline-none bg-transparent placeholder:text-muted-foreground leading-relaxed"
             style={{ minHeight: '48px', maxHeight: '200px' }}
           />
-          <div className="flex itely-center justify-between px-3 py-2 border-t bg-muted/20">
-            <div className="flex itely-center gap-2">
+          <div className="flex items-center justify-between px-3 py-2 border-t bg-muted/20">
+            <div className="flex items-center gap-2">
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <Paperclip className="w-4 h-4" />
               </Button>
               <span className="text-sm text-muted-foreground">+0 tokenów</span>
             </div>
-            <div className="flex itely-center gap-3">
+            <div className="flex items-center gap-3">
               {hint && <span className="text-xs text-muted-foreground">{hint}</span>}
               <Button size="sm" className="gap-1.5">
                 <Send className="w-4 h-4" /> Wyślij

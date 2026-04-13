@@ -38,7 +38,7 @@ export default function DashboardScreen() {
 
           {/* Recent docs */}
           <div>
-            <div className="flex itely-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold">Ostatnie dokumenty</h2>
               <Button size="sm" className="h-8 gap-1.5 text-xs">
                 <Plus className="w-3.5 h-3.5" /> Nowy dokument
@@ -55,7 +55,7 @@ export default function DashboardScreen() {
 
           {/* Quick start */}
           <div>
-            <div className="flex itely-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4">
               <div>
                 <h2 className="text-sm font-semibold">Szybki start</h2>
                 <p className="text-xs text-muted-foreground mt-0.5">Wybierz szablon i zacznij generować</p>

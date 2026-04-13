@@ -82,7 +82,7 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
 function TypeBadge({ type }: { type: ContentType }) {
   const { label, icon: Icon, bg } = TYPE_CONFIG[type]
   return (
-    <span className={cn('inline-flex itely-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-md border', bg)}>
+    <span className={cn('inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-md border', bg)}>
       <Icon className="w-2.5 h-2.5" /> {label}
     </span>
   )
@@ -98,18 +98,18 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
 
   if (view === 'list') {
     return (
-      <div className="group flex itely-center gap-4 px-4 py-3 bg-card border rounded-xl hover:border-foreground/20 hover:shadow-sm transition-all">
-        <div className={cn('w-8 h-8 rounded-lg border flex itely-center justify-center shrink-0', TYPE_CONFIG[item.type].bg)}>
+      <div className="group flex items-center gap-4 px-4 py-3 bg-card border rounded-xl hover:border-foreground/20 hover:shadow-sm transition-all">
+        <div className={cn('w-8 h-8 rounded-lg border flex items-center justify-center shrink-0', TYPE_CONFIG[item.type].bg)}>
           <Icon className={cn('w-4 h-4', color)} />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex itely-center gap-2">
+          <div className="flex items-center gap-2">
             {item.starred && <Star className="w-3 h-3 text-amber-400 fill-amber-400 shrink-0" />}
             <p className="text-sm font-medium truncate">{item.title}</p>
           </div>
-          <div className="flex itely-center gap-3 mt-0.5">
+          <div className="flex items-center gap-3 mt-0.5">
             <TypeBadge type={item.type} />
-            <span className="flex itely-center gap-1 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1 text-xs text-muted-foreground">
               <StatusDot status={item.status} />
               {STATUS_CONFIG[item.status].label}
             </span>
@@ -118,17 +118,17 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
             ))}
           </div>
         </div>
-        <div className="flex itely-center gap-4 text-xs text-foreground/60 shrink-0">
-          <span className="flex itely-center gap-1"><Hash className="w-3 h-3" />{item.words.toLocaleString()}</span>
-          {item.chapters && <span className="flex itely-center gap-1"><BookOpen className="w-3 h-3" />{item.chapters} rozdz.</span>}
-          <span className="flex itely-center gap-1"><Clock className="w-3 h-3" />{item.updatedAt}</span>
+        <div className="flex items-center gap-4 text-xs text-foreground/60 shrink-0">
+          <span className="flex items-center gap-1"><Hash className="w-3 h-3" />{item.words.toLocaleString()}</span>
+          {item.chapters && <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" />{item.chapters} rozdz.</span>}
+          <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{item.updatedAt}</span>
           {item.progress !== undefined && (
             <div className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
               <div className="h-full bg-foreground/30 rounded-full" style={{ width: `${item.progress}%` }} />
             </div>
           )}
         </div>
-        <div className="flex itely-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <Button variant="ghost" size="icon" className="h-7 w-7"><Edit3 className="w-3.5 h-3.5" /></Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -151,11 +151,11 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
 
   return (
     <div className="group bg-card border rounded-xl p-4 hover:border-foreground/20 hover:shadow-sm transition-all flex flex-col">
-      <div className="flex itely-start justify-between mb-3">
-        <div className={cn('w-9 h-9 rounded-lg border flex itely-center justify-center', TYPE_CONFIG[item.type].bg)}>
+      <div className="flex items-start justify-between mb-3">
+        <div className={cn('w-9 h-9 rounded-lg border flex items-center justify-center', TYPE_CONFIG[item.type].bg)}>
           <Icon className={cn('w-4 h-4', color)} />
         </div>
-        <div className="flex itely-center gap-1">
+        <div className="flex items-center gap-1">
           {item.starred && <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -180,7 +180,7 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
 
       {item.progress !== undefined && (
         <div className="mb-3">
-          <div className="flex itely-center justify-between text-xs text-muted-foreground mb-1">
+          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
             <span>{item.progress}% ukończone</span>
             {item.chapters && <span>{item.chapters} rozdz.</span>}
           </div>
@@ -190,15 +190,15 @@ function ItemCard({ item, view }: { item: ContentItem; view: 'grid' | 'list' }) 
         </div>
       )}
 
-      <div className="flex itely-center justify-between mt-auto pt-3 border-t">
-        <div className="flex itely-center gap-2">
+      <div className="flex items-center justify-between mt-auto pt-3 border-t">
+        <div className="flex items-center gap-2">
           <TypeBadge type={item.type} />
-          <span className="flex itely-center gap-1 text-[10px] text-muted-foreground">
+          <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
             <StatusDot status={item.status} />
             {STATUS_CONFIG[item.status].label}
           </span>
         </div>
-        <div className="text-xs text-foreground/60 flex itely-center gap-1">
+        <div className="text-xs text-foreground/60 flex items-center gap-1">
           <Hash className="w-3 h-3" /> {item.words.toLocaleString()}
         </div>
       </div>
@@ -240,7 +240,7 @@ export default function DashboardScreen() {
     <div className="min-h-full bg-background">
       {/* Top bar */}
       <div className="bg-background/95 border-b backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-8 py-4 flex itely-center justify-between">
+        <div className="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-semibold tracking-tight">Lyra</h1>
             <p className="text-xs text-foreground/65">Twoje treści w jednym miejscu</p>
@@ -256,7 +256,7 @@ export default function DashboardScreen() {
                 const { label, icon: Icon, color, bg } = TYPE_CONFIG[type]
                 return (
                   <DropdownMenuItem key={type} className="gap-3 py-2.5">
-                    <div className={cn('w-7 h-7 rounded-md border flex itely-center justify-center shrink-0', bg)}>
+                    <div className={cn('w-7 h-7 rounded-md border flex items-center justify-center shrink-0', bg)}>
                       <Icon className={cn('w-3.5 h-3.5', color)} />
                     </div>
                     <div>
@@ -284,9 +284,9 @@ export default function DashboardScreen() {
         </div>
 
         {/* Filters + search + sort */}
-        <div className="flex itely-center gap-3">
+        <div className="flex items-center gap-3">
           {/* Type tabs */}
-          <div className="flex itely-center gap-1 bg-card border rounded-lg p-1 shrink-0">
+          <div className="flex items-center gap-1 bg-card border rounded-lg p-1 shrink-0">
             {FILTERS.map(f => (
               <button key={f.value} onClick={() => setFilter(f.value)}
                 className={cn(
@@ -325,7 +325,7 @@ export default function DashboardScreen() {
           </DropdownMenu>
 
           {/* View toggle */}
-          <div className="flex itely-center border rounded-md bg-white overflow-hidden shrink-0">
+          <div className="flex items-center border rounded-md bg-white overflow-hidden shrink-0">
             <button onClick={() => setView('list')}
               className={cn('p-2 transition-colors', view === 'list' ? 'bg-foreground text-background' : 'text-muted-foreground hover:bg-muted')}>
               <List className="w-4 h-4" />

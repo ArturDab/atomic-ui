@@ -19,8 +19,8 @@ export function CP2Sidebar({ active = 'ai-chat' }: { active?: string }) {
   return (
     <aside className="w-48 border-r flex flex-col shrink-0 bg-background h-full">
       {/* Logo + app name */}
-      <div className="h-14 flex itely-center gap-3 px-4 border-b">
-        <div className="w-7 h-7 rounded-lg bg-foreground flex itely-center justify-center shrink-0">
+      <div className="h-14 flex items-center gap-3 px-4 border-b">
+        <div className="w-7 h-7 rounded-lg bg-foreground flex items-center justify-center shrink-0">
           <span className="text-xs font-bold text-background">CP</span>
         </div>
         <span className="font-semibold text-sm">Altair</span>
@@ -35,7 +35,7 @@ export function CP2Sidebar({ active = 'ai-chat' }: { active?: string }) {
             <button
               key={item.href}
               className={cn(
-                'w-full flex itely-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-left',
+                'w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-left',
                 isActive
                   ? 'bg-foreground text-background font-medium'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -49,7 +49,7 @@ export function CP2Sidebar({ active = 'ai-chat' }: { active?: string }) {
       </nav>
 
       <Separator />
-      <div className="p-3 flex itely-center gap-3">
+      <div className="p-3 flex items-center gap-3">
         <Avatar className="w-7 h-7 shrink-0">
           <AvatarFallback className="text-xs font-semibold">AK</AvatarFallback>
         </Avatar>

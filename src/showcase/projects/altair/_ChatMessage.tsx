@@ -59,9 +59,9 @@ function FormattedText({ text }: { text: string }) {
 
 function MessageActions({ tokens, time }: { tokens?: string; time?: string }) {
   return (
-    <div className="flex itely-center gap-1 mt-2">
+    <div className="flex items-center gap-1 mt-2">
       {(tokens || time) && (
-        <span className="text-xs text-muted-foreground flex itely-center gap-1 mr-2">
+        <span className="text-xs text-muted-foreground flex items-center gap-1 mr-2">
           {tokens && <><Coins className="w-3 h-3" /> {tokens}</>}
           {time && <span className="ml-1">{time}</span>}
         </span>
@@ -82,7 +82,7 @@ export function ChatMessage({ msg }: { msg: Message }) {
   // User message
   if (msg.role === 'user') {
     return (
-      <div className="flex gap-3 justify-end itely-start">
+      <div className="flex gap-3 justify-end items-start">
         <div className="max-w-[72%]">
           {msg.userName && (
             <p className="text-xs text-muted-foreground text-right mb-1 font-medium uppercase tracking-wide">
@@ -106,11 +106,11 @@ export function ChatMessage({ msg }: { msg: Message }) {
   const hasColoredAvatar = !!msg.agentColor
 
   return (
-    <div className="flex gap-3 itely-start">
+    <div className="flex gap-3 items-start">
       {/* Avatar */}
       {hasColoredAvatar ? (
         <div className={cn(
-          'w-8 h-8 rounded-full border flex itely-center justify-center text-sm font-semibold shrink-0 mt-5',
+          'w-8 h-8 rounded-full border flex items-center justify-center text-sm font-semibold shrink-0 mt-5',
           msg.agentColor
         )}>
           {msg.agentInitial}
@@ -125,7 +125,7 @@ export function ChatMessage({ msg }: { msg: Message }) {
 
       <div className="flex-1 min-w-0">
         {/* Header */}
-        <div className="flex itely-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-2">
           {msg.agentName && (
             <span className="text-xs font-semibold tracking-wide uppercase">{msg.agentName}</span>
           )}

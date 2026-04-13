@@ -126,11 +126,11 @@ export default function AIStudioEditorScreen() {
           {/* Left panel – params */}
           <div className="w-80 border-r flex flex-col shrink-0">
             {/* Header */}
-            <div className="h-14 border-b flex itely-center gap-3 px-4 shrink-0">
+            <div className="h-14 border-b flex items-center gap-3 px-4 shrink-0">
               <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
                 <ArrowLeft className="w-4 h-4" />
               </Button>
-              <div className="w-8 h-8 rounded-md bg-muted flex itely-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-md bg-muted flex items-center justify-center shrink-0">
                 <FileText className="w-4 h-4 text-muted-foreground" />
               </div>
               <span className="font-semibold text-sm">Artykuł blogowy</span>
@@ -205,10 +205,10 @@ export default function AIStudioEditorScreen() {
                 {/* History */}
                 <div>
                   <button
-                    className="w-full flex itely-center justify-between py-1 hover:text-foreground transition-colors"
+                    className="w-full flex items-center justify-between py-1 hover:text-foreground transition-colors"
                     onClick={() => setHistoryOpen(o => !o)}
                   >
-                    <span className="text-sm text-muted-foreground flex itely-center gap-2">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
                       Historia
                       <Badge variant="secondary" className="text-xs h-5">{HISTORY.length}</Badge>
                     </span>
@@ -244,7 +244,7 @@ export default function AIStudioEditorScreen() {
           <div className="flex-1 flex flex-col overflow-hidden">
 
             {/* Toolbar */}
-            <div className="h-12 border-b flex itely-center px-4 gap-1 shrink-0 overflow-x-auto">
+            <div className="h-12 border-b flex items-center px-4 gap-1 shrink-0 overflow-x-auto">
               {TOOLBAR_GROUPS.map((group, gi) => (
                 <React.Fragment key={gi}>
                   {gi > 0 && <div className="w-px h-5 bg-border mx-1 shrink-0" />}
@@ -261,7 +261,7 @@ export default function AIStudioEditorScreen() {
                         key={bi}
                         title={btn.label}
                         className={cn(
-                          'h-8 w-8 rounded flex itely-center justify-center transition-colors shrink-0',
+                          'h-8 w-8 rounded flex items-center justify-center transition-colors shrink-0',
                           (btn as { active?: boolean }).active
                             ? 'bg-foreground text-background'
                             : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -274,11 +274,11 @@ export default function AIStudioEditorScreen() {
                 </React.Fragment>
               ))}
 
-              <div className="ml-auto flex itely-center gap-2 shrink-0 pl-2">
-                <span className="text-xs text-muted-foreground flex itely-center gap-1.5">
+              <div className="ml-auto flex items-center gap-2 shrink-0 pl-2">
+                <span className="text-xs text-muted-foreground flex items-center gap-1.5">
                   <Coins className="w-3.5 h-3.5" /> 978
                 </span>
-                <span className="text-xs text-muted-foreground flex itely-center gap-1.5">
+                <span className="text-xs text-muted-foreground flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" /> 18.6s
                 </span>
                 <Button variant="ghost" size="icon" className="h-8 w-8">

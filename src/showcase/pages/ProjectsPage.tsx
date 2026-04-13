@@ -115,8 +115,8 @@ export default function ProjectsPage() {
           const Icon = cfg.icon
           return (
             <div key={item.phase} className="border rounded-xl p-4 bg-white">
-              <div className="flex itely-center gap-2 mb-2">
-                <span className={cn('w-5 h-5 rounded text-[10px] font-bold flex itely-center justify-center text-white',
+              <div className="flex items-center gap-2 mb-2">
+                <span className={cn('w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center text-white',
                   i === 0 ? 'bg-slate-500' : i === 1 ? 'bg-blue-500' : 'bg-emerald-500'
                 )}>{i + 1}</span>
                 <span className="text-sm font-semibold">{item.title}</span>
@@ -128,7 +128,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Filtr faz */}
-      <div className="flex itely-center gap-1 bg-muted/50 rounded-xl p-1 w-fit">
+      <div className="flex items-center gap-1 bg-muted/50 rounded-xl p-1 w-fit">
         {PHASE_TABS.map(tab => (
           <button key={tab.id} onClick={() => setActiveFilter(tab.id)}
             className={cn(
@@ -149,12 +149,12 @@ export default function ProjectsPage() {
           return (
             <div key={project.slug} className="border rounded-2xl bg-white overflow-hidden hover:border-foreground/20 hover:shadow-sm transition-all">
               {/* Header projektu */}
-              <div className="flex itely-start gap-4 px-6 py-5 border-b">
-                <div className={cn('w-10 h-10 rounded-xl border flex itely-center justify-center shrink-0', project.color)}>
+              <div className="flex items-start gap-4 px-6 py-5 border-b">
+                <div className={cn('w-10 h-10 rounded-xl border flex items-center justify-center shrink-0', project.color)}>
                   <Icon className={cn('w-5 h-5', project.iconColor)} />
                 </div>
                 <div className="flex-1">
-                  <div className="flex itely-center gap-2 mb-0.5">
+                  <div className="flex items-center gap-2 mb-0.5">
                     <h3 className="text-base font-semibold">{project.name}</h3>
                     <span className={cn(
                       'text-[10px] px-2 py-0.5 rounded-full font-medium',
@@ -167,7 +167,7 @@ export default function ProjectsPage() {
                   <p className="text-sm text-muted-foreground">{project.desc}</p>
                 </div>
                 <Link to={`/projects/${project.slug}`}
-                  className="flex itely-center gap-1.5 text-sm font-medium border rounded-lg px-4 py-2 hover:bg-muted transition-colors shrink-0">
+                  className="flex items-center gap-1.5 text-sm font-medium border rounded-lg px-4 py-2 hover:bg-muted transition-colors shrink-0">
                   Otwórz <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -181,7 +181,7 @@ export default function ProjectsPage() {
                   const isActive = project.activePhase === phase
                   return (
                     <div key={phase} className={cn(
-                      'flex-1 flex itely-center gap-2.5 px-5 py-3.5 transition-colors',
+                      'flex-1 flex items-center gap-2.5 px-5 py-3.5 transition-colors',
                       isActive ? 'bg-muted/50' : ''
                     )}>
                       {info.done

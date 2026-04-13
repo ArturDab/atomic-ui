@@ -35,11 +35,11 @@ export default function AIStudioEditorEmptyScreen() {
 
           {/* Lewy panel – formularz */}
           <div className="w-80 border-r flex flex-col shrink-0">
-            <div className="h-14 border-b flex itely-center gap-3 px-4 shrink-0">
+            <div className="h-14 border-b flex items-center gap-3 px-4 shrink-0">
               <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
                 <ArrowLeft className="w-4 h-4" />
               </Button>
-              <div className="w-8 h-8 rounded-md bg-muted flex itely-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-md bg-muted flex items-center justify-center shrink-0">
                 <FileText className="w-4 h-4 text-muted-foreground" />
               </div>
               <span className="font-semibold text-sm">Artykuł blogowy</span>
@@ -110,9 +110,9 @@ export default function AIStudioEditorEmptyScreen() {
           </div>
 
           {/* Prawa strefa – empty state */}
-          <div className="flex-1 flex flex-col itely-center justify-center bg-[#fafafa] px-8">
+          <div className="flex-1 flex flex-col items-center justify-center bg-[#fafafa] px-8">
             <div className="max-w-sm text-center">
-              <div className="w-16 h-16 rounded-2xl bg-muted flex itely-center justify-center mx-auto mb-5">
+              <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-5">
                 <Wand2 className="w-8 h-8 text-muted-foreground" strokeWidth={1.5} />
               </div>
               <h2 className="text-lg font-semibold mb-2">Gotowy do generowania</h2>
@@ -124,7 +124,7 @@ export default function AIStudioEditorEmptyScreen() {
 
               {/* Wskazówki */}
               <div className="text-left space-y-3">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest flex itely-center gap-1.5">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest flex items-center gap-1.5">
                   <Lightbulb className="w-3.5 h-3.5" /> Wskazówki
                 </p>
                 {TIPS.map((tip, i) => (

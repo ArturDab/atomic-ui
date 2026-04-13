@@ -62,7 +62,7 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
           </div>
 
           {/* Custom input */}
-          <div className="px-3 py-2 border-b flex itely-center gap-2">
+          <div className="px-3 py-2 border-b flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
             <input
               autoFocus
@@ -74,23 +74,23 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
             />
             {custom.trim() && (
               <button onClick={() => run(custom.trim())}
-                className="w-6 h-6 rounded-lg bg-foreground text-background flex itely-center justify-center">
+                className="w-6 h-6 rounded-lg bg-foreground text-background flex items-center justify-center">
                 <Send className="w-3 h-3" />
               </button>
             )}
           </div>
 
           {/* Primary actions */}
-          <div className="flex itely-center gap-0.5 p-2 border-b">
+          <div className="flex items-center gap-0.5 p-2 border-b">
             {PRIMARY_ACTIONS.map(a => (
               <button key={a.id} onClick={() => run(a.label)}
-                className="flex flex-col itely-center gap-1 px-3 py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                className="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                 <a.icon className="w-4 h-4" />
                 <span className="text-[10px] font-medium">{a.label}</span>
               </button>
             ))}
             <button onClick={() => setShowMore(o => !o)}
-              className={cn('flex flex-col itely-center gap-1 px-3 py-2 rounded-xl text-muted-foreground hover:bg-muted transition-colors', showMore && 'bg-muted')}>
+              className={cn('flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-muted-foreground hover:bg-muted transition-colors', showMore && 'bg-muted')}>
               <MoreHorizontal className="w-4 h-4" />
               <span className="text-[10px] font-medium">Więcej</span>
             </button>
@@ -98,10 +98,10 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
 
           {/* Secondary actions */}
           {showMore && (
-            <div className="flex itely-center gap-0.5 p-2 border-b">
+            <div className="flex items-center gap-0.5 p-2 border-b">
               {SECONDARY_ACTIONS.map(a => (
                 <button key={a.id} onClick={() => run(a.label)}
-                  className="flex flex-col itely-center gap-1 px-3 py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                  className="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                   <a.icon className="w-4 h-4" />
                   <span className="text-[10px] font-medium">{a.label}</span>
                 </button>
@@ -112,7 +112,7 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
           {/* Copy */}
           <div className="p-2">
             <button onClick={onClose}
-              className="w-full flex itely-center justify-center gap-2 px-4 py-2 rounded-xl text-sm text-muted-foreground hover:bg-muted transition-colors">
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm text-muted-foreground hover:bg-muted transition-colors">
               <Copy className="w-4 h-4" /> Kopiuj
             </button>
           </div>
@@ -121,8 +121,8 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
 
       {phase === 'loading' && (
         <div className="px-4 py-5 space-y-3">
-          <div className="flex itely-center justify-between">
-            <div className="flex itely-center gap-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
               <div className="flex gap-1">
                 {[0, 120, 240].map(d => (
                   <span key={d} className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce"
@@ -144,7 +144,7 @@ export function SelectionMenu({ selectedText, onClose, style }: SelectionMenuPro
       {phase === 'result' && (
         <>
           <div className="px-4 pt-3 pb-2">
-            <div className="flex itely-center gap-1.5 mb-2">
+            <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="w-3.5 h-3.5 text-muted-foreground" />
               <span className="text-[11px] text-foreground/85 font-medium">{label}</span>
               <div className="flex-1" />

@@ -125,7 +125,7 @@ function ColorRow({ tokenKey, label, hslValue, defaultHsl, onChange, onReset }: 
 
   return (
     <div className="space-y-1.5">
-      <div className="flex itely-center gap-2.5">
+      <div className="flex items-center gap-2.5">
         {/* Swatch */}
         <div className="relative shrink-0 w-9 h-9 rounded-lg border shadow-sm overflow-hidden cursor-pointer"
           style={{background:`hsl(${h} ${s}% ${l}%)`, borderRadius:'6px'}}>
@@ -133,7 +133,7 @@ function ColorRow({ tokenKey, label, hslValue, defaultHsl, onChange, onReset }: 
             className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"/>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex itely-center gap-1 mb-1">
+          <div className="flex items-center gap-1 mb-1">
             <p className="text-xs font-medium flex-1">{label}</p>
             {isModified && (
               <button onClick={()=>onReset(tokenKey)} title="Przywróć domyślny"
@@ -147,7 +147,7 @@ function ColorRow({ tokenKey, label, hslValue, defaultHsl, onChange, onReset }: 
               RGB
             </button>
           </div>
-          <div className="flex itely-center gap-1.5">
+          <div className="flex items-center gap-1.5">
             <div className="relative flex-1">
               <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-mono">#</span>
               <Input value={hexInput.replace('#','')}
@@ -208,10 +208,10 @@ function VersionsPanel({ currentVars, themeId, onLoad }: {
 
   return (
     <div className="space-y-3">
-      <div className="flex itely-center justify-between">
+      <div className="flex items-center justify-between">
         <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Zapisane wersje</p>
         <button onClick={()=>setNaming(o=>!o)}
-          className="flex itely-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
           <Plus className="w-3.5 h-3.5"/> Zapisz wersję
         </button>
       </div>
@@ -237,7 +237,7 @@ function VersionsPanel({ currentVars, themeId, onLoad }: {
       ) : (
         <div className="space-y-1.5">
           {versions.map(v=>(
-            <div key={v.id} className="flex itely-center gap-2 px-3 py-2.5 border rounded-xl hover:border-foreground/20 transition-colors group">
+            <div key={v.id} className="flex items-center gap-2 px-3 py-2.5 border rounded-xl hover:border-foreground/20 transition-colors group">
               {/* Color preview dots */}
               <div className="flex gap-0.5 shrink-0">
                 {['--primary','--background','--sidebar'].map(k=>(
@@ -331,7 +331,7 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
 
   return (
     <div className="w-80 border-l flex flex-col bg-background shrink-0">
-      <div className="h-14 border-b flex itely-center gap-2.5 px-4 shrink-0">
+      <div className="h-14 border-b flex items-center gap-2.5 px-4 shrink-0">
         <Palette className="w-4 h-4 text-muted-foreground"/>
         <span className="text-sm font-semibold flex-1">Konfigurator</span>
         {hasChanges&&<span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">Zmiany</span>}
@@ -343,7 +343,7 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
       <div className="grid grid-cols-4 border-b shrink-0">
         {TABS.map(tab=>{const Icon=tab.icon;return(
           <button key={tab.id} onClick={()=>setActiveTab(tab.id)}
-            className={cn('flex flex-col itely-center gap-1 py-2.5 text-[10px] border-b-2 transition-colors',
+            className={cn('flex flex-col items-center gap-1 py-2.5 text-[10px] border-b-2 transition-colors',
               activeTab===tab.id?'border-foreground font-medium text-foreground':'border-transparent text-muted-foreground hover:text-foreground')}>
             <Icon className="w-3.5 h-3.5"/>{tab.label}
           </button>
@@ -378,7 +378,7 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
                 <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Font edytora</p>
                 {FONT_OPTIONS.filter(f=>f.type==='serif').map(font=>(
                   <button key={font.value} onClick={()=>updateVar('--editor-font',font.value)}
-                    className={cn('w-full flex itely-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all',
+                    className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all',
                       editorFont===font.value?'border-foreground bg-muted/30':'border-border hover:border-foreground/30')}>
                     <div className="flex-1">
                       <p className="text-sm font-medium"style={{fontFamily:font.value}}>{font.label}</p>
@@ -391,7 +391,7 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
               <Separator/>
               <div className="space-y-3">
                 <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Rozmiar fontu edytora</p>
-                <div className="flex itely-center gap-3">
+                <div className="flex items-center gap-3">
                   <input type="range" min={14} max={24} value={editorSize}
                     onChange={e=>updateVar('--editor-size',e.target.value+'px')}
                     className="flex-1 h-1.5 cursor-pointer"/>
@@ -408,7 +408,7 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
                 <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Font UI</p>
                 {FONT_OPTIONS.filter(f=>f.type==='sans').map(font=>(
                   <button key={font.value} onClick={()=>updateVar('--font-sans',font.value)}
-                    className={cn('w-full flex itely-center gap-3 px-3 py-2 rounded-xl border text-left transition-all',
+                    className={cn('w-full flex items-center gap-3 px-3 py-2 rounded-xl border text-left transition-all',
                       (vars['--font-sans']||baseTheme.vars['--font-sans']||'')===font.value
                         ?'border-foreground bg-muted/30':'border-border hover:border-foreground/30')}>
                     <div className="flex-1">
@@ -433,7 +433,7 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
                     const active=Math.abs(radiusPx-pxVal)<2||(pxVal>=999&&radiusPx>50)
                     return(
                       <button key={preset.label} onClick={()=>updateVar('--radius',remVal)}
-                        className={cn('flex flex-col itely-center gap-1.5 py-2.5 rounded-lg border transition-all',
+                        className={cn('flex flex-col items-center gap-1.5 py-2.5 rounded-lg border transition-all',
                           active?'border-foreground bg-muted/30':'border-border hover:border-foreground/30')}>
                         <div className="w-6 h-6 bg-foreground/70"style={{borderRadius:preset.px>=999?'9999px':preset.px+'px'}}/>
                         <span className="text-[9px] text-muted-foreground">{preset.label}</span>
@@ -441,16 +441,16 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
                     )
                   })}
                 </div>
-                <div className="flex itely-center gap-3">
+                <div className="flex items-center gap-3">
                   <input type="range" min={0} max={24} value={Math.min(radiusPx,24)}
                     onChange={e=>updateVar('--radius',(parseFloat(e.target.value)/16)+'rem')}
                     className="flex-1 h-1.5 cursor-pointer"/>
                   <span className="text-sm font-mono w-10 text-right">{Math.round(radiusPx)}px</span>
                 </div>
-                <div className="flex itely-center gap-2 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
                   {['Przycisk','Karta','Input','Badge'].map((t,i)=>(
                     <div key={t} style={{borderRadius:radius}}
-                      className={cn('border border-foreground/20 bg-muted/30 text-xs flex itely-center justify-center',
+                      className={cn('border border-foreground/20 bg-muted/30 text-xs flex items-center justify-center',
                         i===0?'px-4 py-2':i===1?'w-20 h-12':i===2?'px-3 py-1.5 w-24':'px-2.5 py-1')}>
                       {t}
                     </div>
@@ -463,7 +463,7 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
                 <div className="grid grid-cols-3 gap-2">
                   {SHADOW_OPTIONS.map(opt=>(
                     <button key={opt.label} onClick={()=>updateVar('--card-shadow',opt.value)}
-                      className={cn('flex flex-col itely-center gap-2 p-3 rounded-xl border transition-all',
+                      className={cn('flex flex-col items-center gap-2 p-3 rounded-xl border transition-all',
                         (vars['--card-shadow']||'none')===opt.value?'border-foreground bg-muted/30':'border-border hover:border-foreground/30')}>
                       <div className="w-14 h-9 bg-background border rounded-lg"
                         style={{boxShadow:opt.value,borderRadius:radius}}/>

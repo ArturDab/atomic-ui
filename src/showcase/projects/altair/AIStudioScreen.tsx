@@ -181,8 +181,8 @@ export default function AIStudioScreen() {
 
         <div className="flex-1 overflow-y-auto bg-[#fafafa]">
           {/* Header */}
-          <div className="flex flex-col itely-center pt-12 pb-8 px-6">
-            <div className="w-16 h-16 rounded-2xl bg-foreground flex itely-center justify-center mb-4">
+          <div className="flex flex-col items-center pt-12 pb-8 px-6">
+            <div className="w-16 h-16 rounded-2xl bg-foreground flex items-center justify-center mb-4">
               <Wand2 className="w-8 h-8 text-background" strokeWidth={1.5} />
             </div>
             <h1 className="text-2xl font-semibold tracking-tight mb-2">AI Studio</h1>
@@ -200,7 +200,7 @@ export default function AIStudioScreen() {
                   to={`/projects/${projectSlug}/ai-studio/${gen.slug}`}
                   className="border rounded-xl bg-white hover:border-foreground/30 hover:shadow-sm transition-all overflow-hidden group"
                 >
-                  <div className="h-36 bg-muted/20 flex itely-center justify-center px-6 py-4 border-b">
+                  <div className="h-36 bg-muted/20 flex items-center justify-center px-6 py-4 border-b">
                     {gen.illustration}
                   </div>
                   <div className="p-4">

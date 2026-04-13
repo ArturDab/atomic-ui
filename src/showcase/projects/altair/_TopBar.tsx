@@ -10,10 +10,10 @@ interface TopBarProps {
 
 export function TopBar({ crumbs, className }: TopBarProps) {
   return (
-    <div className={cn('h-10 border-b flex itely-center px-5 shrink-0 bg-background', className)}>
-      <nav className="flex itely-center gap-1.5">
+    <div className={cn('h-10 border-b flex items-center px-5 shrink-0 bg-background', className)}>
+      <nav className="flex items-center gap-1.5">
         {crumbs.map((crumb, i) => (
-          <span key={i} className="flex itely-center gap-1.5">
+          <span key={i} className="flex items-center gap-1.5">
             {i > 0 && <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/40" />}
             <span className={cn(
               'text-sm',

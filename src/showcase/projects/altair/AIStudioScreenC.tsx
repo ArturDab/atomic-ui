@@ -125,12 +125,12 @@ export default function AIStudioScreenC() {
                     active={activeHistory === item.id}
                     onClick={() => setActiveHistory(item.id)}
                   >
-                    <div className="flex itely-start gap-2.5">
+                    <div className="flex items-start gap-2.5">
                       <Icon className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-1" />
                       <div className="min-w-0 flex-1">
                         <p className="text-xs text-muted-foreground mb-0.5">{item.type}</p>
                         <p className="text-sm leading-snug line-clamp-2">{item.topic}</p>
-                        <p className="text-xs text-muted-foreground mt-1 flex itely-center gap-1.5">
+                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
                           <Clock className="w-3 h-3" />
                           {item.date} · {item.words.toLocaleString()} słów
                         </p>
@@ -147,7 +147,7 @@ export default function AIStudioScreenC() {
             <div className="max-w-3xl mx-auto px-8 py-8">
 
               {/* Header */}
-              <div className="flex itely-start justify-between gap-4 mb-8">
+              <div className="flex items-start justify-between gap-4 mb-8">
                 <div>
                   <h1 className="text-xl font-semibold tracking-tight mb-1">AI Studio</h1>
                   <p className="text-sm text-muted-foreground">Wybierz generator i zacznij tworzyć</p>
@@ -193,7 +193,7 @@ export default function AIStudioScreenC() {
                       Przypięte
                     </p>
                     {pinnedGenerators.length === 0 ? (
-                      <div className="border border-dashed rounded-xl bg-white/60 flex flex-col itely-center justify-center py-8 text-center px-6">
+                      <div className="border border-dashed rounded-xl bg-white/60 flex flex-col items-center justify-center py-8 text-center px-6">
                         <Pin className="w-5 h-5 text-muted-foreground/50 mb-2" />
                         <p className="text-sm font-medium text-muted-foreground">Brak przypiętych generatorów</p>
                         <p className="text-xs text-muted-foreground/70 mt-1">
@@ -277,13 +277,13 @@ function GeneratorCard({
             to={`/projects/${projectSlug}/ai-studio/${gen.slug}`}
             className={cn(
               'flex text-left border rounded-xl bg-white transition-all hover:border-foreground/25 hover:shadow-sm',
-              featured ? 'flex-col p-5' : 'itely-center gap-3 px-4 py-3.5'
+              featured ? 'flex-col p-5' : 'items-center gap-3 px-4 py-3.5'
             )}
           >
             {featured ? (
               <>
-                <div className="flex itely-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-muted flex itely-center justify-center">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
                     <gen.icon className="w-5 h-5 text-foreground" />
                   </div>
                   {'badge' in gen && gen.badge && (
@@ -292,13 +292,13 @@ function GeneratorCard({
                 </div>
                 <p className="font-semibold text-sm mb-1.5">{gen.name}</p>
                 <p className="text-xs text-muted-foreground leading-relaxed flex-1">{gen.desc}</p>
-                <div className="flex itely-center gap-1 mt-4 text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                <div className="flex items-center gap-1 mt-4 text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                   Użyj <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </>
             ) : (
               <>
-                <div className="w-8 h-8 rounded-lg bg-muted flex itely-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
                   <gen.icon className="w-4 h-4 text-muted-foreground" />
                 </div>
                 <p className="font-medium text-sm flex-1 text-left">{gen.name}</p>
@@ -311,7 +311,7 @@ function GeneratorCard({
             onClick={e => onTogglePin(gen.slug, e)}
             title={isPinned ? 'Odepnij' : 'Przypnij'}
             className={cn(
-              'absolute top-2 right-2 w-6 h-6 rounded-md flex itely-center justify-center transition-all',
+              'absolute top-2 right-2 w-6 h-6 rounded-md flex items-center justify-center transition-all',
               isPinned
                 ? 'text-foreground bg-muted opacity-100'
                 : 'text-muted-foreground opacity-0 group-hover:opacity-100 hover:bg-muted'

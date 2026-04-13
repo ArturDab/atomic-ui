@@ -85,7 +85,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
     <div className={cn('flex flex-col bg-background border-l', className)}>
 
       {/* ── Header – h-14, bez truncation ────────────────────────── */}
-      <div className="h-14 border-b flex itely-center gap-2.5 px-4 shrink-0">
+      <div className="h-14 border-b flex items-center gap-2.5 px-4 shrink-0">
         <Sparkles className="w-4 h-4 text-muted-foreground shrink-0" />
         <span className="text-sm font-semibold flex-1">Asystent AI</span>
         {/* Ikony – nie tłoczą tytułu bo tytuł jest teraz osobno */}
@@ -107,14 +107,14 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
       {/* ── Kontekst – osobny wiersz pod headerem, nie ucina ─────── */}
       {(contextTitle || isBook) && (
         <div className="border-b px-4 py-2 shrink-0 bg-muted/20">
-          <div className="flex itely-center gap-2">
+          <div className="flex items-center gap-2">
             {/* Dla książek: przełącznik rozdział / cała książka */}
             {isBook ? (
-              <div className="flex itely-center gap-1 bg-muted rounded-lg p-0.5 text-xs">
+              <div className="flex items-center gap-1 bg-muted rounded-lg p-0.5 text-xs">
                 <button
                   onClick={() => setContextLevel('chapter')}
                   className={cn(
-                    'flex itely-center gap-1 px-2.5 py-1 rounded-md transition-colors',
+                    'flex items-center gap-1 px-2.5 py-1 rounded-md transition-colors',
                     contextLevel === 'chapter'
                       ? 'bg-background text-foreground shadow-sm font-medium'
                       : 'text-foreground/60 hover:text-foreground'
@@ -124,7 +124,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
                 <button
                   onClick={() => setContextLevel('book')}
                   className={cn(
-                    'flex itely-center gap-1 px-2.5 py-1 rounded-md transition-colors',
+                    'flex items-center gap-1 px-2.5 py-1 rounded-md transition-colors',
                     contextLevel === 'book'
                       ? 'bg-background text-foreground shadow-sm font-medium'
                       : 'text-foreground/60 hover:text-foreground'
@@ -145,13 +145,13 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
           </div>
 
           {/* Historia konwersacji – link do archiwum */}
-          <div className="flex itely-center gap-2 mt-1.5">
-            <button className="flex itely-center gap-1 text-[10px] text-foreground/60 hover:text-foreground/70 transition-colors">
+          <div className="flex items-center gap-2 mt-1.5">
+            <button className="flex items-center gap-1 text-[10px] text-foreground/60 hover:text-foreground/70 transition-colors">
               <History className="w-2.5 h-2.5" />
               {contextLevel === 'chapter' ? 'Historia tego rozdziału' : 'Historia tej książki'}
             </button>
             <span className="text-foreground/25">·</span>
-            <button className="flex itely-center gap-1 text-[10px] text-foreground/60 hover:text-foreground/70 transition-colors">
+            <button className="flex items-center gap-1 text-[10px] text-foreground/60 hover:text-foreground/70 transition-colors">
               <Plus className="w-2.5 h-2.5" />
               Nowa konwersacja
             </button>
@@ -162,7 +162,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
       {/* ── Settings ─────────────────────────────────────────────── */}
       {showSettings && (
         <div className="border-b px-4 py-3 bg-muted/30 space-y-3 shrink-0">
-          <div className="flex itely-center justify-between">
+          <div className="flex items-center justify-between">
             <p className="text-xs font-semibold">Ustawienia AI</p>
             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setShowSettings(false)}>
               <X className="w-3 h-3" />
@@ -173,13 +173,13 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
             <option>Claude Sonnet 4</option>
             <option>Gemini Pro</option>
           </select>
-          <div className="flex itely-center gap-2 text-xs text-foreground/60">
+          <div className="flex items-center gap-2 text-xs text-foreground/60">
             <div className="w-2 h-2 rounded-full bg-amber-400" />
             Dodaj klucz API w ustawieniach aplikacji
           </div>
           <button
             onClick={() => setShowInstructions(o => !o)}
-            className="flex itely-center gap-1 text-xs text-foreground/60 hover:text-foreground transition-colors">
+            className="flex items-center gap-1 text-xs text-foreground/60 hover:text-foreground transition-colors">
             {showInstructions ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
             Instrukcje systemowe
           </button>
@@ -197,8 +197,8 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
       {/* ── Wiadomości ───────────────────────────────────────────── */}
       <ScrollArea className="flex-1">
         {messages.length === 0 ? (
-          <div className="flex flex-col itely-center justify-center py-10 gap-3 text-center px-4">
-            <div className="w-10 h-10 rounded-full bg-muted flex itely-center justify-center">
+          <div className="flex flex-col items-center justify-center py-10 gap-3 text-center px-4">
+            <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-muted-foreground" strokeWidth={1.5} />
             </div>
             <div>
@@ -213,7 +213,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
               {QUICK_ACTIONS.map(a => (
                 <button key={a.label}
                   onClick={() => { setInput(a.prompt); textareaRef.current?.focus() }}
-                  className="flex itely-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-muted hover:bg-muted/70 transition-colors text-foreground/85 hover:text-foreground">
+                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-muted hover:bg-muted/70 transition-colors text-foreground/85 hover:text-foreground">
                   <a.icon className="w-3 h-3" /> {a.label}
                 </button>
               ))}
@@ -224,7 +224,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
             {messages.map(msg => (
               <div key={msg.id} className={cn('flex gap-2.5', msg.role === 'user' && 'justify-end')}>
                 {msg.role === 'assistant' && (
-                  <div className="w-6 h-6 rounded-full bg-muted border flex itely-center justify-center shrink-0 mt-0.5">
+                  <div className="w-6 h-6 rounded-full bg-muted border flex items-center justify-center shrink-0 mt-0.5">
                     <Sparkles className="w-3 h-3" />
                   </div>
                 )}
@@ -234,9 +234,9 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
                 )}>
                   <p className="whitespace-pre-wrap">{msg.content}</p>
                   {msg.role === 'assistant' && (
-                    <div className="flex itely-center gap-2 mt-2 pt-2 border-t border-border/50">
+                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-border/50">
                       {msg.tokens && (
-                        <span className="text-[10px] text-foreground/60 flex itely-center gap-1">
+                        <span className="text-[10px] text-foreground/60 flex items-center gap-1">
                           <Coins className="w-2.5 h-2.5" /> {msg.tokens} tok
                         </span>
                       )}
@@ -246,7 +246,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
                       <div className="flex gap-1 ml-auto">
                         {[Copy, PenLine, RotateCcw].map((Icon, i) => (
                           <button key={i}
-                            className="w-5 h-5 flex itely-center justify-center text-foreground/55 hover:text-foreground transition-colors rounded">
+                            className="w-5 h-5 flex items-center justify-center text-foreground/55 hover:text-foreground transition-colors rounded">
                             <Icon className="w-3 h-3" />
                           </button>
                         ))}
@@ -276,7 +276,7 @@ export function AIPanel({ onClose, contextTitle, contextType = 'chapter', classN
             className="w-full resize-none px-3 pt-2.5 pb-2 text-sm outline-none bg-transparent placeholder:text-muted-foreground leading-relaxed"
             style={{ maxHeight: '120px' }}
           />
-          <div className="flex itely-center justify-between px-2 py-1.5 border-t bg-muted/20">
+          <div className="flex items-center justify-between px-2 py-1.5 border-t bg-muted/20">
             <span className="text-[10px] text-foreground/65">⏎ wyślij · ⇧⏎ nowa linia</span>
             <Button size="sm" className="h-7 gap-1.5 text-xs px-3" onClick={send} disabled={!input.trim()}>
               <Send className="w-3.5 h-3.5" /> Wyślij

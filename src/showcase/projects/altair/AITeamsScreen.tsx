@@ -94,13 +94,13 @@ export default function AITeamsScreen() {
 
           {/* Chat */}
           <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="h-14 border-b flex itely-center px-6 gap-3 shrink-0">
+            <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
               <h1 className="text-base font-semibold">Tworzenie treści</h1>
               <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground"><Star className="w-4 h-4" /></Button>
               <Badge variant="outline" className="gap-1.5 text-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" /> 3 Aktywni agenci
               </Badge>
-              <div className="flex itely-center gap-1 ml-auto">
+              <div className="flex items-center gap-1 ml-auto">
                 <Button variant="outline" size="sm" className="h-8 gap-1.5 text-sm">
                   <MessageSquarePlus className="w-4 h-4" /> Nowy czat
                 </Button>
@@ -112,18 +112,18 @@ export default function AITeamsScreen() {
               <ChatMessages messages={MESSAGES} />
             </div>
             <ChatInput placeholder="Napisz wiadomość do zespołu..."
-              hint={<span className="flex itely-center gap-1">Shift + Enter nowa linia · <AtSign className="w-3 h-3" /> to mention agent</span>} />
+              hint={<span className="flex items-center gap-1">Shift + Enter nowa linia · <AtSign className="w-3 h-3" /> to mention agent</span>} />
           </div>
 
           {/* Right panel */}
           <div className="w-72 border-l flex flex-col shrink-0 overflow-y-auto">
-            <div className="h-14 border-b flex itely-center justify-between px-4 shrink-0">
+            <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
               <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Przegląd zespołu</span>
               <Button variant="ghost" size="icon" className="h-7 w-7"><ChevronRight className="w-4 h-4" /></Button>
             </div>
             <div className="p-4 space-y-6">
-              <div className="flex itely-start gap-3 p-3 border rounded-lg">
-                <div className="w-8 h-8 rounded-md bg-muted flex itely-center justify-center shrink-0">
+              <div className="flex items-start gap-3 p-3 border rounded-lg">
+                <div className="w-8 h-8 rounded-md bg-muted flex items-center justify-center shrink-0">
                   <Users className="w-4 h-4 text-muted-foreground" />
                 </div>
                 <div>
@@ -133,14 +133,14 @@ export default function AITeamsScreen() {
               </div>
               <Separator />
               <div>
-                <div className="flex itely-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-3">
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Aktywni agenci</p>
                   <Button variant="ghost" size="icon" className="h-6 w-6"><Plus className="w-3.5 h-3.5" /></Button>
                 </div>
                 <div className="space-y-2">
                   {agents.map(agent => (
-                    <div key={agent.id} className="flex itely-center gap-3 p-2.5 border rounded-lg">
-                      <div className={cn('w-7 h-7 rounded-full border flex itely-center justify-center text-xs font-semibold shrink-0', AGENT_COLOR[agent.id])}>
+                    <div key={agent.id} className="flex items-center gap-3 p-2.5 border rounded-lg">
+                      <div className={cn('w-7 h-7 rounded-full border flex items-center justify-center text-xs font-semibold shrink-0', AGENT_COLOR[agent.id])}>
                         {agent.initial}
                       </div>
                       <p className="text-sm font-medium flex-1">{agent.name}</p>
@@ -152,18 +152,18 @@ export default function AITeamsScreen() {
               </div>
               <Separator />
               <div>
-                <div className="flex itely-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-3">
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Pliki kontekstowe</p>
                   <Button variant="ghost" size="icon" className="h-6 w-6"><Upload className="w-3.5 h-3.5" /></Button>
                 </div>
-                <div className="border rounded-lg border-dashed flex flex-col itely-center justify-center py-6 gap-2 text-muted-foreground">
+                <div className="border rounded-lg border-dashed flex flex-col items-center justify-center py-6 gap-2 text-muted-foreground">
                   <Upload className="w-5 h-5" />
                   <p className="text-xs">Brak plików</p>
                 </div>
               </div>
               <Separator />
               <div>
-                <div className="flex itely-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-3">
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Limit historii wiadomości</p>
                   <span className="text-sm font-semibold tabular-nums">{limit[0]}</span>
                 </div>

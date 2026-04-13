@@ -25,7 +25,7 @@ export default function DocumentsScreen() {
     <div className="flex h-full">
       <AppSidebar activeHref="/documents" user={{ name: 'Artur K.', email: 'artur@simplimo.pl', initials: 'AK' }} />
       <div className="flex-1 flex flex-col overflow-hidden bg-[#fafafa]">
-        <div className="border-b bg-white px-8 py-4 flex itely-center justify-between">
+        <div className="border-b bg-white px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">Dokumenty</h1>
             <p className="text-xs text-muted-foreground mt-0.5">47 dokumentów łącznie</p>

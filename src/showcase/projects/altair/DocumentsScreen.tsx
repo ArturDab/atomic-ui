@@ -79,7 +79,7 @@ export default function DocumentsScreen() {
                   <FileText className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <SidePanelItemTitle>Nowy dokument</SidePanelItemTitle>
-                    <div className="flex itely-center gap-1.5 mt-0.5">
+                    <div className="flex items-center gap-1.5 mt-0.5">
                       <SidePanelItemBadge label="Dokumenty" className="bg-emerald-100 text-emerald-700" />
                       <SidePanelItemMeta>27 mar</SidePanelItemMeta>
                     </div>
@@ -91,16 +91,16 @@ export default function DocumentsScreen() {
 
           {/* Edytor */}
           <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="h-12 border-b flex itely-center px-5 gap-3 shrink-0">
+            <div className="h-12 border-b flex items-center px-5 gap-3 shrink-0">
               <h1 className="text-base font-semibold flex-1">Nowy dokument</h1>
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
               </Button>
-              <button className="flex itely-center gap-1.5 text-xs text-muted-foreground border rounded-md px-2.5 py-1.5 hover:bg-muted/40 transition-colors">
+              <button className="flex items-center gap-1.5 text-xs text-muted-foreground border rounded-md px-2.5 py-1.5 hover:bg-muted/40 transition-colors">
                 <span className="w-3 h-3 rounded-full border border-muted-foreground/40 inline-block" />
                 Bez projektu <ChevronDown className="w-3 h-3" />
               </button>
-              <div className="flex itely-center gap-1 ml-auto">
+              <div className="flex items-center gap-1 ml-auto">
                 <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm"><Wand2 className="w-3.5 h-3.5" /> AI</Button>
                 <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-sm"><Copy className="w-3.5 h-3.5" /> Kopiuj</Button>
                 <Button variant="ghost" size="icon" className="h-8 w-8"><Download className="w-4 h-4" /></Button>
@@ -111,7 +111,7 @@ export default function DocumentsScreen() {
               </div>
             </div>
 
-            <div className="h-11 border-b flex itely-center px-4 gap-1 shrink-0 overflow-x-auto">
+            <div className="h-11 border-b flex items-center px-4 gap-1 shrink-0 overflow-x-auto">
               {TOOLBAR_GROUPS.map((group, gi) => (
                 <React.Fragment key={gi}>
                   {gi > 0 && <div className="w-px h-5 bg-border mx-1 shrink-0" />}
@@ -121,7 +121,7 @@ export default function DocumentsScreen() {
                         {btn.label}
                       </button>
                     ) : (
-                      <button key={bi} className="h-7 w-7 rounded flex itely-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground transition-colors shrink-0">
+                      <button key={bi} className="h-7 w-7 rounded flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground transition-colors shrink-0">
                         {'icon' in btn && btn.icon && <btn.icon className="w-3.5 h-3.5" />}
                       </button>
                     )
@@ -140,7 +140,7 @@ export default function DocumentsScreen() {
           {/* Panel AI – zwinięty */}
           <div className={cn('border-l flex flex-col shrink-0 transition-all overflow-hidden', aiPanelOpen ? 'w-72' : 'w-9')}>
             <button onClick={() => setAiPanelOpen(o => !o)}
-              className="h-12 flex itely-center justify-center hover:bg-muted/40 transition-colors shrink-0 border-b">
+              className="h-12 flex items-center justify-center hover:bg-muted/40 transition-colors shrink-0 border-b">
               <Wand2 className="w-4 h-4 text-muted-foreground" />
             </button>
             {aiPanelOpen && (

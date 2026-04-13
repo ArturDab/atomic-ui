@@ -56,30 +56,30 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
       } as React.CSSProperties}>
 
       {/* Header */}
-      <div className="h-14 border-b flex itely-center px-4 gap-3 shrink-0 bg-background">
-        <div className="w-6 h-6 rounded-md bg-primary/10 flex itely-center justify-center"
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-background">
+        <div className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center"
           style={{ borderRadius: radius }}>
           <ChevronRight className="w-3 h-3 text-primary rotate-180"/>
         </div>
-        <div className="flex itely-center gap-2 flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
           <span className="text-[10px] px-1.5 py-0.5 rounded border border-emerald-200 bg-emerald-50 text-emerald-600 font-medium shrink-0"
             style={{ borderRadius: `calc(${radius} * 0.7)` }}>Książka</span>
           <span className="text-xs text-muted-foreground hidden lg:block">Strategie Contentowe</span>
           <ChevronRight className="w-3 h-3 text-muted-foreground shrink-0 hidden lg:block"/>
           <span className="text-sm font-medium truncate">Modele językowe</span>
         </div>
-        <div className="flex itely-center gap-1">
+        <div className="flex items-center gap-1">
           {[Search,History,Settings].map((I,i) => (
-            <div key={i} className="w-8 h-8 flex itely-center justify-center text-muted-foreground hover:bg-muted rounded cursor-pointer"
+            <div key={i} className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:bg-muted rounded cursor-pointer"
               style={{ borderRadius: radius }}>
               <I className="w-4 h-4"/>
             </div>
           ))}
-          <div className="flex itely-center gap-1.5 px-3 h-8 rounded border text-xs font-medium cursor-pointer text-muted-foreground hover:bg-muted"
+          <div className="flex items-center gap-1.5 px-3 h-8 rounded border text-xs font-medium cursor-pointer text-muted-foreground hover:bg-muted"
             style={{ borderRadius: radius }}>
             <Eye className="w-3.5 h-3.5"/> Podgląd
           </div>
-          <div className="flex itely-center gap-1.5 px-3 h-8 rounded bg-primary text-primary-foreground text-xs font-medium cursor-pointer"
+          <div className="flex items-center gap-1.5 px-3 h-8 rounded bg-primary text-primary-foreground text-xs font-medium cursor-pointer"
             style={{ borderRadius: radius }}>
             <ExternalLink className="w-3.5 h-3.5"/> Eksportuj
           </div>
@@ -89,7 +89,7 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
       <div className="flex flex-1 overflow-hidden">
         {/* Structure */}
         <div className="w-48 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || '0 0% 95%'})` }}>
-          <div className="h-14 border-b flex itely-center justify-between px-4 shrink-0" style={{ background: `hsl(${vars['--sidebar-header'] || '0 0% 93%'})` }}>
+          <div className="h-14 border-b flex items-center justify-between px-4 shrink-0" style={{ background: `hsl(${vars['--sidebar-header'] || '0 0% 93%'})` }}>
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Struktura</span>
             <Plus className="w-4 h-4 text-muted-foreground"/>
           </div>
@@ -102,14 +102,14 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
             </div>
           </div>
           <div className="flex-1 overflow-y-auto py-1">
-            <div className="flex itely-center gap-1.5 px-3 py-1.5 text-[11px]">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 text-[11px]">
               <ChevronDown className="w-3 h-3 text-muted-foreground"/>
               <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500"/>
               <span className="font-medium text-muted-foreground">Część I: Fundamenty</span>
             </div>
             {chapters.map(ch => (
               <div key={ch.id} className={cn(
-                'flex itely-center gap-2 px-3 py-1.5 pl-7 text-[11px] border-l-2',
+                'flex items-center gap-2 px-3 py-1.5 pl-7 text-[11px] border-l-2',
                 (ch as any).active?'bg-muted border-l-primary font-medium':'border-l-transparent text-muted-foreground')}>
                 <SIcon s={ch.status}/>
                 <span className="flex-1 line-clamp-1">{ch.title}</span>
@@ -121,14 +121,14 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
 
         {/* Outline */}
         <div className="w-36 border-r flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar-light'] || vars['--sidebar'] || '0 0% 97%'})` }}>
-          <div className="h-14 border-b flex itely-center px-4 shrink-0" style={{ background: `hsl(${vars['--sidebar-header'] || '0 0% 93%'})` }}>
+          <div className="h-14 border-b flex items-center px-4 shrink-0" style={{ background: `hsl(${vars['--sidebar-header'] || '0 0% 93%'})` }}>
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Rozdział</span>
           </div>
           <div className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
             {headings.map((h,i) => {
               const Icon = HI[h.level]
               return (
-                <div key={i} className={cn('flex itely-start gap-1.5 px-2 py-1.5 rounded-md text-[11px] cursor-pointer',
+                <div key={i} className={cn('flex items-start gap-1.5 px-2 py-1.5 rounded-md text-[11px] cursor-pointer',
                   h.level===1?'pl-2':h.level===2?'pl-3':'pl-5',
                   i===1?'bg-muted font-medium':'text-muted-foreground hover:bg-muted/50')}
                   style={{ borderRadius: `calc(${radius} * 0.7)` }}>
@@ -142,13 +142,13 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
 
         {/* Editor */}
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
-          <div className="h-11 border-b flex itely-center px-4 gap-1 bg-background shrink-0 overflow-hidden">
+          <div className="h-11 border-b flex items-center px-4 gap-1 bg-background shrink-0 overflow-hidden">
             {['H1','H2','B','I','U','≡','⋮'].map(t=>(
-              <div key={t} className="w-7 h-7 rounded text-[10px] flex itely-center justify-center text-muted-foreground hover:bg-muted cursor-pointer font-mono"
+              <div key={t} className="w-7 h-7 rounded text-[10px] flex items-center justify-center text-muted-foreground hover:bg-muted cursor-pointer font-mono"
                 style={{ borderRadius: `calc(${radius} * 0.5)` }}>{t}</div>
             ))}
           </div>
-          <div className="h-9 border-b flex itely-center px-4 text-xs text-muted-foreground bg-muted/20 shrink-0">
+          <div className="h-9 border-b flex items-center px-4 text-xs text-muted-foreground bg-muted/20 shrink-0">
             <Hash className="w-3 h-3 mr-1.5"/> 2 400 / 3 000 słów
           </div>
           <div className="flex-1 overflow-y-auto">
@@ -181,13 +181,13 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
 
         {/* AI Panel */}
         <div className="w-64 border-l flex flex-col shrink-0" style={{ background: `hsl(${vars['--sidebar'] || vars['--background'] || '0 0% 100%'})` }}>
-          <div className="h-14 border-b flex itely-center gap-2.5 px-4 shrink-0">
+          <div className="h-14 border-b flex items-center gap-2.5 px-4 shrink-0">
             <Sparkles className="w-4 h-4 text-muted-foreground"/>
             <span className="text-sm font-semibold flex-1">Asystent AI</span>
             <X className="w-4 h-4 text-muted-foreground cursor-pointer"/>
           </div>
           <div className="border-b px-3 py-2 bg-muted/20">
-            <div className="flex itely-center gap-1 bg-muted rounded-lg p-0.5 text-[11px] w-fit">
+            <div className="flex items-center gap-1 bg-muted rounded-lg p-0.5 text-[11px] w-fit">
               <div className="px-2.5 py-1 rounded-md bg-background shadow-sm font-medium"
                 style={{ borderRadius: `calc(${radius} * 0.7)` }}>Rozdział</div>
               <div className="px-2.5 py-1 text-muted-foreground">Książka</div>
@@ -196,7 +196,7 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
           </div>
           <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3">
             <div className="flex gap-2">
-              <div className="w-6 h-6 rounded-full bg-muted border flex itely-center justify-center shrink-0">
+              <div className="w-6 h-6 rounded-full bg-muted border flex items-center justify-center shrink-0">
                 <Sparkles className="w-3 h-3"/>
               </div>
               <div className="bg-muted/50 border rounded-xl px-3 py-2 text-[11px] leading-relaxed"
@@ -214,9 +214,9 @@ function ThemedBookEditor({ vars }: { vars: Record<string, string> }) {
           <div className="p-3 border-t shrink-0">
             <div className="border rounded-xl overflow-hidden" style={{ borderRadius: radius }}>
               <div className="px-3 py-2 text-[11px] text-muted-foreground">Zapytaj...</div>
-              <div className="flex itely-center justify-between px-2 py-1.5 border-t bg-muted/20">
+              <div className="flex items-center justify-between px-2 py-1.5 border-t bg-muted/20">
                 <span className="text-[10px] text-muted-foreground">⏎ wyślij</span>
-                <div className="flex itely-center gap-1 px-2.5 py-1 rounded bg-primary text-primary-foreground text-[11px] cursor-pointer"
+                <div className="flex items-center gap-1 px-2.5 py-1 rounded bg-primary text-primary-foreground text-[11px] cursor-pointer"
                   style={{ borderRadius: `calc(${radius} * 0.7)` }}>Wyślij</div>
               </div>
             </div>
@@ -244,7 +244,7 @@ export default function DesignSystemScreen() {
     <div className="flex flex-col h-full" style={{ background: themeId === 'verso' ? `hsl(222 22% 9%)` : `#fafafa` }}>
       {/* Header */}
       <div className={cn('border-b px-6 py-3.5 shrink-0', themeId === 'verso' ? 'bg-[#181c2a]' : 'bg-white')}>
-        <div className="flex itely-center justify-between">
+        <div className="flex items-center justify-between">
           <div>
             <h1 className="text-sm font-semibold">Design System</h1>
             <p className="text-xs text-muted-foreground mt-0.5">
@@ -252,11 +252,11 @@ export default function DesignSystemScreen() {
             </p>
           </div>
           {/* Theme switcher */}
-          <div className="flex itely-center gap-1.5">
+          <div className="flex items-center gap-1.5">
             {THEMES.map(t => (
               <button key={t.id} onClick={() => handleThemeSwitch(t.id)}
                 className={cn(
-                  'flex itely-center gap-1.5 px-3.5 py-2 rounded-xl border text-sm transition-all',
+                  'flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-sm transition-all',
                   themeId === t.id
                     ? 'border-foreground bg-foreground text-background font-semibold shadow-sm'
                     : t.id === 'verso'
@@ -271,11 +271,11 @@ export default function DesignSystemScreen() {
         </div>
 
         {/* Info bar */}
-        <div className="flex itely-center gap-5 mt-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-5 mt-2 text-xs text-muted-foreground">
           <span className="font-medium text-foreground">{baseTheme.tagline}</span>
           <span>Edytor: {baseTheme.editorFont.split(',')[0].replace(/'/g,'')} {customVars['--editor-size']||baseTheme.editorFontSize}</span>
           <span>Radius: {customVars['--radius']||baseTheme.radius}</span>
-          <div className="flex itely-center gap-1">
+          <div className="flex items-center gap-1">
             {['--primary','--accent','--background','--muted','--border'].map(k=>(
               <div key={k} className="w-4 h-4 rounded-full border border-black/10"
                 style={{background:`hsl(${activeVars[k]||'0 0% 50%'})`}} title={k}/>

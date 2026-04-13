@@ -63,7 +63,7 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
     <div className={cn('flex flex-col overflow-hidden', showArtifact ? 'w-[400px] shrink-0' : 'flex-1')}>
 
       {/* Header */}
-      <div className="h-14 border-b flex itely-center px-4 gap-2 shrink-0">
+      <div className="h-14 border-b flex items-center px-4 gap-2 shrink-0">
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold truncate">Artykuł o AI Teams dla Interia</p>
         </div>
@@ -107,8 +107,8 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
 
       {/* Context bar */}
       <div className="border-b bg-muted/20">
-        <button className="w-full flex itely-center justify-between px-4 py-2.5 hover:bg-muted/40 transition-colors">
-          <span className="text-xs text-muted-foreground font-medium flex itely-center gap-1.5">
+        <button className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-muted/40 transition-colors">
+          <span className="text-xs text-muted-foreground font-medium flex items-center gap-1.5">
             <FileText className="w-3.5 h-3.5" /> Kontekst systemowy
           </span>
           <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
@@ -124,7 +124,7 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
               <AvatarFallback><Sparkles className="w-3.5 h-3.5" /></AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <div className="flex itely-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs font-semibold">Asystent</span>
                 <Badge variant="outline" className="text-[10px] font-mono py-0">GPT-4o</Badge>
               </div>
@@ -138,9 +138,9 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
               {showArtifact ? (
                 <button
                   onClick={onToggleArtifact}
-                  className="mt-3 flex itely-center gap-2.5 border rounded-lg px-3 py-2 hover:bg-muted/50 transition-colors w-full text-left"
+                  className="mt-3 flex items-center gap-2.5 border rounded-lg px-3 py-2 hover:bg-muted/50 transition-colors w-full text-left"
                 >
-                  <div className="w-7 h-7 rounded-md bg-muted flex itely-center justify-center shrink-0">
+                  <div className="w-7 h-7 rounded-md bg-muted flex items-center justify-center shrink-0">
                     <Code className="w-3.5 h-3.5 text-muted-foreground" />
                   </div>
                   <div>
@@ -151,7 +151,7 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
                 </button>
               ) : (
                 <div className="mt-3 rounded-lg border overflow-hidden">
-                  <div className="flex itely-center justify-between px-3 py-2 border-b bg-muted/40">
+                  <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/40">
                     <span className="text-[10px] font-mono text-muted-foreground">html</span>
                     <Button variant="ghost" size="sm" className="h-6 gap-1 text-[10px] px-2">
                       <Copy className="w-3 h-3" /> Kopiuj
@@ -160,8 +160,8 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
                   <pre className="px-3 py-3 text-xs font-mono leading-relaxed overflow-x-auto max-h-44 bg-muted/10 text-foreground/80">{ARTIFACT_CODE}</pre>
                 </div>
               )}
-              <div className="flex itely-center gap-1 mt-2">
-                <span className="text-[10px] text-muted-foreground flex itely-center gap-1 mr-auto">
+              <div className="flex items-center gap-1 mt-2">
+                <span className="text-[10px] text-muted-foreground flex items-center gap-1 mr-auto">
                   <Coins className="w-3 h-3" /> 2010 tok <Clock className="w-3 h-3 ml-1" /> 9.6s
                 </span>
                 {[ThumbsUp, ThumbsDown, RotateCcw, Copy].map((Icon, i) => (
@@ -189,7 +189,7 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
               <AvatarFallback><Sparkles className="w-3.5 h-3.5" /></AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <div className="flex itely-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs font-semibold">Asystent</span>
                 <Badge variant="outline" className="text-[10px] font-mono py-0">GPT-4o</Badge>
               </div>
@@ -199,8 +199,8 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
                   : 'Kod jest widoczny powyżej. Możesz też otworzyć panel artefaktu (ikona ▣ w prawym górnym rogu), żeby edytować go na żywo obok czatu.'
                 }
               </p>
-              <div className="flex itely-center gap-1 mt-2">
-                <span className="text-[10px] text-muted-foreground flex itely-center gap-1 mr-auto">
+              <div className="flex items-center gap-1 mt-2">
+                <span className="text-[10px] text-muted-foreground flex items-center gap-1 mr-auto">
                   <Coins className="w-3 h-3" /> 890 tok
                 </span>
                 {[ThumbsUp, ThumbsDown, RotateCcw, Copy].map((Icon, i) => (
@@ -224,12 +224,12 @@ function ChatPane({ showArtifact, onToggleArtifact }: { showArtifact: boolean; o
             className="w-full resize-none px-4 pt-3 pb-2 text-sm outline-none bg-transparent placeholder:text-muted-foreground leading-relaxed"
             style={{ minHeight: '44px', maxHeight: '160px' }}
           />
-          <div className="flex itely-center justify-between px-3 py-2 border-t bg-muted/20">
-            <div className="flex itely-center gap-1">
+          <div className="flex items-center justify-between px-3 py-2 border-t bg-muted/20">
+            <div className="flex items-center gap-1">
               <Button variant="ghost" size="icon" className="h-7 w-7"><Paperclip className="w-4 h-4" /></Button>
               <span className="text-xs text-muted-foreground">+0 tok</span>
             </div>
-            <div className="flex itely-center gap-2">
+            <div className="flex items-center gap-2">
               <span className="text-[10px] text-muted-foreground">⏎ wyślij · ⇧⏎ nowa linia</span>
               <Button size="sm" className="h-7 gap-1.5 text-xs px-3">
                 <Send className="w-3.5 h-3.5" /> Wyślij
@@ -246,8 +246,8 @@ function ArtifactPane({ onClose }: { onClose: () => void }) {
   return (
     // Artifact pane – stała szerokość, nie za szeroka
     <div className="w-[520px] shrink-0 border-l flex flex-col overflow-hidden bg-muted/10">
-      <div className="h-14 border-b flex itely-center px-4 gap-3 shrink-0 bg-background">
-        <div className="w-7 h-7 rounded-md bg-muted flex itely-center justify-center">
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-background">
+        <div className="w-7 h-7 rounded-md bg-muted flex items-center justify-center">
           <Code className="w-3.5 h-3.5 text-muted-foreground" />
         </div>
         <div className="flex-1 min-w-0">
@@ -283,7 +283,7 @@ export default function AIChatScreen() {
 
       {/* Thread list */}
       <div className="w-64 border-r flex flex-col shrink-0">
-        <div className="h-14 border-b flex itely-center px-3">
+        <div className="h-14 border-b flex items-center px-3">
           <Button className="w-full gap-2 justify-start h-10">
             <Plus className="w-4 h-4 shrink-0" /> Nowy czat
           </Button>
@@ -327,7 +327,7 @@ export function AIChatWithArtifactScreen() {
       <CP2Sidebar active="ai-chat" />
 
       <div className="w-64 border-r flex flex-col shrink-0">
-        <div className="h-14 border-b flex itely-center px-3">
+        <div className="h-14 border-b flex items-center px-3">
           <Button className="w-full gap-2 justify-start h-10">
             <Plus className="w-4 h-4 shrink-0" /> Nowy czat
           </Button>

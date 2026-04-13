@@ -39,13 +39,13 @@ function RankMath() {
 
   return (
     <div className="border rounded-xl overflow-hidden">
-      <div className="flex itely-center gap-2.5 px-4 py-3 bg-orange-50 border-b border-orange-100">
-        <div className="w-5 h-5 rounded bg-orange-500 flex itely-center justify-center">
+      <div className="flex items-center gap-2.5 px-4 py-3 bg-orange-50 border-b border-orange-100">
+        <div className="w-5 h-5 rounded bg-orange-500 flex items-center justify-center">
           <BarChart2 className="w-3 h-3 text-white" />
         </div>
         <span className="text-sm font-semibold text-orange-800">Rank Math SEO</span>
-        <div className="ml-auto flex itely-center gap-1.5">
-          <div className="w-6 h-6 rounded-full bg-green-500 flex itely-center justify-center">
+        <div className="ml-auto flex items-center gap-1.5">
+          <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
             <span className="text-[9px] text-white font-bold">82</span>
           </div>
           <span className="text-xs text-orange-600">Wynik SEO</span>
@@ -60,7 +60,7 @@ function RankMath() {
           { id: 'schema',  label: 'Schema',   Icon: Layout },
         ] as const).map(({id, label, Icon}) => (
           <button key={id} onClick={() => setTab(id)}
-            className={cn('flex-1 flex itely-center justify-center gap-1.5 py-2.5 text-xs border-b-2 transition-colors',
+            className={cn('flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs border-b-2 transition-colors',
               tab === id ? 'border-orange-500 text-orange-700 font-medium' : 'border-transparent text-muted-foreground hover:text-foreground')}>
             <Icon className="w-3.5 h-3.5" />{label}
           </button>
@@ -71,7 +71,7 @@ function RankMath() {
         {tab === 'general' && (
           <>
             <div className="space-y-1.5">
-              <label className="text-xs font-medium flex itely-center gap-1.5">
+              <label className="text-xs font-medium flex items-center gap-1.5">
                 <Star className="w-3.5 h-3.5 text-orange-500" />
                 Fraza kluczowa (Focus Keyword)
               </label>
@@ -142,7 +142,7 @@ function RankMath() {
                 onClick={() => set('og_image', 'placeholder')}>
                 {vals.og_image ? (
                   <div>
-                    <div className="w-full h-24 bg-gradient-to-br from-blue-100 to-indigo-100 flex itely-center justify-center">
+                    <div className="w-full h-24 bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
                       <div className="text-center">
                         <Image className="w-7 h-7 mx-auto mb-1 text-blue-400" strokeWidth={1.5} />
                         <p className="text-[10px] text-blue-600">og-image.png · 1200×630</p>
@@ -251,20 +251,20 @@ export default function WordPressExportPanel() {
   return (
     <div className="w-full max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex itely-center gap-3 mb-6">
-        <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex itely-center justify-center">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center">
           <Globe className="w-4 h-4 text-blue-600" />
         </div>
         <div>
           <h1 className="text-base font-semibold">Eksport do WordPress</h1>
           <p className="text-xs text-foreground/60">Jak AI Zmienia Content Marketing w 2025 Roku</p>
         </div>
-        <div className="ml-auto flex itely-center gap-2">
-          <div className="flex itely-center gap-2 px-3 py-1.5 rounded-lg border bg-card text-xs">
+        <div className="ml-auto flex items-center gap-2">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border bg-card text-xs">
             <div className="w-2 h-2 rounded-full bg-emerald-500" />
             animails.pl · WordPress REST API
           </div>
-          <button className="text-xs text-muted-foreground hover:text-foreground flex itely-center gap-1">
+          <button className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
             <RefreshCw className="w-3 h-3" /> Zmień
           </button>
         </div>
@@ -291,7 +291,7 @@ export default function WordPressExportPanel() {
             {/* Block map */}
             <div>
               <button onClick={()=>setShowBlockMap(o=>!o)}
-                className="flex itely-center gap-2 text-sm font-medium w-full text-left">
+                className="flex items-center gap-2 text-sm font-medium w-full text-left">
                 {showBlockMap ? <ChevronDown className="w-4 h-4"/>:<ChevronRight className="w-4 h-4"/>}
                 Mapowanie bloków → Gutenberg
               </button>
@@ -301,8 +301,8 @@ export default function WordPressExportPanel() {
                     <span className="flex-1">Lyra</span><span className="flex-1">Gutenberg</span>
                   </div>
                   {BLOCK_MAP.map(b=>(
-                    <div key={b.from} className="flex itely-center px-4 py-2 border-t gap-3 text-xs">
-                      <div className="flex itely-center gap-1.5 flex-1 text-foreground/70">
+                    <div key={b.from} className="flex items-center px-4 py-2 border-t gap-3 text-xs">
+                      <div className="flex items-center gap-1.5 flex-1 text-foreground/70">
                         <b.icon className="w-3.5 h-3.5 text-foreground/40 shrink-0"/>{b.from}
                       </div>
                       <ChevronRight className="w-3 h-3 text-foreground/25 shrink-0"/>
@@ -315,7 +315,7 @@ export default function WordPressExportPanel() {
 
             {/* Featured Image */}
             <div className="space-y-2">
-              <label className="text-sm font-medium flex itely-center gap-1.5">
+              <label className="text-sm font-medium flex items-center gap-1.5">
                 <Image className="w-3.5 h-3.5 text-foreground/50"/>Grafika wyróżniająca
               </label>
               <div className={cn('border-2 rounded-xl overflow-hidden cursor-pointer transition-all',
@@ -323,14 +323,14 @@ export default function WordPressExportPanel() {
                 onClick={()=>!featuredImage&&setFeaturedImage(true)}>
                 {featuredImage ? (
                   <div>
-                    <div className="w-full h-36 bg-gradient-to-br from-blue-100 to-violet-100 flex itely-center justify-center">
+                    <div className="w-full h-36 bg-gradient-to-br from-blue-100 to-violet-100 flex items-center justify-center">
                       <div className="text-center">
                         <Image className="w-10 h-10 mx-auto mb-2 text-blue-400" strokeWidth={1.5}/>
                         <p className="text-xs text-blue-600 font-medium">hero-ai-marketing.png</p>
                         <p className="text-[10px] text-blue-500">1200 × 630 · 284 KB</p>
                       </div>
                     </div>
-                    <div className="px-4 py-2.5 border-t bg-card flex itely-center gap-3">
+                    <div className="px-4 py-2.5 border-t bg-card flex items-center gap-3">
                       <Input placeholder="Alt text: Schemat agentów AI w e-commerce" className="h-7 text-xs flex-1" defaultValue="Schemat działania agentów AI w e-commerce" />
                       <button onClick={e=>{e.stopPropagation();setFeaturedImage(false)}}
                         className="text-xs text-red-500 hover:text-red-600 shrink-0 whitespace-nowrap">Usuń</button>
@@ -348,7 +348,7 @@ export default function WordPressExportPanel() {
 
             {/* Categories */}
             <div className="space-y-2">
-              <label className="text-sm font-medium flex itely-center gap-1.5">
+              <label className="text-sm font-medium flex items-center gap-1.5">
                 <Tag className="w-3.5 h-3.5 text-foreground/50"/>Kategorie
               </label>
               <div className="flex flex-wrap gap-2">
@@ -404,7 +404,7 @@ export default function WordPressExportPanel() {
                 {id:'draft'    as const, label:'Szkic WP',  desc:'Do edycji',   Icon:FileText},
               ]).map(({id,label,desc,Icon})=>(
                 <button key={id} onClick={()=>setPublishMode(id)}
-                  className={cn('flex flex-col itely-center gap-1.5 p-3 rounded-xl border text-center transition-all',
+                  className={cn('flex flex-col items-center gap-1.5 p-3 rounded-xl border text-center transition-all',
                     publishMode===id?'border-foreground bg-muted/30':'border-border hover:border-foreground/30')}>
                   <Icon className={cn('w-4 h-4',publishMode===id?'text-foreground':'text-foreground/40')}/>
                   <span className="text-xs font-medium">{label}</span>
@@ -426,8 +426,8 @@ export default function WordPressExportPanel() {
             )}
 
             {exported ? (
-              <div className="flex itely-center justify-between p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
-                <div className="flex itely-center gap-2.5">
+              <div className="flex items-center justify-between p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                <div className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600"/>
                   <div>
                     <p className="text-sm font-medium text-emerald-700">

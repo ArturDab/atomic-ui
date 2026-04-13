@@ -32,7 +32,7 @@ export default function PromptsScreen() {
     <div className="flex h-full">
       <AppSidebar activeHref="/prompts" user={{ name: 'Artur K.', email: 'artur@simplimo.pl', initials: 'AK' }} />
       <div className="flex-1 flex flex-col overflow-hidden bg-[#fafafa]">
-        <div className="border-b bg-white px-8 py-4 flex itely-center justify-between">
+        <div className="border-b bg-white px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">Prompty</h1>
             <p className="text-xs text-muted-foreground mt-0.5">{PROMPTS.length} szablonów</p>
@@ -42,7 +42,7 @@ export default function PromptsScreen() {
           </Button>
         </div>
 
-        <div className="border-b bg-white px-8 py-3 flex itely-center justify-between gap-4">
+        <div className="border-b bg-white px-8 py-3 flex items-center justify-between gap-4">
           <div className="flex gap-1">
             {CATEGORIES.map(cat => (
               <button

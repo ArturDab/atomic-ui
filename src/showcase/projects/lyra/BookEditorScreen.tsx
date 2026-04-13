@@ -165,7 +165,7 @@ function SettingsSheet() {
                 { label: 'Tryb maszyny do pisania', desc: 'Kursor zawsze wyśrodkowany' },
                 { label: 'Licznik znaków', desc: 'Obok licznika słów' },
               ].map(opt => (
-                <div key={opt.label} className="flex itely-center justify-between py-0.5">
+                <div key={opt.label} className="flex items-center justify-between py-0.5">
                   <div>
                     <p className="text-sm font-medium">{opt.label}</p>
                     <p className="text-xs text-muted-foreground">{opt.desc}</p>
@@ -214,11 +214,11 @@ export default function BookEditorScreen() {
     <div className={wrapClass}>
 
       {/* Header – h-14, wyrównany ze wszystkimi kolumnami */}
-      <div className="h-14 border-b flex itely-center px-4 gap-3 shrink-0 bg-white">
+      <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0 bg-white">
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <ArrowLeft className="w-4 h-4" />
         </Button>
-        <div className="flex itely-center gap-2 flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
           <Badge variant="outline" className="text-[10px] border-emerald-200 bg-emerald-50 text-emerald-600 shrink-0">
             Książka
           </Badge>
@@ -227,8 +227,8 @@ export default function BookEditorScreen() {
           <span className="text-sm font-medium truncate">Modele językowe jako fundament</span>
           <Badge variant="outline" className="text-[10px] ml-1 shrink-0">W trakcie</Badge>
         </div>
-        <div className="flex itely-center gap-1 shrink-0">
-          <span className="text-xs text-muted-foreground hidden xl:flex itely-center gap-1">
+        <div className="flex items-center gap-1 shrink-0">
+          <span className="text-xs text-muted-foreground hidden xl:flex items-center gap-1">
             <Clock className="w-3 h-3" /> Autozapis
           </span>
           <Separator orientation="vertical" className="h-5 mx-1 hidden xl:block" />
@@ -257,7 +257,7 @@ export default function BookEditorScreen() {
         {showStructure && !fullscreen && (
           <div className="w-64 border-r flex flex-col shrink-0 bg-background">
             {/* h-14 – wyrównane z app header i AI panelem */}
-            <div className="h-14 border-b flex itely-center justify-between px-4 shrink-0">
+            <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
               <span className="text-xs font-semibold text-foreground/65 uppercase tracking-wider">Struktura</span>
               <div className="flex gap-1">
                 <Button variant="ghost" size="icon" className="h-7 w-7">
@@ -283,7 +283,7 @@ export default function BookEditorScreen() {
                   return (
                     <div key={part.id}>
                       <button onClick={() => toggle(part.id)}
-                        className="w-full flex itely-center gap-2 px-4 py-2 text-xs hover:bg-muted/50 transition-colors">
+                        className="w-full flex items-center gap-2 px-4 py-2 text-xs hover:bg-muted/50 transition-colors">
                         {expanded.has(part.id)
                           ? <ChevronDown className="w-3.5 h-3.5 text-foreground/55 shrink-0" />
                           : <ChevronRight className="w-3.5 h-3.5 text-foreground/55 shrink-0" />}
@@ -297,7 +297,7 @@ export default function BookEditorScreen() {
                         return (
                           <button key={ch.id}
                             className={cn(
-                              'w-full flex itely-center gap-2 px-4 py-2 pl-9 text-xs transition-colors border-l-2 border-l-transparent',
+                              'w-full flex items-center gap-2 px-4 py-2 pl-9 text-xs transition-colors border-l-2 border-l-transparent',
                               (ch as any).active
                                 ? 'bg-muted !border-l-foreground font-medium text-foreground'
                                 : 'hover:bg-muted/40 text-foreground/85'
@@ -323,7 +323,7 @@ export default function BookEditorScreen() {
         {/* Kolumna 2: Nagłówki rozdziału – h-14, text-xs */}
         {showOutline && !fullscreen && (
           <div className="w-52 border-r flex flex-col shrink-0 bg-background">
-            <div className="h-14 border-b flex itely-center justify-between px-4 shrink-0">
+            <div className="h-14 border-b flex items-center justify-between px-4 shrink-0">
               <span className="text-xs font-semibold text-foreground/65 uppercase tracking-wider">Rozdział</span>
               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setShowOutline(false)}>
                 <X className="w-3.5 h-3.5" />
@@ -336,7 +336,7 @@ export default function BookEditorScreen() {
                   return (
                     <button key={h.id} onClick={() => setActiveH(h.id)}
                       className={cn(
-                        'w-full flex itely-start gap-2 px-2 py-2 rounded-md text-left transition-colors',
+                        'w-full flex items-start gap-2 px-2 py-2 rounded-md text-left transition-colors',
                         h.level === 1 ? 'pl-2' : h.level === 2 ? 'pl-4' : 'pl-7',
                         activeH === h.id
                           ? 'bg-muted text-foreground font-medium'
@@ -359,7 +359,7 @@ export default function BookEditorScreen() {
           <EditorToolbar wordCount={2400} chapterWordCount={2400} />
 
           {/* Sub-toolbar */}
-          <div className="h-9 border-b flex itely-center px-4 gap-2 bg-muted/20 shrink-0">
+          <div className="h-9 border-b flex items-center px-4 gap-2 bg-muted/20 shrink-0">
             {(!showStructure || fullscreen) && (
               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => { setShowStructure(true); setFullscreen(false) }}>
                 <PanelLeft className="w-3.5 h-3.5" />
@@ -370,7 +370,7 @@ export default function BookEditorScreen() {
                 <AlignLeft className="w-3.5 h-3.5" />
               </Button>
             )}
-            <span className="text-xs text-foreground/60 flex itely-center gap-1.5">
+            <span className="text-xs text-foreground/60 flex items-center gap-1.5">
               <Hash className="w-3 h-3" /> 2 400 / 3 000 słów
             </span>
             <div className="flex-1" />
@@ -434,7 +434,7 @@ export default function BookEditorScreen() {
           />
         ) : (
           <button onClick={() => setShowAI(true)}
-            className="w-9 border-l flex flex-col itely-center justify-center gap-1 hover:bg-muted/40 transition-colors shrink-0">
+            className="w-9 border-l flex flex-col items-center justify-center gap-1 hover:bg-muted/40 transition-colors shrink-0">
             <Sparkles className="w-4 h-4 text-foreground/60" />
           </button>
         )}

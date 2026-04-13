@@ -38,7 +38,7 @@ interface SidePanelHeaderProps {
 
 export function SidePanelHeader({ children, className }: SidePanelHeaderProps) {
   return (
-    <div className={cn('p-4 border-b flex itely-center gap-2', className)}>
+    <div className={cn('p-4 border-b flex items-center gap-2', className)}>
       {children}
     </div>
   )
@@ -89,7 +89,7 @@ export function SidePanelSearch({ placeholder = 'Szukaj', value, onChange }: Sid
 
 export function SidePanelToolbar({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-4 py-2 border-b flex itely-center gap-2">
+    <div className="px-4 py-2 border-b flex items-center gap-2">
       {children}
     </div>
   )
@@ -129,7 +129,7 @@ export function SidePanelItem({ active, onClick, className, children }: SidePane
     <button
       onClick={onClick}
       className={cn(
-        'w-full text-left px-4 py-3 border-b flex itely-start gap-3 hover:bg-muted/50 transition-colors',
+        'w-full text-left px-4 py-3 border-b flex items-start gap-3 hover:bg-muted/50 transition-colors',
         active && 'bg-muted',
         className
       )}
