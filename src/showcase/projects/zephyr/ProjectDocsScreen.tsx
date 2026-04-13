@@ -1,7 +1,6 @@
 /**
  * Zephyr – Docs & Prompty
- * Cztery zakładki: Wdrożenie / Sesja Atomic UI / Sesja Zephyr / CLAUDE.md
- * Identyczna struktura dla wszystkich projektów w Atomic UI.
+ * Stack: GitHub + Vercel + Railway (PostgreSQL + S3 Bucket) + Auth.js
  */
 import React, { useState } from 'react'
 import { ClipboardCopy, Check, Pencil, BookOpen, Code2, Wind, ExternalLink, Rocket } from 'lucide-react'
@@ -110,10 +109,10 @@ function StepList({ steps }: { steps: StepItem[] }) {
 }
 
 const SECTIONS = [
-  { id: 'wdrozenie', label: 'Wdrożenie',           icon: Rocket    },
-  { id: 'atomic',    label: 'Sesja Atomic UI',      icon: BookOpen  },
-  { id: 'session',   label: 'Sesja Zephyr',       icon: Wind   },
-  { id: 'claude',    label: 'CLAUDE.md aplikacji',  icon: Code2     },
+  { id: 'wdrozenie', label: 'Wdrożenie',           icon: Rocket   },
+  { id: 'atomic',    label: 'Sesja Atomic UI',      icon: BookOpen },
+  { id: 'session',   label: 'Sesja Zephyr',         icon: Wind     },
+  { id: 'claude',    label: 'CLAUDE.md aplikacji',  icon: Code2    },
 ]
 
 export default function ZephyrDocsScreen() {
@@ -145,13 +144,12 @@ git -C /tmp/atomic-ui config user.name "Claude"
 Sklonuj repo, przeczytaj CLAUDE.md i zacznij.`
 
   const sessionPrompt = () => {
-        const repo = values['zephyr_repo'] || 'https://github.com/OWNER/zephyr.git'
-    const token = values['zephyr_token'] || 'UZUPEŁNIJ_TOKEN'
-    const vercel = values['zephyr_vercel'] || 'https://zephyr.vercel.app'
-    const supabase = values['zephyr_supabase'] || 'https://xyz.supabase.co'
-    const supabaseKey = values['zephyr_supabase_key'] || 'eyJ...'
-    const anthropic = values['anthropic_key'] || 'sk-ant-...'
-    const cfUrl = values['cf_url'] || 'https://images.zephyr.app'
+    const repo        = values['zephyr_repo']       || 'https://github.com/OWNER/zephyr'
+    const token       = values['zephyr_token']      || 'UZUPEŁNIJ_TOKEN'
+    const vercel      = values['zephyr_vercel']     || 'https://zephyr.vercel.app'
+    const railway_db  = values['zephyr_railway_db'] || 'postgresql://user:pass@host:5432/zephyr'
+    const railway_s3  = values['zephyr_railway_s3'] || 'https://storage.railway.app'
+    const anthropic   = values['anthropic_key']     || 'sk-ant-...'
     return `# Zephyr – sesja robocza
 
 ## Repo
@@ -159,15 +157,24 @@ GitHub: ${repo}
 Token: ${token}
 Vercel: ${vercel}
 
-## Backend
-Supabase URL: ${supabase}
-Supabase Anon Key: ${supabaseKey}
+## Backend (Railway)
+PostgreSQL: ${railway_db}
+S3 Bucket URL: ${railway_s3}
+
+## Auth
+Auth.js – skonfigurowany w repo (src/lib/auth.ts)
+AUTH_SECRET w zmiennych środowiskowych Vercel
 
 ## AI
 Anthropic API Key: ${anthropic}
 
-## Cloudflare
-R2 Public URL: ${cfUrl}
+## Stack
+Next.js 14 + TypeScript + Tailwind v3 + Shadcn/ui
+Railway PostgreSQL + Railway S3 Bucket + Auth.js + Vercel
+
+## Czym jest Zephyr
+SaaS do tworzenia newsletterów HTML dla agencji obsługujących wielu klientów.
+Konfiguracja per klient: kolory, font, instrukcje AI, biblioteka sekcji, UTM-y.
 
 ## Moduły z Atomic UI
 Hooki: useClients, useNewsletterCreator, useArtifact
@@ -175,49 +182,65 @@ Hooki: useClients, useNewsletterCreator, useArtifact
 ## Workflow
 git clone https://OWNER:${token}@... /tmp/zephyr
 git config user.email "claude@anthropic.com" && git config user.name "Claude"
-# po zmianach: git add -A && git commit -m "..." && git push origin main
+cd /tmp/zephyr && npm run build  # przed każdym push
+git add -A && git commit -m "feat/fix: opis" && git push origin main
 
-Sklonuj repo, przeczytaj CLAUDE.md i zacznij.\``
+Sklonuj repo, przeczytaj CLAUDE.md i zacznij.`
   }
 
-  const claudeMd = () => {
-        return `# Zephyr – instrukcja dla Claude
+  const claudeMd = () => `# Zephyr – instrukcja dla Claude
 
 ## Czym jest Zephyr
 SaaS do tworzenia newsletterów HTML dla agencji obsługujących wielu klientów.
-Konfiguracja per klient: kolory, font, instrukcje AI, biblioteka sekcji, UTM-y.
+Konfiguracja per klient: kolory, font, instrukcje AI, biblioteka sekcji HTML, UTM-y.
+Generuje gotowy HTML do wklejenia w Klaviyo/Mailchimp/SendGrid.
 
 ## Repo
 GitHub: ${values['zephyr_repo'] || 'UZUPEŁNIJ'}
 Vercel: ${values['zephyr_vercel'] || 'UZUPEŁNIJ'}
-Supabase: ${values['zephyr_supabase'] || 'UZUPEŁNIJ'}
 
-## Workflow
+## Stack
+Next.js 14 + TypeScript + Tailwind CSS v3 + Shadcn/ui
+Railway PostgreSQL + Railway S3 Bucket + Auth.js + Drizzle ORM + Vercel
+
+## Struktura
+src/app/(app)/clients/      – lista klientów
+src/app/(app)/clients/[id]/ – konfiguracja klienta
+src/app/(app)/creator/      – kreator newslettera
+src/app/(app)/artifact/     – podgląd + edycja HTML
+src/app/(app)/history/      – archiwum
+src/app/api/generate/       – generacja HTML przez Anthropic API
+src/app/api/upload/         – upload grafik do Railway S3 Bucket
+src/app/(auth)/             – login, register (Auth.js)
+src/modules/zephyr/         – hooki i typy (z Atomic UI)
+src/lib/auth.ts             – konfiguracja Auth.js
+src/lib/db.ts               – klient bazy (Drizzle ORM + Railway PostgreSQL)
+src/lib/storage.ts          – S3 client (Railway Bucket)
+src/lib/ai.ts               – wywołania Anthropic API
+
+## Zmienne środowiskowe
+DATABASE_URL                – Railway PostgreSQL connection string
+AUTH_SECRET                 – generuj: openssl rand -base64 32
+ANTHROPIC_API_KEY           – klucz Anthropic
+RAILWAY_BUCKET_ACCESS_KEY   – z Railway Bucket → Credentials
+RAILWAY_BUCKET_SECRET_KEY   – z Railway Bucket → Credentials
+RAILWAY_BUCKET_ENDPOINT     – https://storage.railway.app
+RAILWAY_BUCKET_NAME         – nazwa bucketa
+
+## Workflow sesji
 git clone https://OWNER:TOKEN@... /tmp/zephyr
 git config user.email "claude@anthropic.com" && git config user.name "Claude"
 cd /tmp/zephyr && npm run build  # przed każdym push
 git add -A && git commit -m "feat/fix: opis" && git push origin main
 
-## Stack
-Next.js 14 + TypeScript + Tailwind CSS v3 + Shadcn/ui + Supabase + Vercel + Cloudflare R2
-
-## Struktura
-src/app/(app)/clients/   – lista klientów
-src/app/(app)/creator/   – kreator newslettera
-src/app/(app)/artifact/  – podgląd + edycja
-src/modules/zephyr/      – hooki i typy (z Atomic UI)
-src/app/api/generate/    – generacja HTML przez Anthropic API
-src/app/api/upload/      – upload grafik do Cloudflare R2
-
 ## Zasady
-- h-14 dla wszystkich nagłówków pierwszego rzędu
+- h-14 dla wszystkich nagłówków pierwszego rzędu (NIEPODWAŻALNE)
 - CSS variables, nigdy hardkodowane kolory w UI
 - HTML emaili: inline styles są wymagane (emaile nie obsługują CSS class)
 - npm run build przed każdym push – zero błędów TypeScript
 
 ## Makiety
-https://atomic-ui-sandy.vercel.app/projects/zephyr\``
-  }
+https://atomic-ui-sandy.vercel.app/projects/zephyr`
 
   return (
     <div className="flex h-full">
@@ -243,7 +266,7 @@ https://atomic-ui-sandy.vercel.app/projects/zephyr\``
 
           {active === 'wdrozenie' && (<>
             <div>
-              <h1 className="text-xl font-semibold">Wdrożenie Zephyr – krok po kroku</h1>
+              <h1 className="text-xl font-semibold">Wdrożenie Zephyra – krok po kroku</h1>
               <p className="text-sm text-muted-foreground mt-1">Co musisz zrobić sam, a co zrobi Claude Code automatycznie.</p>
             </div>
             <div className="border rounded-xl p-4 bg-emerald-50 border-emerald-200">
@@ -251,47 +274,44 @@ https://atomic-ui-sandy.vercel.app/projects/zephyr\``
               <ul className="text-xs text-emerald-700 space-y-0.5 list-disc list-inside">
                 <li>Instaluje Next.js, Tailwind, Shadcn i zależności</li>
                 <li>Kopiuje moduły (hooki, typy) z Atomic UI</li>
-                <li>Konfiguruje Supabase i tworzy tabele</li>
+                <li>Konfiguruje Auth.js, Drizzle ORM i schemat bazy</li>
+                <li>Konfiguruje S3 client dla Railway Bucket</li>
                 <li>Buduje widoki według prototypów z Atomic UI</li>
                 <li>Deployuje na Vercel przy każdym push</li>
               </ul>
             </div>
-                          <StepList steps={[
-                { number: 1, title: 'Utwórz repo na GitHubie', link: 'https://github.com/new', content: (<>
-                    <p>Idź na github.com/new, nazwij repo <code className="bg-muted px-1 rounded text-xs">zephyr</code>, ustaw <strong>Private</strong>, kliknij "Create repository".</p>
-                    <p className="mt-1">Wygeneruj token: <strong>Settings → Developer settings → Personal access tokens → Generate new token (classic)</strong>. Zakres: <code className="bg-muted px-1 rounded text-xs">repo</code>.</p>
-                    <div className="mt-2 space-y-1">
-                      <div><EditableField fieldKey="zephyr_token" placeholder="ghp_..." values={values} onChange={onChange} /></div>
-                      <div><EditableField fieldKey="zephyr_repo" placeholder="https://github.com/OWNER/zephyr.git" values={values} onChange={onChange} /></div>
-                    </div>
-                  </>), },
-                { number: 2, title: 'Podłącz repo do Vercela', link: 'https://vercel.com/new', content: (<>
-                    <p>vercel.com/new → "Import Git Repository" → wybierz <code className="bg-muted px-1 rounded text-xs">zephyr</code> → Deploy.</p>
-                    <div className="mt-2"><EditableField fieldKey="zephyr_vercel" placeholder="https://zephyr.vercel.app" values={values} onChange={onChange} /></div>
-                  </>), },
-                { number: 3, title: 'Utwórz projekt Supabase (dev)', link: 'https://supabase.com/dashboard/new', content: (<>
-                    <p>supabase.com → "New project" → nazwij <code className="bg-muted px-1 rounded text-xs">zephyr-dev</code> → Frankfurt. Skopiuj z <strong>Project Settings → API</strong>: URL i klucz "anon public".</p>
-                    <div className="mt-2 space-y-1">
-                      <div><EditableField fieldKey="zephyr_supabase" placeholder="https://xyz.supabase.co" values={values} onChange={onChange} /></div>
-                      <div><EditableField fieldKey="zephyr_supabase_key" placeholder="eyJ... (anon key)" values={values} onChange={onChange} /></div>
-                    </div>
-                  </>), },
-                { number: 4, title: 'Klucz Anthropic API', link: 'https://console.anthropic.com/settings/keys', content: (<>
-                    <p>console.anthropic.com → "Create Key". Skopiuj – zobaczysz go tylko raz.</p>
-                    <div className="mt-2"><EditableField fieldKey="anthropic_key" placeholder="sk-ant-..." values={values} onChange={onChange} /></div>
-                  </>), },
-                { number: 5, title: 'Cloudflare R2 (grafiki)', link: 'https://dash.cloudflare.com/', content: (<>
-                    <p>dash.cloudflare.com → R2 → "Create bucket" → nazwij <code className="bg-muted px-1 rounded text-xs">zephyr-images</code>. Utwórz API Token "Object Read & Write".</p>
-                    <p className="mt-1 text-xs text-foreground/50">Możesz pominąć na start – upload grafik dodamy później.</p>
-                    <div className="mt-2"><EditableField fieldKey="cf_url" placeholder="https://images.zephyr.app" values={values} onChange={onChange} /></div>
-                  </>), },
-                { number: 6, title: 'Wklej CLAUDE.md do repo', content: (
-                    <p>Skopiuj CLAUDE.md z zakładki obok i wklej jako plik w GitHubie: repo → "Add file" → "Create new file" → nazwa: <code className="bg-muted px-1 rounded text-xs">CLAUDE.md</code>.</p>
-                  ), },
-                { number: 7, title: 'Uruchom Claude Code', content: (
-                    <p>Wklej prompt z zakładki "Sesja Zephyr" jako pierwszą wiadomość w Claude Code. Na końcu dopisz: <em>"Zacznij od Iteracji 1 – setup projektu."</em></p>
-                  ), },
-              ]} />
+            <StepList steps={[
+              { number: 1, title: 'Utwórz repo na GitHubie', link: 'https://github.com/new', content: (<>
+                  <p>github.com/new → nazwa <code className="bg-muted px-1 rounded text-xs">zephyr</code> → <strong>Private</strong> → Create repository.</p>
+                  <p className="mt-1">Wygeneruj token: <strong>Settings → Developer settings → Personal access tokens → Generate new token (classic)</strong>. Zakres: <code className="bg-muted px-1 rounded text-xs">repo</code>.</p>
+                  <div className="mt-2 space-y-1">
+                    <div><EditableField fieldKey="zephyr_token" placeholder="ghp_..." values={values} onChange={onChange} /></div>
+                    <div><EditableField fieldKey="zephyr_repo" placeholder="https://github.com/OWNER/zephyr" values={values} onChange={onChange} /></div>
+                  </div>
+                </>), },
+              { number: 2, title: 'Podłącz repo do Vercela', link: 'https://vercel.com/new', content: (<>
+                  <p>vercel.com/new → Import Git Repository → wybierz <code className="bg-muted px-1 rounded text-xs">zephyr</code> → Deploy.</p>
+                  <div className="mt-2"><EditableField fieldKey="zephyr_vercel" placeholder="https://zephyr.vercel.app" values={values} onChange={onChange} /></div>
+                </>), },
+              { number: 3, title: 'Utwórz bazę PostgreSQL w Railway', link: 'https://railway.app', content: (<>
+                  <p>railway.app → New Project → Add PostgreSQL. Skopiuj <strong>DATABASE_URL</strong> z zakładki Variables.</p>
+                  <div className="mt-2"><EditableField fieldKey="zephyr_railway_db" placeholder="postgresql://user:pass@host:5432/zephyr" values={values} onChange={onChange} /></div>
+                </>), },
+              { number: 4, title: 'Utwórz S3 Bucket w Railway (grafiki)', link: 'https://railway.app', content: (<>
+                  <p>W tym samym projekcie Railway → New → Bucket. Po utworzeniu skopiuj credentials z zakładki <strong>Credentials</strong>: Access Key, Secret Key i Endpoint.</p>
+                  <div className="mt-2"><EditableField fieldKey="zephyr_railway_s3" placeholder="https://storage.railway.app" values={values} onChange={onChange} /></div>
+                </>), },
+              { number: 5, title: 'Klucz Anthropic API', link: 'https://console.anthropic.com/settings/keys', content: (<>
+                  <p>console.anthropic.com → Create Key. Skopiuj – zobaczysz go tylko raz.</p>
+                  <div className="mt-2"><EditableField fieldKey="anthropic_key" placeholder="sk-ant-..." values={values} onChange={onChange} /></div>
+                </>), },
+              { number: 6, title: 'Wklej CLAUDE.md do repo', content: (
+                  <p>Skopiuj CLAUDE.md z zakładki obok → GitHub: repo → "Add file" → "Create new file" → nazwa: <code className="bg-muted px-1 rounded text-xs">CLAUDE.md</code>.</p>
+                ), },
+              { number: 7, title: 'Uruchom Claude Code', content: (
+                  <p>Wklej prompt z zakładki "Sesja Zephyr" jako pierwszą wiadomość. Na końcu dopisz: <em>"Zacznij od Iteracji 1 – setup projektu."</em></p>
+                ), },
+            ]} />
           </>)}
 
           {active === 'atomic' && (<>
@@ -307,9 +327,9 @@ https://atomic-ui-sandy.vercel.app/projects/zephyr\``
               ['Token: ', { key: 'atomic_token', placeholder: 'ghp_...' }],
               ['Vercel: https://atomic-ui-sandy.vercel.app'],
               [''],
-                  ['## Projekt: Zephyr'],
-                  ['Faza: Makiety + Design System + Moduły'],
-                  ['Widoki: 6 makiet, 4 motywy, 3 hooki'],
+              ['## Projekt: Zephyr'],
+              ['Faza: Makiety + Design System + Moduły'],
+              ['Widoki: 6 makiet, 4 motywy, 3 hooki'],
               [''],
               ['Sklonuj repo, przeczytaj CLAUDE.md i zacznij.'],
             ]} />
@@ -317,12 +337,11 @@ https://atomic-ui-sandy.vercel.app/projects/zephyr\``
             <div className="border-t pt-6 space-y-3">
               <h3 className="text-sm font-semibold">Stan projektu Zephyr w Atomic UI</h3>
               {[
-                  { label: 'Makiety',         value: '6 widoków',                        done: true  },
-                  { label: 'Design System',   value: '4 motywy (Sky/Slate/Sage/Noir)',    done: true  },
-                  { label: 'Moduły',          value: '3 hooki, 14 typów TS',              done: true  },
-                  { label: 'Supabase schema', value: 'SQL gotowy (SUPABASE_SCHEMA.sql)',   done: true  },
-                  { label: 'Implementacja',   value: 'Claude Code → repo Zephyr',         done: false },
-                ].map(item => (
+                { label: 'Makiety',         value: '6 widoków',                          done: true  },
+                { label: 'Design System',   value: '4 motywy (Sky/Slate/Sage/Noir)',      done: true  },
+                { label: 'Moduły',          value: '3 hooki, 14 typów TS',               done: true  },
+                { label: 'Implementacja',   value: 'Claude Code → repo Zephyr',           done: false },
+              ].map(item => (
                 <div key={item.label} className="flex items-center justify-between py-2 border-b last:border-0">
                   <span className="text-sm text-foreground/80">{item.label}</span>
                   <div className="flex items-center gap-2">
@@ -337,30 +356,27 @@ https://atomic-ui-sandy.vercel.app/projects/zephyr\``
           {active === 'session' && (<>
             <div>
               <h1 className="text-xl font-semibold">Prompt startowy – Zephyr</h1>
-              <p className="text-sm text-muted-foreground mt-1">Wklej to na początku każdej sesji w projekcie Claude "Zephyr". Uzupełnij podświetlone pola.</p>
+              <p className="text-sm text-muted-foreground mt-1">Wklej to na początku każdej sesji w Claude Code. Uzupełnij podświetlone pola.</p>
             </div>
             <EditableCode values={values} onChange={onChange} lines={[
-                  ['# Zephyr – sesja robocza'],
-                  [''],
-                  ['## Repo'],
-                  ['GitHub: ', { key: 'zephyr_repo', placeholder: 'https://github.com/OWNER/zephyr.git' }],
-                  ['Token: ',  { key: 'zephyr_token', placeholder: 'ghp_...' }],
-                  ['Vercel: ', { key: 'zephyr_vercel', placeholder: 'https://zephyr.vercel.app' }],
-                  [''],
-                  ['## Backend'],
-                  ['Supabase URL: ', { key: 'zephyr_supabase', placeholder: 'https://xyz.supabase.co' }],
-                  ['Supabase Anon Key: ', { key: 'zephyr_supabase_key', placeholder: 'eyJ...' }],
-                  [''],
-                  ['## AI'],
-                  ['Anthropic API Key: ', { key: 'anthropic_key', placeholder: 'sk-ant-...' }],
-                  [''],
-                  ['## Cloudflare (grafiki)'],
-                  ['R2 Public URL: ', { key: 'cf_url', placeholder: 'https://images.zephyr.app' }],
-                  [''],
-                  ['## Moduły z Atomic UI'],
-                  ['Hooki: useClients, useNewsletterCreator, useArtifact'],
-                  [''],
-                  ['Sklonuj repo, przeczytaj CLAUDE.md i zacznij.'],
+              ['# Zephyr – sesja robocza'],
+              [''],
+              ['## Repo'],
+              ['GitHub: ', { key: 'zephyr_repo', placeholder: 'https://github.com/OWNER/zephyr' }],
+              ['Token: ',  { key: 'zephyr_token', placeholder: 'ghp_...' }],
+              ['Vercel: ', { key: 'zephyr_vercel', placeholder: 'https://zephyr.vercel.app' }],
+              [''],
+              ['## Backend (Railway)'],
+              ['PostgreSQL: ',    { key: 'zephyr_railway_db', placeholder: 'postgresql://user:pass@host:5432/zephyr' }],
+              ['S3 Bucket URL: ', { key: 'zephyr_railway_s3', placeholder: 'https://storage.railway.app' }],
+              [''],
+              ['## AI'],
+              ['Anthropic API Key: ', { key: 'anthropic_key', placeholder: 'sk-ant-...' }],
+              [''],
+              ['## Stack'],
+              ['Next.js 14 + Railway PostgreSQL + Railway S3 + Auth.js + Drizzle ORM + Vercel'],
+              [''],
+              ['Sklonuj repo, przeczytaj CLAUDE.md i zacznij.'],
             ]} />
             <CopyButton label="Kopiuj prompt startowy Zephyr" getText={sessionPrompt} />
           </>)}
@@ -368,7 +384,7 @@ https://atomic-ui-sandy.vercel.app/projects/zephyr\``
           {active === 'claude' && (<>
             <div>
               <h1 className="text-xl font-semibold">CLAUDE.md – Zephyr</h1>
-              <p className="text-sm text-muted-foreground mt-1">Ten plik trafia do korzenia repo aplikacji Zephyr. Claude Code czyta go automatycznie.</p>
+              <p className="text-sm text-muted-foreground mt-1">Ten plik trafia do korzenia repo. Claude Code czyta go automatycznie przy każdej sesji.</p>
             </div>
             <div className="bg-muted/50 border rounded-lg overflow-hidden">
               <pre className="px-4 py-3 text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre">{claudeMd()}</pre>

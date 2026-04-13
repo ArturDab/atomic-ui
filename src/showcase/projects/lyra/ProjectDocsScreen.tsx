@@ -1,7 +1,6 @@
 /**
  * Lyra – Docs & Prompty
- * Cztery zakładki: Wdrożenie / Sesja Atomic UI / Sesja Lyra / CLAUDE.md
- * Identyczna struktura dla wszystkich projektów w Atomic UI.
+ * Stack: GitHub + Vercel + Railway (PostgreSQL) + Auth.js
  */
 import React, { useState } from 'react'
 import { ClipboardCopy, Check, Pencil, BookOpen, Code2, Sparkles, ExternalLink, Rocket } from 'lucide-react'
@@ -110,10 +109,10 @@ function StepList({ steps }: { steps: StepItem[] }) {
 }
 
 const SECTIONS = [
-  { id: 'wdrozenie', label: 'Wdrożenie',           icon: Rocket    },
-  { id: 'atomic',    label: 'Sesja Atomic UI',      icon: BookOpen  },
-  { id: 'session',   label: 'Sesja Lyra',       icon: Sparkles   },
-  { id: 'claude',    label: 'CLAUDE.md aplikacji',  icon: Code2     },
+  { id: 'wdrozenie', label: 'Wdrożenie',            icon: Rocket   },
+  { id: 'atomic',    label: 'Sesja Atomic UI',       icon: BookOpen },
+  { id: 'session',   label: 'Sesja Lyra',            icon: Sparkles },
+  { id: 'claude',    label: 'CLAUDE.md aplikacji',   icon: Code2    },
 ]
 
 export default function ProjectDocsScreen() {
@@ -145,12 +144,11 @@ git -C /tmp/atomic-ui config user.name "Claude"
 Sklonuj repo, przeczytaj CLAUDE.md i zacznij.`
 
   const sessionPrompt = () => {
-        const repo = values['lyra_repo'] || 'https://github.com/OWNER/lyra.git'
-    const token = values['lyra_token'] || 'UZUPEŁNIJ_TOKEN'
-    const vercel = values['lyra_vercel'] || 'https://lyra.vercel.app'
-    const supabase = values['lyra_supabase'] || 'https://xyz.supabase.co'
-    const supabaseKey = values['lyra_supabase_key'] || 'eyJ...'
-    const ds = values['lyra_ds'] || 'Chalk'
+    const repo    = values['lyra_repo']    || 'https://github.com/OWNER/lyra.git'
+    const token   = values['lyra_token']   || 'UZUPEŁNIJ_TOKEN'
+    const vercel  = values['lyra_vercel']  || 'https://lyra.vercel.app'
+    const railway = values['lyra_railway'] || 'postgresql://...'
+    const ds      = values['lyra_ds']      || 'Chalk'
     return `# Lyra – sesja robocza
 
 ## Repo
@@ -159,11 +157,17 @@ Token: ${token}
 Vercel: ${vercel}
 
 ## Backend
-Supabase: ${supabase}
-Supabase key: ${supabaseKey}
+Railway PostgreSQL: ${railway}
+
+## Auth
+Auth.js – skonfigurowany w repo (src/lib/auth.ts)
+AUTH_SECRET w zmiennych środowiskowych Vercel
 
 ## Design System
 Wariant: ${ds}
+
+## Stack
+Next.js 14 + TypeScript + Tailwind v3 + Shadcn/ui + Railway PostgreSQL + Auth.js + Vercel
 
 ## Moduły z Atomic UI
 Hooki: useDashboard, useArticleEditor, useBookEditor, useAIConversation
@@ -171,13 +175,13 @@ Hooki: useDashboard, useArticleEditor, useBookEditor, useAIConversation
 ## Workflow
 git clone https://OWNER:${token}@... /tmp/lyra
 git config user.email "claude@anthropic.com" && git config user.name "Claude"
-# po zmianach: git add -A && git commit -m "..." && git push origin main
+cd /tmp/lyra && npm run build  # przed każdym push
+git add -A && git commit -m "feat/fix: opis" && git push origin main
 
-Sklonuj repo, przeczytaj CLAUDE.md i zacznij.\``
+Sklonuj repo, przeczytaj CLAUDE.md i zacznij.`
   }
 
-  const claudeMd = () => {
-        return `# Lyra – instrukcja dla Claude
+  const claudeMd = () => `# Lyra – instrukcja dla Claude
 
 ## Czym jest Lyra
 Edytor treści z AI – artykuły, opracowania, książki, eksport do WordPress.
@@ -185,31 +189,37 @@ Edytor treści z AI – artykuły, opracowania, książki, eksport do WordPress.
 ## Repo
 GitHub: ${values['lyra_repo'] || 'UZUPEŁNIJ'}
 Vercel: ${values['lyra_vercel'] || 'UZUPEŁNIJ'}
-Supabase: ${values['lyra_supabase'] || 'UZUPEŁNIJ'}
 
-## Workflow
+## Stack
+Next.js 14 + TypeScript + Tailwind CSS v3 + Shadcn/ui
+Railway PostgreSQL + Auth.js + Vercel
+
+## Struktura
+src/app/(app)/          – widoki aplikacji
+src/app/(auth)/         – login, register (Auth.js)
+src/modules/lyra/       – hooki i typy (z Atomic UI)
+src/lib/auth.ts         – konfiguracja Auth.js
+src/lib/db.ts           – klient bazy (Drizzle ORM + Railway PostgreSQL)
+src/lib/ai.ts           – wywołania Anthropic API
+
+## Zmienne środowiskowe
+DATABASE_URL            – Railway PostgreSQL connection string
+AUTH_SECRET             – generuj: openssl rand -base64 32
+ANTHROPIC_API_KEY       – klucz Anthropic
+
+## Workflow sesji
 git clone https://OWNER:TOKEN@... /tmp/lyra
 git config user.email "claude@anthropic.com" && git config user.name "Claude"
 cd /tmp/lyra && npm run build  # przed każdym push
 git add -A && git commit -m "feat/fix: opis" && git push origin main
 
-## Stack
-Next.js 14 + TypeScript + Tailwind CSS v3 + Shadcn/ui + Supabase + Vercel
-
-## Struktura
-src/app/(app)/          – widoki aplikacji
-src/modules/lyra/       – hooki i typy (z Atomic UI)
-src/lib/supabase.ts     – klient Supabase
-src/lib/ai.ts           – Anthropic API
-
 ## Zasady
-- h-14 dla wszystkich nagłówków pierwszego rzędu
+- h-14 dla wszystkich nagłówków pierwszego rzędu (NIEPODWAŻALNE)
 - CSS variables, nigdy hardkodowane kolory
 - npm run build przed każdym push – zero błędów TypeScript
 
 ## Makiety
-https://atomic-ui-sandy.vercel.app/projects/lyra\``
-  }
+https://atomic-ui-sandy.vercel.app/projects/lyra`
 
   return (
     <div className="flex h-full">
@@ -235,7 +245,7 @@ https://atomic-ui-sandy.vercel.app/projects/lyra\``
 
           {active === 'wdrozenie' && (<>
             <div>
-              <h1 className="text-xl font-semibold">Wdrożenie Lyra – krok po kroku</h1>
+              <h1 className="text-xl font-semibold">Wdrożenie Lyry – krok po kroku</h1>
               <p className="text-sm text-muted-foreground mt-1">Co musisz zrobić sam, a co zrobi Claude Code automatycznie.</p>
             </div>
             <div className="border rounded-xl p-4 bg-emerald-50 border-emerald-200">
@@ -243,38 +253,35 @@ https://atomic-ui-sandy.vercel.app/projects/lyra\``
               <ul className="text-xs text-emerald-700 space-y-0.5 list-disc list-inside">
                 <li>Instaluje Next.js, Tailwind, Shadcn i zależności</li>
                 <li>Kopiuje moduły (hooki, typy) z Atomic UI</li>
-                <li>Konfiguruje Supabase i tworzy tabele</li>
+                <li>Konfiguruje Auth.js i schemat bazy danych</li>
                 <li>Buduje widoki według prototypów z Atomic UI</li>
                 <li>Deployuje na Vercel przy każdym push</li>
               </ul>
             </div>
-                          <StepList steps={[
-                { number: 1, title: 'Utwórz repo na GitHubie', link: 'https://github.com/new', content: (<>
-                    <p>Idź na github.com/new, nazwij repo <code className="bg-muted px-1 rounded text-xs">lyra</code>, ustaw <strong>Private</strong>, kliknij "Create repository".</p>
-                    <p className="mt-1">Wygeneruj token: <strong>Settings → Developer settings → Personal access tokens → Generate new token (classic)</strong>. Zakres: <code className="bg-muted px-1 rounded text-xs">repo</code>. Skopiuj i wklej:</p>
-                    <div className="mt-2 space-y-1">
-                      <div><EditableField fieldKey="lyra_token" placeholder="ghp_..." values={values} onChange={onChange} /></div>
-                      <div><EditableField fieldKey="lyra_repo" placeholder="https://github.com/OWNER/lyra.git" values={values} onChange={onChange} /></div>
-                    </div>
-                  </>), },
-                { number: 2, title: 'Podłącz repo do Vercela', link: 'https://vercel.com/new', content: (<>
-                    <p>vercel.com/new → "Import Git Repository" → wybierz <code className="bg-muted px-1 rounded text-xs">lyra</code> → Deploy.</p>
-                    <div className="mt-2"><EditableField fieldKey="lyra_vercel" placeholder="https://lyra.vercel.app" values={values} onChange={onChange} /></div>
-                  </>), },
-                { number: 3, title: 'Utwórz projekt Supabase (dev)', link: 'https://supabase.com/dashboard/new', content: (<>
-                    <p>supabase.com → "New project" → nazwij <code className="bg-muted px-1 rounded text-xs">lyra-dev</code> → Frankfurt. Skopiuj z <strong>Project Settings → API</strong>: URL i klucz "anon public".</p>
-                    <div className="mt-2 space-y-1">
-                      <div><EditableField fieldKey="lyra_supabase" placeholder="https://xyz.supabase.co" values={values} onChange={onChange} /></div>
-                      <div><EditableField fieldKey="lyra_supabase_key" placeholder="eyJ... (anon key)" values={values} onChange={onChange} /></div>
-                    </div>
-                  </>), },
-                { number: 4, title: 'Wklej CLAUDE.md do repo', content: (
-                    <p>Skopiuj CLAUDE.md z zakładki obok i wklej jako plik w GitHubie: repo → "Add file" → "Create new file" → nazwa: <code className="bg-muted px-1 rounded text-xs">CLAUDE.md</code>.</p>
-                  ), },
-                { number: 5, title: 'Uruchom Claude Code', content: (
-                    <p>Wklej prompt z zakładki "Sesja Lyra" jako pierwszą wiadomość w Claude Code. Na końcu dopisz: <em>"Zacznij od Iteracji 1 – setup projektu."</em></p>
-                  ), },
-              ]} />
+            <StepList steps={[
+              { number: 1, title: 'Utwórz repo na GitHubie', link: 'https://github.com/new', content: (<>
+                  <p>github.com/new → nazwa <code className="bg-muted px-1 rounded text-xs">lyra</code> → <strong>Private</strong> → Create repository.</p>
+                  <p className="mt-1">Wygeneruj token: <strong>Settings → Developer settings → Personal access tokens → Generate new token (classic)</strong>. Zakres: <code className="bg-muted px-1 rounded text-xs">repo</code>.</p>
+                  <div className="mt-2 space-y-1">
+                    <div><EditableField fieldKey="lyra_token" placeholder="ghp_..." values={values} onChange={onChange} /></div>
+                    <div><EditableField fieldKey="lyra_repo" placeholder="https://github.com/OWNER/lyra" values={values} onChange={onChange} /></div>
+                  </div>
+                </>), },
+              { number: 2, title: 'Podłącz repo do Vercela', link: 'https://vercel.com/new', content: (<>
+                  <p>vercel.com/new → Import Git Repository → wybierz <code className="bg-muted px-1 rounded text-xs">lyra</code> → Deploy.</p>
+                  <div className="mt-2"><EditableField fieldKey="lyra_vercel" placeholder="https://lyra.vercel.app" values={values} onChange={onChange} /></div>
+                </>), },
+              { number: 3, title: 'Utwórz bazę w Railway', link: 'https://railway.app', content: (<>
+                  <p>railway.app → New Project → Add PostgreSQL. Skopiuj <strong>DATABASE_URL</strong> z zakładki Variables.</p>
+                  <div className="mt-2"><EditableField fieldKey="lyra_railway" placeholder="postgresql://user:pass@host:5432/lyra" values={values} onChange={onChange} /></div>
+                </>), },
+              { number: 4, title: 'Wklej CLAUDE.md do repo', content: (
+                  <p>Skopiuj CLAUDE.md z zakładki obok → GitHubie: repo → "Add file" → "Create new file" → nazwa: <code className="bg-muted px-1 rounded text-xs">CLAUDE.md</code>.</p>
+                ), },
+              { number: 5, title: 'Uruchom Claude Code', content: (
+                  <p>Wklej prompt z zakładki "Sesja Lyra" jako pierwszą wiadomość. Na końcu dopisz: <em>"Zacznij od Iteracji 1 – setup projektu."</em></p>
+                ), },
+            ]} />
           </>)}
 
           {active === 'atomic' && (<>
@@ -290,9 +297,9 @@ https://atomic-ui-sandy.vercel.app/projects/lyra\``
               ['Token: ', { key: 'atomic_token', placeholder: 'ghp_...' }],
               ['Vercel: https://atomic-ui-sandy.vercel.app'],
               [''],
-                  ['## Projekt: Lyra'],
-                  ['Faza: Design System + Moduły'],
-                  ['Widoki: 9 makiet, 4 motywy, 4 hooki'],
+              ['## Projekt: Lyra'],
+              ['Faza: Design System + Moduły'],
+              ['Widoki: 9 makiet, 4 motywy, 4 hooki'],
               [''],
               ['Sklonuj repo, przeczytaj CLAUDE.md i zacznij.'],
             ]} />
@@ -300,11 +307,11 @@ https://atomic-ui-sandy.vercel.app/projects/lyra\``
             <div className="border-t pt-6 space-y-3">
               <h3 className="text-sm font-semibold">Stan projektu Lyra w Atomic UI</h3>
               {[
-                  { label: 'Makiety',         value: '9 widoków',                      done: true  },
-                  { label: 'Design System',   value: '4 motywy (Chalk/Verso/Zen/Paper)', done: true  },
-                  { label: 'Moduły',          value: '4 hooki, 12 typów TS',            done: true  },
-                  { label: 'Implementacja',   value: 'Claude Code → repo Lyra',          done: false },
-                ].map(item => (
+                { label: 'Makiety',       value: '9 widoków',                        done: true  },
+                { label: 'Design System', value: '4 motywy (Chalk/Verso/Zen/Paper)', done: true  },
+                { label: 'Moduły',        value: '4 hooki, 12 typów TS',             done: true  },
+                { label: 'Implementacja', value: 'Claude Code → repo Lyra',           done: false },
+              ].map(item => (
                 <div key={item.label} className="flex items-center justify-between py-2 border-b last:border-0">
                   <span className="text-sm text-foreground/80">{item.label}</span>
                   <div className="flex items-center gap-2">
@@ -319,27 +326,26 @@ https://atomic-ui-sandy.vercel.app/projects/lyra\``
           {active === 'session' && (<>
             <div>
               <h1 className="text-xl font-semibold">Prompt startowy – Lyra</h1>
-              <p className="text-sm text-muted-foreground mt-1">Wklej to na początku każdej sesji w projekcie Claude "Lyra". Uzupełnij podświetlone pola.</p>
+              <p className="text-sm text-muted-foreground mt-1">Wklej to na początku każdej sesji w Claude Code. Uzupełnij podświetlone pola.</p>
             </div>
             <EditableCode values={values} onChange={onChange} lines={[
-                  ['# Lyra – sesja robocza'],
-                  [''],
-                  ['## Repo'],
-                  ['GitHub: ', { key: 'lyra_repo', placeholder: 'https://github.com/OWNER/lyra.git' }],
-                  ['Token: ',  { key: 'lyra_token', placeholder: 'ghp_...' }],
-                  ['Vercel: ', { key: 'lyra_vercel', placeholder: 'https://lyra.vercel.app' }],
-                  [''],
-                  ['## Backend'],
-                  ['Supabase: ', { key: 'lyra_supabase', placeholder: 'https://xyz.supabase.co' }],
-                  ['Supabase key: ', { key: 'lyra_supabase_key', placeholder: 'eyJ...' }],
-                  [''],
-                  ['## Design System'],
-                  ['Wariant: ', { key: 'lyra_ds', placeholder: 'Chalk / Verso / Zen / Paper' }],
-                  [''],
-                  ['## Moduły z Atomic UI'],
-                  ['Hooki: useDashboard, useArticleEditor, useBookEditor, useAIConversation'],
-                  [''],
-                  ['Sklonuj repo, przeczytaj CLAUDE.md i zacznij.'],
+              ['# Lyra – sesja robocza'],
+              [''],
+              ['## Repo'],
+              ['GitHub: ', { key: 'lyra_repo', placeholder: 'https://github.com/OWNER/lyra' }],
+              ['Token: ',  { key: 'lyra_token', placeholder: 'ghp_...' }],
+              ['Vercel: ', { key: 'lyra_vercel', placeholder: 'https://lyra.vercel.app' }],
+              [''],
+              ['## Backend'],
+              ['Railway PostgreSQL: ', { key: 'lyra_railway', placeholder: 'postgresql://user:pass@host:5432/lyra' }],
+              [''],
+              ['## Design System'],
+              ['Wariant: ', { key: 'lyra_ds', placeholder: 'Chalk / Verso / Zen / Paper' }],
+              [''],
+              ['## Stack'],
+              ['Next.js 14 + Railway PostgreSQL + Auth.js + Drizzle ORM + Vercel'],
+              [''],
+              ['Sklonuj repo, przeczytaj CLAUDE.md i zacznij.'],
             ]} />
             <CopyButton label="Kopiuj prompt startowy Lyra" getText={sessionPrompt} />
           </>)}
@@ -347,7 +353,7 @@ https://atomic-ui-sandy.vercel.app/projects/lyra\``
           {active === 'claude' && (<>
             <div>
               <h1 className="text-xl font-semibold">CLAUDE.md – Lyra</h1>
-              <p className="text-sm text-muted-foreground mt-1">Ten plik trafia do korzenia repo aplikacji Lyra. Claude Code czyta go automatycznie.</p>
+              <p className="text-sm text-muted-foreground mt-1">Ten plik trafia do korzenia repo. Claude Code czyta go automatycznie przy każdej sesji.</p>
             </div>
             <div className="bg-muted/50 border rounded-lg overflow-hidden">
               <pre className="px-4 py-3 text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre">{claudeMd()}</pre>
