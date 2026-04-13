@@ -74,7 +74,7 @@ export default function CreatorScreen() {
     <div className="flex h-full bg-background">
       {/* ── Lewa kolumna – formularz ── */}
       <ScrollArea className="flex-1 border-r">
-        <div className="px-6 py-5 space-y-6 max-w-2xl">
+        <div className="px-6 py-5 space-y-6 max-w-2xl mx-auto">
 
           {/* Klient */}
           <div className="flex items-center gap-3 pb-4 border-b">

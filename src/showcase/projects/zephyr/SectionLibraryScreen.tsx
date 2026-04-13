@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { EmptyState } from '@/components/blocks/empty-state'
+import { PageHeader } from '@/components/blocks/page-header'
 import { FilterBar } from '@/components/blocks/filter-bar'
 import { Plus, Eye, Code2, Copy, MoreHorizontal, Trash2, Globe, User, Layers } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -140,16 +141,18 @@ export default function SectionLibraryScreen() {
 
   return (
     <div className="flex flex-col h-full bg-background">
-      <div className="h-14 border-b flex items-center px-6 gap-4 shrink-0">
-        <h1 className="text-base font-semibold flex-1">Biblioteka sekcji</h1>
-        <Button size="sm" className="h-8 gap-1.5 text-xs">
-          <Plus className="w-3.5 h-3.5" />Nowa sekcja
-        </Button>
-      </div>
+      <PageHeader
+        title="Biblioteka sekcji"
+        actions={
+          <Button size="sm" className="h-8 gap-1.5 text-xs">
+            <Plus className="w-3.5 h-3.5" />Nowa sekcja
+          </Button>
+        }
+      />
 
       {/* Filtry */}
       <div className="border-b shrink-0">
-        <div className="max-w-5xl mx-auto px-6 py-3">
+        <div className="px-6 py-3">
         <FilterBar
           placeholder="Szukaj sekcji..."
           onSearch={setSearch}
@@ -161,7 +164,7 @@ export default function SectionLibraryScreen() {
       {/* ── Tabs z ui/ ── */}
       <Tabs defaultValue="global" className="flex-1 flex flex-col overflow-hidden">
         <div className="border-b shrink-0">
-        <div className="max-w-5xl mx-auto">
+        <div className="">
         <TabsList className="h-10 bg-transparent p-0 gap-0 rounded-none px-6 justify-start">
           <TabsTrigger value="global"
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-4 h-10 text-xs gap-1.5">
@@ -178,7 +181,7 @@ export default function SectionLibraryScreen() {
         {(['global', 'client'] as SectionScope[]).map(scope => (
           <TabsContent key={scope} value={scope} className="flex-1 overflow-hidden mt-0">
             <ScrollArea className="h-full">
-              <div className="p-6 max-w-5xl mx-auto">
+              <div className="p-6">
                 {filterSections(scope).length === 0 ? (
                   /* ── EmptyState z blocks/ ── */
                   <EmptyState icon={Layers} title="Brak sekcji"

@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { StatCard } from '@/components/blocks/stat-card'
+import { PageHeader } from '@/components/blocks/page-header'
 import { EmptyState } from '@/components/blocks/empty-state'
 import { FilterBar } from '@/components/blocks/filter-bar'
 import { Plus, Settings, Clock, Calendar, Zap, MoreHorizontal, Mail, Pause, Play, Users } from 'lucide-react'
@@ -136,16 +137,17 @@ export default function ClientsScreen() {
   return (
     <div className="flex flex-col h-full bg-background">
 
-      {/* Header h-14 */}
-      <div className="h-14 border-b flex items-center px-6 gap-4 shrink-0">
-        <h1 className="text-base font-semibold flex-1">Klienci</h1>
-        <Button size="sm" className="h-8 gap-1.5 text-xs">
-          <Plus className="w-3.5 h-3.5" />Nowy klient
-        </Button>
-      </div>
+      <PageHeader
+        title="Klienci"
+        actions={
+          <Button size="sm" className="h-8 gap-1.5 text-xs">
+            <Plus className="w-3.5 h-3.5" />Nowy klient
+          </Button>
+        }
+      />
 
       <ScrollArea className="flex-1">
-        <div className="max-w-5xl mx-auto px-6 py-6 space-y-6">
+        <div className="px-6 py-6 space-y-6">
 
           {/* ── StatCard z blocks/ ── */}
           <div className="grid grid-cols-4 gap-3">

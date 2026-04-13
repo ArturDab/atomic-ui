@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { StatCard } from '@/components/blocks/stat-card'
+import { PageHeader } from '@/components/blocks/page-header'
 import { FilterBar } from '@/components/blocks/filter-bar'
 import { EmptyState } from '@/components/blocks/empty-state'
 import { Eye, Copy, Download, MoreHorizontal, Trash2, Zap, Mail, Clock, Code2 } from 'lucide-react'
@@ -45,15 +46,17 @@ export default function HistoryScreen() {
 
   return (
     <div className="flex flex-col h-full bg-background">
-      <div className="h-14 border-b flex items-center px-6 gap-4 shrink-0">
-        <h1 className="text-base font-semibold flex-1">Historia newsletterów</h1>
-        <Button size="sm" className="h-8 gap-1.5 text-xs">
-          <Zap className="w-3.5 h-3.5" />Nowy newsletter
-        </Button>
-      </div>
+      <PageHeader
+        title="Historia newsletterów"
+        actions={
+          <Button size="sm" className="h-8 gap-1.5 text-xs">
+            <Zap className="w-3.5 h-3.5" />Nowy newsletter
+          </Button>
+        }
+      />
 
       <ScrollArea className="flex-1">
-        <div className="max-w-5xl mx-auto px-6 py-6 space-y-6">
+        <div className="px-6 py-6 space-y-6">
 
           {/* ── StatCard z blocks/ ── */}
           <div className="grid grid-cols-4 gap-3">
