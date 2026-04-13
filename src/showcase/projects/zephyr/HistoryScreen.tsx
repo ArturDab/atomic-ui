@@ -4,7 +4,6 @@
  */
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { StatCard } from '@/components/blocks/stat-card'
@@ -28,9 +27,11 @@ const NEWSLETTERS: Newsletter[] = [
   { id: '4', subject: 'Nowa karma bezzbożowa – premiera',             preheader: 'Odkryj nową linię karm dla wrażliwych psów',       createdAt: '3 lut, 16:45',   status: 'draft',     sections: 3, tokens: 0,    campaign: ''               },
 ]
 
-const STATUS_LABEL: Record<NLStatus, string> = { draft: 'Szkic', generated: 'Wygenerowany', exported: 'Wyeksportowany' }
-const STATUS_VARIANT: Record<NLStatus, 'secondary' | 'default' | 'outline'> = {
-  draft: 'secondary', generated: 'default', exported: 'outline'
+// Hierarchia semantyczna: exported > generated > draft
+const STATUS_CONFIG: Record<NLStatus, { label: string; className: string }> = {
+  exported:  { label: 'Wyeksportowany', className: 'bg-foreground text-background border-transparent' },
+  generated: { label: 'Wygenerowany',   className: 'bg-background text-foreground border-border' },
+  draft:     { label: 'Szkic',          className: 'bg-muted/60 text-foreground/50 border-transparent' },
 }
 
 export default function HistoryScreen() {
@@ -78,9 +79,9 @@ export default function HistoryScreen() {
             <div key={nl.id} className="bg-card border rounded-xl px-5 py-4 flex items-start gap-4 hover:shadow-sm transition-shadow group">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <Badge variant={STATUS_VARIANT[nl.status]} className="text-xs shrink-0">
-                    {STATUS_LABEL[nl.status]}
-                  </Badge>
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold border ${STATUS_CONFIG[nl.status].className}`}>
+                    {STATUS_CONFIG[nl.status].label}
+                  </span>
                   {nl.campaign && (
                     <span className="text-[10px] text-muted-foreground font-mono bg-muted px-1.5 py-0.5 rounded">
                       {nl.campaign}

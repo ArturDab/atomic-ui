@@ -34,13 +34,23 @@ const CLIENT_SECTIONS: ClientSection[] = [
   { id: '5', name: 'Stopka standardowa',      type: 'footer',  source: 'global' },
 ]
 
-const TYPE_COLOR: Record<SectionType, string> = {
-  header:  'bg-muted text-foreground/60',
-  hero:    'bg-muted text-foreground/70',
-  cta:     'bg-foreground/[0.07] text-foreground/75',
-  product: 'bg-foreground/[0.07] text-foreground/75',
-  content: 'bg-muted text-foreground/70',
-  footer:  'bg-muted text-foreground/60',
+const TYPE_META: Record<SectionType, { label: string; short: string }> = {
+  header:  { label: 'Nagłówek', short: 'H' },
+  hero:    { label: 'Hero',     short: '◈' },
+  cta:     { label: 'CTA',      short: '→' },
+  product: { label: 'Produkt',  short: '☰' },
+  content: { label: 'Treść',    short: 'T' },
+  footer:  { label: 'Stopka',   short: 'F' },
+}
+
+function SectionTypeBadge({ type }: { type: SectionType }) {
+  const meta = TYPE_META[type]
+  return (
+    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-border bg-card text-[10px] font-mono text-foreground/65 shrink-0 select-none">
+      <span className="text-foreground/35 text-[9px] leading-none">{meta.short}</span>
+      <span>{meta.label}</span>
+    </span>
+  )
 }
 
 function ColorSwatch({ color, label }: { color: string; label: string }) {
@@ -56,6 +66,7 @@ function ColorSwatch({ color, label }: { color: string; label: string }) {
 }
 
 export default function ClientConfigScreen() {
+  const [primaryColor, setPrimaryColor] = React.useState('#0ea5e9')
   const [aiPrompt, setAiPrompt] = React.useState('Piszesz newslettery dla sklepu zoologicznego Animails. Ton: ciepły, przyjazny, skierowany do właścicieli psów i kotów. Unikaj formalnego języka. Zawsze podkreślaj troskę o zwierzęta.')
   const [aiGuidelines, setAiGuidelines] = React.useState('- Max 3 sekcje produktowe\n- Zawsze dodaj sekcję z darmową dostawą\n- CTA: krótkie, max 5 słów\n- Nie używaj słowa "promocja" – używaj "oferta specjalna"')
 
@@ -95,7 +106,17 @@ export default function ClientConfigScreen() {
               <div>
                 <p className="text-sm font-semibold mb-4">Kolory marki</p>
                 <div className="grid grid-cols-2 gap-4">
-                  <ColorSwatch color="#0ea5e9" label="Kolor główny" />
+                  {/* Kolor główny – reaktywny z podglądem */}
+                  <div className="space-y-1.5">
+                    <Label className="text-xs">Kolor główny</Label>
+                    <div className="flex items-center gap-2">
+                      <input type="color" value={primaryColor}
+                        onChange={e => setPrimaryColor(e.target.value)}
+                        className="w-8 h-8 rounded-lg border cursor-pointer p-0.5 bg-transparent" />
+                      <Input value={primaryColor} onChange={e => setPrimaryColor(e.target.value)}
+                        className="h-8 text-xs font-mono" />
+                    </div>
+                  </div>
                   <ColorSwatch color="#0284c7" label="Kolor akcentu" />
                   <ColorSwatch color="#f8fafc" label="Tło emaila" />
                   <ColorSwatch color="#0f172a" label="Kolor tekstu" />
@@ -127,9 +148,9 @@ export default function ClientConfigScreen() {
               <div>
                 <p className="text-sm font-semibold mb-3">Podgląd nagłówka emaila</p>
                 <div className="border rounded-lg overflow-hidden">
-                  <div style={{ backgroundColor: 'hsl(var(--foreground))', padding: '12px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ backgroundColor: primaryColor, padding: '12px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ color: '#fff', fontWeight: 700, fontFamily: 'Inter, sans-serif' }}>Animails</span>
-                    <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: 12 }}>Sklep dla pupili</span>
+                    <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12 }}>Sklep dla pupili</span>
                   </div>
                 </div>
               </div>
@@ -199,9 +220,7 @@ export default function ClientConfigScreen() {
               {CLIENT_SECTIONS.map(s => (
                 <div key={s.id} className="bg-card border rounded-xl px-4 py-3 flex items-center gap-3">
                   <GripVertical className="w-4 h-4 text-muted-foreground/40 cursor-grab shrink-0" />
-                  <span className={cn('text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0', TYPE_COLOR[s.type])}>
-                    {s.type}
-                  </span>
+                  <SectionTypeBadge type={s.type} />
                   <p className="text-xs font-medium flex-1">{s.name}</p>
                   <Badge variant={s.source === 'global' ? 'secondary' : 'outline'} className="text-[10px] shrink-0">
                     {s.source === 'global' ? 'Globalna' : 'Własna'}

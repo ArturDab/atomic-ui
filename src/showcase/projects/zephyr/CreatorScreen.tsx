@@ -19,13 +19,23 @@ interface SelectedSection { id: string; name: string; type: SectionType }
 interface UploadedImage { id: string; name: string; cfUrl: string }
 interface UrlEntry { id: string; label: string; url: string }
 
-const TYPE_COLOR: Record<SectionType, string> = {
-  header:  'bg-muted text-foreground/60',
-  hero:    'bg-muted text-foreground/70',
-  cta:     'bg-foreground/[0.07] text-foreground/75',
-  product: 'bg-foreground/[0.07] text-foreground/75',
-  content: 'bg-muted text-foreground/70',
-  footer:  'bg-muted text-foreground/60',
+const TYPE_META: Record<SectionType, { label: string; short: string }> = {
+  header:  { label: 'Nagłówek', short: 'H' },
+  hero:    { label: 'Hero',     short: '◈' },
+  cta:     { label: 'CTA',      short: '→' },
+  product: { label: 'Produkt',  short: '☰' },
+  content: { label: 'Treść',    short: 'T' },
+  footer:  { label: 'Stopka',   short: 'F' },
+}
+
+function SectionTypeBadge({ type }: { type: SectionType }) {
+  const meta = TYPE_META[type]
+  return (
+    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-border bg-card text-[10px] font-mono text-foreground/65 shrink-0 select-none">
+      <span className="text-foreground/35 text-[9px] leading-none">{meta.short}</span>
+      <span>{meta.label}</span>
+    </span>
+  )
 }
 
 const AVAILABLE_SECTIONS: SelectedSection[] = [
@@ -117,9 +127,7 @@ export default function CreatorScreen() {
                 {AVAILABLE_SECTIONS.filter(s => !sections.find(sel => sel.id === s.id)).map(s => (
                   <button key={s.id} onClick={() => setSections(prev => [...prev, s])}
                     className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-muted transition-colors text-left">
-                    <span className={cn('text-[10px] font-semibold px-1.5 py-0.5 rounded-full', TYPE_COLOR[s.type])}>
-                      {s.type}
-                    </span>
+                    <SectionTypeBadge type={s.type} />
                     <span className="text-xs">{s.name}</span>
                   </button>
                 ))}
@@ -131,9 +139,7 @@ export default function CreatorScreen() {
                 <div key={s.id} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-2.5">
                   <GripVertical className="w-4 h-4 text-muted-foreground/40 cursor-grab shrink-0" />
                   <span className="text-xs text-muted-foreground w-4 shrink-0">{i + 1}.</span>
-                  <span className={cn('text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0', TYPE_COLOR[s.type])}>
-                    {s.type}
-                  </span>
+                  <SectionTypeBadge type={s.type} />
                   <span className="text-xs flex-1">{s.name}</span>
                   <button onClick={() => removeSection(s.id)}
                     className="text-muted-foreground hover:text-destructive transition-colors">

@@ -19,53 +19,86 @@ type SectionScope = 'global' | 'client'
 interface Section {
   id: string; name: string; type: SectionType
   description: string; scope: SectionScope; usedBy?: number
-  previewBg: string; previewAccent: string
 }
 
-const TYPE_COLOR: Record<SectionType, string> = {
-  header:  'bg-muted text-foreground/60',
-  hero:    'bg-muted text-foreground/70',
-  cta:     'bg-foreground/[0.07] text-foreground/75',
-  product: 'bg-foreground/[0.07] text-foreground/75',
-  content: 'bg-muted text-foreground/70',
-  divider: 'bg-muted/60 text-foreground/50',
-  footer:  'bg-muted text-foreground/60',
+const TYPE_META: Record<SectionType, { label: string; short: string }> = {
+  header:  { label: 'Nagłówek', short: 'H' },
+  hero:    { label: 'Hero',     short: '◈' },
+  cta:     { label: 'CTA',      short: '→' },
+  product: { label: 'Produkt',  short: '☰' },
+  content: { label: 'Treść',    short: 'T' },
+  divider: { label: 'Separator',short: '─' },
+  footer:  { label: 'Stopka',   short: 'F' },
 }
-const TYPE_LABEL: Record<SectionType, string> = {
-  header: 'Nagłówek', hero: 'Hero', cta: 'CTA', product: 'Produkt',
-  content: 'Treść', divider: 'Separator', footer: 'Stopka',
+
+function SectionTypeBadge({ type }: { type: SectionType }) {
+  const meta = TYPE_META[type]
+  return (
+    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-border bg-card text-[10px] font-mono text-foreground/65 shrink-0 select-none">
+      <span className="text-foreground/35 text-[9px] leading-none">{meta.short}</span>
+      <span>{meta.label}</span>
+    </span>
+  )
 }
 
 const SECTIONS: Section[] = [
-  { id: '1', name: 'Nagłówek standardowy',  type: 'header',  description: 'Logo + nawigacja + przycisk CTA', scope: 'global', usedBy: 8,  previewBg: '#f8fafc', previewAccent: '#0ea5e9' },
-  { id: '2', name: 'Hero full-width',        type: 'hero',    description: 'Duży baner z tłem i CTA',        scope: 'global', usedBy: 5,  previewBg: '#eff6ff', previewAccent: '#3b82f6' },
-  { id: '3', name: 'Sekcja CTA prosta',      type: 'cta',     description: 'Tekst + przycisk wyśrodkowany',  scope: 'global', usedBy: 12, previewBg: '#fff7ed', previewAccent: '#f59e0b' },
-  { id: '4', name: 'Stopka standardowa',     type: 'footer',  description: 'Dane firmy + linki + dane kontaktowe', scope: 'global', usedBy: 9, previewBg: '#f8fafc', previewAccent: '#64748b' },
-  { id: '5', name: 'Nagłówek Animails',      type: 'header',  description: 'Logo Animails + tagline',        scope: 'client', previewBg: '#f0f9ff', previewAccent: '#0ea5e9' },
-  { id: '6', name: 'Produkty 3 kolumny',     type: 'product', description: 'Siatka 3 produktów z cenami',   scope: 'client', previewBg: '#f0fdf4', previewAccent: '#10b981' },
+  { id: '1', name: 'Nagłówek standardowy',  type: 'header',  description: 'Logo + nawigacja + przycisk CTA', scope: 'global', usedBy: 8 },
+  { id: '2', name: 'Hero full-width',        type: 'hero',    description: 'Duży baner z tłem i CTA',        scope: 'global', usedBy: 5 },
+  { id: '3', name: 'Sekcja CTA prosta',      type: 'cta',     description: 'Tekst + przycisk wyśrodkowany',  scope: 'global', usedBy: 12 },
+  { id: '4', name: 'Stopka standardowa',     type: 'footer',  description: 'Dane firmy + linki + dane kontaktowe', scope: 'global', usedBy: 9 },
+  { id: '5', name: 'Nagłówek Animails',      type: 'header',  description: 'Logo Animails + tagline',        scope: 'client' },
+  { id: '6', name: 'Produkty 3 kolumny',     type: 'product', description: 'Siatka 3 produktów z cenami',   scope: 'client' },
 ]
 
 function SectionCard({ section }: { section: Section }) {
   return (
     <div className="bg-card border rounded-xl overflow-hidden hover:shadow-sm transition-shadow group">
-      {/* Mini preview */}
-      <div className="h-20 border-b relative overflow-hidden flex items-center justify-center"
-        style={{ backgroundColor: section.previewBg }}>
-        <div className="w-3/4 space-y-1.5 px-3">
-          <div className="h-2 rounded-full w-1/2" style={{ backgroundColor: section.previewAccent + '80' }} />
-          <div className="h-1.5 rounded-full w-full bg-black/10" />
-          <div className="h-1.5 rounded-full w-4/5 bg-black/10" />
+      {/* Mini preview – strukturalny wireframe bez hardkodowanych kolorów */}
+      <div className="h-20 border-b bg-muted/30 flex items-center justify-center px-4">
+        <div className="w-full space-y-1.5">
+          {section.type === 'header' && (
+            <div className="flex items-center justify-between">
+              <div className="h-2 rounded w-10 bg-foreground/20" />
+              <div className="h-2 rounded w-8 bg-foreground/10" />
+            </div>
+          )}
+          {section.type === 'hero' && (
+            <div className="space-y-1">
+              <div className="h-2.5 rounded w-3/4 bg-foreground/25" />
+              <div className="h-1.5 rounded w-full bg-foreground/10" />
+              <div className="h-4 rounded w-16 bg-foreground/15 mt-1" />
+            </div>
+          )}
           {section.type === 'cta' && (
-            <div className="h-4 rounded w-16 mt-1" style={{ backgroundColor: section.previewAccent }} />
+            <div className="flex flex-col items-center gap-1.5">
+              <div className="h-2 rounded w-1/2 bg-foreground/20" />
+              <div className="h-4 rounded w-20 bg-foreground/25" />
+            </div>
+          )}
+          {section.type === 'product' && (
+            <div className="grid grid-cols-3 gap-1">
+              {[0,1,2].map(i => <div key={i} className="space-y-1"><div className="h-6 rounded bg-foreground/10" /><div className="h-1.5 rounded bg-foreground/15 w-2/3" /></div>)}
+            </div>
+          )}
+          {(section.type === 'content' || section.type === 'divider') && (
+            <div className="space-y-1">
+              <div className="h-1.5 rounded w-full bg-foreground/10" />
+              <div className="h-1.5 rounded w-4/5 bg-foreground/10" />
+              <div className="h-1.5 rounded w-3/5 bg-foreground/10" />
+            </div>
+          )}
+          {section.type === 'footer' && (
+            <div className="space-y-1.5">
+              <div className="h-1.5 rounded w-1/3 bg-foreground/20" />
+              <div className="flex gap-2">{[0,1,2].map(i => <div key={i} className="h-1 rounded w-8 bg-foreground/10" />)}</div>
+            </div>
           )}
         </div>
       </div>
       <div className="px-4 py-3">
         <div className="flex items-start justify-between mb-1">
           <div className="flex items-center gap-1.5 min-w-0">
-            <span className={cn('text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0', TYPE_COLOR[section.type])}>
-              {TYPE_LABEL[section.type]}
-            </span>
+            <SectionTypeBadge type={section.type} />
             {section.scope === 'global'
               ? <Globe className="w-3 h-3 text-muted-foreground shrink-0" />
               : <User className="w-3 h-3 text-muted-foreground shrink-0" />}
@@ -119,7 +152,7 @@ export default function SectionLibraryScreen() {
         <FilterBar
           placeholder="Szukaj sekcji..."
           onSearch={setSearch}
-          filters={[{ key: 'type', label: 'Typ', options: Object.entries(TYPE_LABEL).map(([v, l]) => ({ value: v, label: l })) }]}
+          filters={[{ key: 'type', label: 'Typ', options: Object.entries(TYPE_META).map(([v, m]) => ({ value: v, label: (m as any).label })) }]}
         />
       </div>
 

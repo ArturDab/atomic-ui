@@ -99,8 +99,8 @@ export default function ClientsScreen() {
       <div className="px-6 py-4 grid grid-cols-4 gap-3 border-b shrink-0">
         <StatCard label="Klientów" value={CLIENTS.length} />
         <StatCard label="Newsletterów łącznie" value={CLIENTS.reduce((s, c) => s + c.newsletterCount, 0)} />
-        <StatCard label="Aktywnych" value={active} trend={active - 1} trendLabel="vs poprzedni miesiąc" />
-        <StatCard label="Ten miesiąc" value={8} trendLabel="wygenerowanych" />
+        <StatCard label="Aktywnych" value={active} />
+        <StatCard label="Ten miesiąc" value={8} />
       </div>
 
       <div className="px-6 py-3 border-b shrink-0">
