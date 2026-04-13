@@ -3,6 +3,7 @@
  * Siatka miniatur wszystkich ekranów projektu.
  */
 import { Link, useParams } from 'react-router-dom'
+// NOTE: DS and Docs screens not shown in grid (config tabs, not prototypes)
 
 const SCREENS = [
   { path: 'zp-clients',        label: 'Klienci',              description: 'Lista klientów z podglądem aktywności' },
@@ -11,6 +12,7 @@ const SCREENS = [
   { path: 'zp-creator',        label: 'Kreator',              description: 'Brief, sekcje, grafiki, URL-e + UTM' },
   { path: 'zp-artifact',       label: 'Artefakt',             description: 'Podgląd desktop/mobile + AI chat + HTML' },
   { path: 'zp-history',        label: 'Historia',             description: 'Archiwum wygenerowanych newsletterów' },
+  { path: 'zp-docs',           label: 'Docs & Prompty',       description: 'Instrukcja wdrożenia + prompt startowy Claude Code' },
 ]
 
 export default function AllScreens() {
