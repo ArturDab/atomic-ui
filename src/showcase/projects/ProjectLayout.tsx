@@ -27,6 +27,7 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
     nav: [
       { path: 'zp-all', label: 'Wszystkie' },
       { path: 'zp-clients', label: 'Klienci' },
+      { path: 'zp-design-system', label: 'Design System' },
       {
         label: 'Konfiguracja',
         defaultPath: 'zp-client-config',

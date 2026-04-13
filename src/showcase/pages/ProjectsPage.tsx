@@ -30,10 +30,10 @@ const PROJECTS = [
     iconColor: 'text-sky-500',
     phases: {
       mockups:    { done: true,  count: 6, label: '6 widoków' },
-      design:     { done: false, count: 0, label: 'W planie' },
+      design:     { done: true,  count: 1, label: '1 ekran' },
       functional: { done: false, count: 0, label: 'W planie' },
     },
-    activePhase: 'mockups' as Phase,
+    activePhase: 'design' as Phase,
   },
   {
     slug: 'lyra',
