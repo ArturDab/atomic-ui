@@ -138,7 +138,7 @@ export default function ClientsScreen() {
 
       {/* Header h-14 */}
       <div className="h-14 border-b flex items-center px-6 gap-4 shrink-0">
-        <h1 className="text-sm font-semibold flex-1">Klienci</h1>
+        <h1 className="text-base font-semibold flex-1">Klienci</h1>
         <Button size="sm" className="h-8 gap-1.5 text-xs">
           <Plus className="w-3.5 h-3.5" />Nowy klient
         </Button>

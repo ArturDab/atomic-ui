@@ -75,7 +75,7 @@ export default function ClientConfigScreen() {
       <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
         <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center text-background text-xs font-bold shrink-0">AN</div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold leading-none">Animails</p>
+          <p className="text-base font-semibold leading-none">Animails</p>
           <p className="text-[10px] text-muted-foreground mt-0.5">Konfiguracja klienta</p>
         </div>
         <Button size="sm" className="h-8 gap-1.5 text-xs">
@@ -195,7 +195,7 @@ export default function ClientConfigScreen() {
               ].map((preset, i) => (
                 <div key={i} className="bg-card border rounded-xl px-4 py-3">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-semibold">{preset.name}</p>
+                    <p className="text-sm font-semibold">{preset.name}</p>
                     <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-destructive">
                       <Trash2 className="w-3 h-3" />
                     </Button>
@@ -221,7 +221,7 @@ export default function ClientConfigScreen() {
                 <div key={s.id} className="bg-card border rounded-xl px-4 py-3 flex items-center gap-3">
                   <GripVertical className="w-4 h-4 text-muted-foreground/40 cursor-grab shrink-0" />
                   <SectionTypeBadge type={s.type} />
-                  <p className="text-xs font-medium flex-1">{s.name}</p>
+                  <p className="text-sm font-medium flex-1">{s.name}</p>
                   <Badge variant={s.source === 'global' ? 'secondary' : 'outline'} className="text-[10px] shrink-0">
                     {s.source === 'global' ? 'Globalna' : 'Własna'}
                   </Badge>

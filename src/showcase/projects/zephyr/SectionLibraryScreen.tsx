@@ -118,10 +118,10 @@ function SectionCard({ section }: { section: Section }) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <p className="text-xs font-medium truncate">{section.name}</p>
-        <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{section.description}</p>
+        <p className="text-sm font-medium truncate">{section.name}</p>
+        <p className="text-xs text-muted-foreground mt-0.5 truncate">{section.description}</p>
         {section.usedBy !== undefined && (
-          <p className="text-[10px] text-muted-foreground/60 mt-1.5">używana przez {section.usedBy} klientów</p>
+          <p className="text-xs text-muted-foreground/60 mt-1.5">używana przez {section.usedBy} klientów</p>
         )}
       </div>
     </div>
@@ -141,24 +141,28 @@ export default function SectionLibraryScreen() {
   return (
     <div className="flex flex-col h-full bg-background">
       <div className="h-14 border-b flex items-center px-6 gap-4 shrink-0">
-        <h1 className="text-sm font-semibold flex-1">Biblioteka sekcji</h1>
+        <h1 className="text-base font-semibold flex-1">Biblioteka sekcji</h1>
         <Button size="sm" className="h-8 gap-1.5 text-xs">
           <Plus className="w-3.5 h-3.5" />Nowa sekcja
         </Button>
       </div>
 
       {/* Filtry */}
-      <div className="px-6 py-3 border-b shrink-0">
+      <div className="border-b shrink-0">
+        <div className="max-w-5xl mx-auto px-6 py-3">
         <FilterBar
           placeholder="Szukaj sekcji..."
           onSearch={setSearch}
           filters={[{ key: 'type', label: 'Typ', options: Object.entries(TYPE_META).map(([v, m]) => ({ value: v, label: (m as any).label })) }]}
         />
+        </div>
       </div>
 
       {/* ── Tabs z ui/ ── */}
       <Tabs defaultValue="global" className="flex-1 flex flex-col overflow-hidden">
-        <TabsList className="h-10 bg-transparent p-0 gap-0 border-b rounded-none px-6 justify-start shrink-0">
+        <div className="border-b shrink-0">
+        <div className="max-w-5xl mx-auto">
+        <TabsList className="h-10 bg-transparent p-0 gap-0 rounded-none px-6 justify-start">
           <TabsTrigger value="global"
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-4 h-10 text-xs gap-1.5">
             <Globe className="w-3.5 h-3.5" />Globalne
@@ -168,6 +172,8 @@ export default function SectionLibraryScreen() {
             <User className="w-3.5 h-3.5" />Per klient (Animails)
           </TabsTrigger>
         </TabsList>
+        </div>
+        </div>
 
         {(['global', 'client'] as SectionScope[]).map(scope => (
           <TabsContent key={scope} value={scope} className="flex-1 overflow-hidden mt-0">

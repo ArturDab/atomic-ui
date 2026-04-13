@@ -128,7 +128,7 @@ export default function CreatorScreen() {
                   <button key={s.id} onClick={() => setSections(prev => [...prev, s])}
                     className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-muted transition-colors text-left">
                     <SectionTypeBadge type={s.type} />
-                    <span className="text-xs">{s.name}</span>
+                    <span className="text-sm">{s.name}</span>
                   </button>
                 ))}
               </div>
@@ -140,7 +140,7 @@ export default function CreatorScreen() {
                   <GripVertical className="w-4 h-4 text-muted-foreground/40 cursor-grab shrink-0" />
                   <span className="text-xs text-muted-foreground w-4 shrink-0">{i + 1}.</span>
                   <SectionTypeBadge type={s.type} />
-                  <span className="text-xs flex-1">{s.name}</span>
+                  <span className="text-sm flex-1">{s.name}</span>
                   <button onClick={() => removeSection(s.id)}
                     className="text-muted-foreground hover:text-destructive transition-colors">
                     <X className="w-3.5 h-3.5" />

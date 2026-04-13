@@ -46,31 +46,32 @@ export default function HistoryScreen() {
   return (
     <div className="flex flex-col h-full bg-background">
       <div className="h-14 border-b flex items-center px-6 gap-4 shrink-0">
-        <h1 className="text-sm font-semibold flex-1">Historia newsletterów</h1>
+        <h1 className="text-base font-semibold flex-1">Historia newsletterów</h1>
         <Button size="sm" className="h-8 gap-1.5 text-xs">
           <Zap className="w-3.5 h-3.5" />Nowy newsletter
         </Button>
       </div>
 
-      {/* ── StatCard z blocks/ ── */}
-      <div className="px-6 py-4 grid grid-cols-4 gap-3 border-b shrink-0">
-        <StatCard label="Łącznie" value={NEWSLETTERS.length} />
-        <StatCard label="Wyeksportowanych" value={exported} />
-        <StatCard label="Tokenów zużytych" value={totalTokens.toLocaleString('pl')} />
-        <StatCard label="Średnio sekcji" value={(NEWSLETTERS.reduce((s, n) => s + n.sections, 0) / NEWSLETTERS.length).toFixed(1)} />
-      </div>
-
-      <div className="px-6 py-3 border-b shrink-0">
-        <FilterBar
-          placeholder="Szukaj newslettera..."
-          onSearch={setSearch}
-          filters={[{ key: 'status', label: 'Status', options: [{ value: 'draft', label: 'Szkic' }, { value: 'generated', label: 'Wygenerowany' }, { value: 'exported', label: 'Wyeksportowany' }] }]}
-        />
-      </div>
-
       <ScrollArea className="flex-1">
-        <div className="px-6 py-4">
-          <div className="max-w-5xl mx-auto space-y-2">
+        <div className="max-w-5xl mx-auto px-6 py-6 space-y-6">
+
+          {/* ── StatCard z blocks/ ── */}
+          <div className="grid grid-cols-4 gap-3">
+            <StatCard label="Łącznie" value={NEWSLETTERS.length} />
+            <StatCard label="Wyeksportowanych" value={exported} />
+            <StatCard label="Tokenów zużytych" value={totalTokens.toLocaleString('pl')} />
+            <StatCard label="Średnio sekcji" value={(NEWSLETTERS.reduce((s, n) => s + n.sections, 0) / NEWSLETTERS.length).toFixed(1)} />
+          </div>
+
+          {/* ── FilterBar z blocks/ ── */}
+          <FilterBar
+            placeholder="Szukaj newslettera..."
+            onSearch={setSearch}
+            filters={[{ key: 'status', label: 'Status', options: [{ value: 'draft', label: 'Szkic' }, { value: 'generated', label: 'Wygenerowany' }, { value: 'exported', label: 'Wyeksportowany' }] }]}
+          />
+
+          {/* ── Lista ── */}
+          <div className="space-y-2">
           {filtered.length === 0 ? (
             /* ── EmptyState z blocks/ ── */
             <EmptyState icon={Mail} title="Brak newsletterów"
@@ -88,9 +89,9 @@ export default function HistoryScreen() {
                     </span>
                   )}
                 </div>
-                <p className="font-medium text-sm truncate">{nl.subject}</p>
-                <p className="text-xs text-muted-foreground truncate mt-0.5">{nl.preheader}</p>
-                <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                <p className="font-medium text-sm">{nl.subject}</p>
+                <p className="text-xs text-muted-foreground truncate">{nl.preheader}</p>
+                <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{nl.createdAt}</span>
                   <span>{nl.sections} sekcji</span>
                   {nl.tokens > 0 && <span className="flex items-center gap-1"><Zap className="w-3 h-3" />{nl.tokens.toLocaleString('pl')} tokenów</span>}
