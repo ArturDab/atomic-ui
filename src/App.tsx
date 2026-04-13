@@ -52,6 +52,7 @@ import ZephyrCreator        from './showcase/projects/zephyr/CreatorScreen'
 import ZephyrArtifact       from './showcase/projects/zephyr/ArtifactScreen'
 import ZephyrHistory        from './showcase/projects/zephyr/HistoryScreen'
 import ZephyrDesignSystem   from './showcase/projects/zephyr/DesignSystemScreen'
+import ZephyrDocs          from './showcase/projects/zephyr/ProjectDocsScreen'
 
 export default function App() {
   return (
@@ -116,6 +117,7 @@ export default function App() {
           <Route path="zp-artifact"       element={<ZephyrArtifact />} />
           <Route path="zp-history"        element={<ZephyrHistory />} />
           <Route path="zp-design-system"  element={<ZephyrDesignSystem />} />
+          <Route path="zp-docs"          element={<ZephyrDocs />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/altair/all" replace />} />

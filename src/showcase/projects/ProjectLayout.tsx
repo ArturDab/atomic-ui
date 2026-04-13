@@ -27,26 +27,20 @@ const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
     name: 'Zephyr',
     nav: [
       { path: 'zp-all', label: 'Wszystkie' },
-      { path: 'zp-clients', label: 'Klienci' },
+      {
+        label: 'Widoki',
+        defaultPath: 'zp-clients',
+        children: [
+          { path: 'zp-clients',        label: 'Klienci' },
+          { path: 'zp-client-config',  label: 'Konfiguracja klienta' },
+          { path: 'zp-section-library',label: 'Biblioteka sekcji' },
+          { path: 'zp-creator',        label: 'Kreator' },
+          { path: 'zp-artifact',       label: 'Artefakt' },
+          { path: 'zp-history',        label: 'Historia' },
+        ],
+      },
       { path: 'zp-design-system', label: 'Design System' },
       { path: 'zp-docs',          label: 'Docs' },
-      {
-        label: 'Konfiguracja',
-        defaultPath: 'zp-client-config',
-        children: [
-          { path: 'zp-client-config',   label: 'Ustawienia klienta' },
-          { path: 'zp-section-library', label: 'Biblioteka sekcji' },
-        ],
-      },
-      {
-        label: 'Kreator',
-        defaultPath: 'zp-creator',
-        children: [
-          { path: 'zp-creator',  label: 'Nowy newsletter' },
-          { path: 'zp-artifact', label: 'Artefakt' },
-          { path: 'zp-history',  label: 'Historia' },
-        ],
-      },
     ],
   },
   lyra: {

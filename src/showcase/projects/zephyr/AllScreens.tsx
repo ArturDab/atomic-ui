@@ -1,50 +1,61 @@
 /**
  * Zephyr – All Screens
- * Siatka miniatur wszystkich ekranów projektu.
+ * Siatka miniatur wszystkich widoków prototypu.
  */
 import { Link, useParams } from 'react-router-dom'
-// NOTE: DS and Docs screens not shown in grid (config tabs, not prototypes)
+import ClientsScreen from './ClientsScreen'
+import ClientConfigScreen from './ClientConfigScreen'
+import SectionLibraryScreen from './SectionLibraryScreen'
+import CreatorScreen from './CreatorScreen'
+import ArtifactScreen from './ArtifactScreen'
+import HistoryScreen from './HistoryScreen'
 
 const SCREENS = [
-  { path: 'zp-clients',        label: 'Klienci',              description: 'Lista klientów z podglądem aktywności' },
-  { path: 'zp-client-config',  label: 'Konfiguracja klienta', description: 'Wygląd, AI, UTM, sekcje per klient' },
-  { path: 'zp-section-library', label: 'Biblioteka sekcji',   description: 'Globalne i per-klient sekcje HTML' },
-  { path: 'zp-creator',        label: 'Kreator',              description: 'Brief, sekcje, grafiki, URL-e + UTM' },
-  { path: 'zp-artifact',       label: 'Artefakt',             description: 'Podgląd desktop/mobile + AI chat + HTML' },
-  { path: 'zp-history',        label: 'Historia',             description: 'Archiwum wygenerowanych newsletterów' },
-  { path: 'zp-docs',           label: 'Docs & Prompty',       description: 'Instrukcja wdrożenia + prompt startowy Claude Code' },
+  { path: 'zp-clients',         label: 'Klienci',               Component: ClientsScreen },
+  { path: 'zp-client-config',   label: 'Konfiguracja klienta',  Component: ClientConfigScreen },
+  { path: 'zp-section-library', label: 'Biblioteka sekcji',     Component: SectionLibraryScreen },
+  { path: 'zp-creator',         label: 'Kreator',               Component: CreatorScreen },
+  { path: 'zp-artifact',        label: 'Artefakt',              Component: ArtifactScreen },
+  { path: 'zp-history',         label: 'Historia',              Component: HistoryScreen },
 ]
 
 export default function AllScreens() {
   const { projectSlug } = useParams<{ projectSlug: string }>()
-
   return (
-    <div className="p-8 bg-muted/30 min-h-full">
-      <div className="mb-6">
-        <h1 className="text-lg font-semibold">Zephyr – wszystkie ekrany</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Kreator newsletterów z konfiguracją per klient, biblioteką sekcji i generacją AI.
-        </p>
-      </div>
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
-        {SCREENS.map(screen => (
-          <Link
-            key={screen.path}
-            to={`/projects/${projectSlug}/${screen.path}`}
-            className="group block bg-card border rounded-xl overflow-hidden hover:shadow-md transition-shadow"
-          >
-            {/* Miniatura – placeholder z inicjałami */}
-            <div className="h-36 bg-gradient-to-br from-sky-50 to-sky-100 flex items-center justify-center border-b group-hover:from-sky-100 group-hover:to-sky-200 transition-colors">
-              <span className="text-4xl font-bold text-sky-200 select-none group-hover:text-sky-300 transition-colors">
-                {screen.label.slice(0, 2)}
-              </span>
-            </div>
-            <div className="p-4">
-              <p className="text-sm font-semibold">{screen.label}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{screen.description}</p>
-            </div>
-          </Link>
-        ))}
+    <div className="overflow-y-auto h-full bg-[#fafafa] px-8 py-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-xl font-semibold tracking-tight mb-1">Zephyr</h1>
+          <p className="text-xs text-muted-foreground">
+            Generator newsletterów HTML z AI – konfiguracja per klient, biblioteka sekcji, podgląd desktop/mobile.
+          </p>
+        </div>
+        <div className="grid grid-cols-3 gap-5">
+          {SCREENS.map(({ path, label, Component }) => (
+            <Link
+              key={path}
+              to={`/projects/${projectSlug}/${path}`}
+              className="group border rounded-xl bg-white overflow-hidden hover:border-foreground/30 hover:shadow-md transition-all"
+            >
+              <div className="relative h-48 overflow-hidden bg-muted/10">
+                <div
+                  className="absolute top-0 left-0 pointer-events-none origin-top-left"
+                  style={{ width: '1280px', height: '720px', transform: 'scale(0.234)' }}
+                >
+                  <div style={{ width: '1280px', height: '720px' }} className="overflow-hidden">
+                    <Component />
+                  </div>
+                </div>
+              </div>
+              <div className="px-4 py-3 border-t flex items-center justify-between">
+                <span className="text-sm font-medium">{label}</span>
+                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  Otwórz →
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )
