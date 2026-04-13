@@ -1,6 +1,7 @@
 import { NavLink, Navigate, Outlet, useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { useRef, useEffect, useCallback } from 'react'
 import { LyraThemeProvider, ThemeSwitcher } from './lyra/ThemeContext'
+import { ZephyrThemeProvider, ZephyrThemeSwitcher } from './zephyr/ThemeContext'
 import { ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -133,6 +134,7 @@ export default function ProjectLayout() {
 
   const containerRef = useRef<HTMLDivElement>(null)
   const isLyra = projectSlug === 'lyra'
+  const isZephyr = projectSlug === 'zephyr'
 
   // Collect all flat paths for arrow navigation
   const allPaths = meta.nav.flatMap(entry =>
@@ -218,6 +220,12 @@ export default function ProjectLayout() {
             <ThemeSwitcher />
           </>
         )}
+        {isZephyr && (
+          <>
+            <div className="w-px h-4 bg-background/20 shrink-0" />
+            <ZephyrThemeSwitcher />
+          </>
+        )}
       </div>
 
       {/* Secondary nav – always shown for lyra groups */}
@@ -269,6 +277,14 @@ export default function ProjectLayout() {
       <LyraThemeProvider containerRef={containerRef}>
         {content}
       </LyraThemeProvider>
+    )
+  }
+
+  if (isZephyr) {
+    return (
+      <ZephyrThemeProvider containerRef={containerRef}>
+        {content}
+      </ZephyrThemeProvider>
     )
   }
 
