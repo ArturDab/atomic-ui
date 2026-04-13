@@ -22,6 +22,30 @@ function isGroup(e: NavEntry): e is ScreenGroup {
 }
 
 const PROJECT_META: Record<string, { name: string; nav: NavEntry[] }> = {
+  zephyr: {
+    name: 'Zephyr',
+    nav: [
+      { path: 'zp-all', label: 'Wszystkie' },
+      { path: 'zp-clients', label: 'Klienci' },
+      {
+        label: 'Konfiguracja',
+        defaultPath: 'zp-client-config',
+        children: [
+          { path: 'zp-client-config',   label: 'Ustawienia klienta' },
+          { path: 'zp-section-library', label: 'Biblioteka sekcji' },
+        ],
+      },
+      {
+        label: 'Kreator',
+        defaultPath: 'zp-creator',
+        children: [
+          { path: 'zp-creator',  label: 'Nowy newsletter' },
+          { path: 'zp-artifact', label: 'Artefakt' },
+          { path: 'zp-history',  label: 'Historia' },
+        ],
+      },
+    ],
+  },
   lyra: {
     name: 'Lyra',
     nav: [

@@ -43,6 +43,15 @@ import LyraWPExportScreen from './showcase/projects/lyra/WPExportScreen'
 import LyraDesignSystem from './showcase/projects/lyra/DesignSystemScreen'
 import LyraDocs from './showcase/projects/lyra/ProjectDocsScreen'
 
+// Zephyr
+import ZephyrAllScreens     from './showcase/projects/zephyr/AllScreens'
+import ZephyrClients        from './showcase/projects/zephyr/ClientsScreen'
+import ZephyrClientConfig   from './showcase/projects/zephyr/ClientConfigScreen'
+import ZephyrSectionLibrary from './showcase/projects/zephyr/SectionLibraryScreen'
+import ZephyrCreator        from './showcase/projects/zephyr/CreatorScreen'
+import ZephyrArtifact       from './showcase/projects/zephyr/ArtifactScreen'
+import ZephyrHistory        from './showcase/projects/zephyr/HistoryScreen'
+
 export default function App() {
   return (
     <TooltipProvider>
@@ -96,6 +105,15 @@ export default function App() {
           <Route path="ly-wp-export"     element={<LyraWPExportScreen />} />
           <Route path="ly-design-system" element={<LyraDesignSystem />} />
           <Route path="ly-docs"          element={<LyraDocs />} />
+
+          {/* Zephyr – prefiks zp- */}
+          <Route path="zp-all"            element={<ZephyrAllScreens />} />
+          <Route path="zp-clients"        element={<ZephyrClients />} />
+          <Route path="zp-client-config"  element={<ZephyrClientConfig />} />
+          <Route path="zp-section-library" element={<ZephyrSectionLibrary />} />
+          <Route path="zp-creator"        element={<ZephyrCreator />} />
+          <Route path="zp-artifact"       element={<ZephyrArtifact />} />
+          <Route path="zp-history"        element={<ZephyrHistory />} />
         </Route>
 
         <Route path="/screens/*" element={<Navigate to="/projects/altair/all" replace />} />
