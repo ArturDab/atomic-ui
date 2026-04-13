@@ -4,12 +4,12 @@
  */
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
+import { ChatPanel, type ChatMessage } from '@/components/blocks/chat-panel'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
-  Monitor, Smartphone, Copy, Download, Send, Sparkles,
-  RotateCcw, Code2, Eye, ChevronRight, Zap, X,
+  Monitor, Smartphone, Copy, Download,
+  Code2, Eye, Sparkles, RotateCcw, ChevronRight, Zap,
   Check, Mail, Coins,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -119,7 +119,7 @@ interface Message {
   time: string
 }
 
-const DEMO_MESSAGES: Message[] = [
+const DEMO_MESSAGES: ChatMessage[] = [
   {
     id: '1', role: 'user', time: '14:08',
     content: 'Wygeneruj newsletter wiosenny dla Animails. Brief: -40% na karmy Royal Canin i Hill\'s. 5 sekcji: nagłówek, hero, produkty, kod promo, stopka.',
@@ -150,21 +150,9 @@ const QUICK_ACTIONS = [
 export default function ArtifactScreen() {
   const [mobile, setMobile]   = React.useState(false)
   const [tab, setTab]         = React.useState<'preview' | 'code'>('preview')
-  const [messages, setMessages] = React.useState<Message[]>(DEMO_MESSAGES)
+  const [messages, setMessages] = React.useState<ChatMessage[]>(DEMO_MESSAGES)
   const [input, setInput]     = React.useState('')
   const [copied, setCopied]   = React.useState(false)
-  const messagesEndRef = React.useRef<HTMLDivElement>(null)
-
-  React.useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
-
-  const sendMessage = () => {
-    if (!input.trim()) return
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', time: '14:12', content: input }
-    setMessages(prev => [...prev, userMsg])
-    setInput('')
-  }
 
   const handleCopy = () => {
     setCopied(true)
@@ -210,81 +198,26 @@ export default function ArtifactScreen() {
   return (
     <div className="flex h-full bg-background overflow-hidden">
 
-      {/* ── Lewa: AI Chat ── */}
-      <div className="w-80 xl:w-96 flex flex-col border-r shrink-0">
-        {/* Chat header */}
-        <div className="h-14 border-b flex items-center px-4 gap-3 shrink-0">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center shrink-0">
-            <Sparkles className="w-3.5 h-3.5 text-white" />
-          </div>
-          <div className="flex-1">
-            <p className="text-xs font-semibold">Asystent Zephyr</p>
-            <p className="text-xs text-muted-foreground">Animails · wiosna-2026</p>
-          </div>
+      {/* ── Lewa: ChatPanel z blocks/ ── */}
+      <ChatPanel
+        className="w-80 xl:w-96 border-r shrink-0"
+        title="Asystent Zephyr"
+        subtitle="Animails · wiosna-2026"
+        messages={messages}
+        quickActions={QUICK_ACTIONS.map(({ label, prompt }) => ({ label, prompt }))}
+        placeholder="Zmień, popraw, dodaj sekcję..."
+        metaBadge={
           <Badge variant="secondary" className="text-xs gap-1">
             <Coins className="w-3 h-3" />
             3 260
           </Badge>
-        </div>
-
-        {/* Messages */}
-        <ScrollArea className="flex-1 px-4 py-3">
-          <div className="space-y-4">
-            {messages.map(msg => (
-              <div key={msg.id} className={cn('flex flex-col', msg.role === 'user' ? 'items-end' : 'items-start')}>
-                <div
-                  className={cn(
-                    'max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed',
-                    msg.role === 'user'
-                      ? 'bg-foreground text-background rounded-br-sm'
-                      : 'bg-muted rounded-bl-sm'
-                  )}
-                >
-                  <p className="whitespace-pre-line">{msg.content}</p>
-                </div>
-                <div className="flex items-center gap-2 mt-1 px-1">
-                  <span className="text-xs text-muted-foreground">{msg.time}</span>
-                  {msg.tokens && (
-                    <span className="text-xs text-muted-foreground">{msg.tokens.toLocaleString()} tokens</span>
-                  )}
-                </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-        </ScrollArea>
-
-        {/* Quick actions */}
-        <div className="px-4 pb-2 flex gap-1.5 flex-wrap">
-          {QUICK_ACTIONS.map(({ label, icon: Icon, prompt }) => (
-            <button
-              key={label}
-              onClick={() => setInput(prompt)}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted hover:bg-muted/80 text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Icon className="w-3 h-3" />
-              {label}
-            </button>
-          ))}
-        </div>
-
-        {/* Input */}
-        <div className="px-4 pb-4 shrink-0">
-          <div className="flex gap-2 items-end">
-            <Textarea
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() } }}
-              placeholder="Zmień, popraw, dodaj sekcję..."
-              className="resize-none text-xs min-h-[36px] max-h-24 py-2"
-              rows={1}
-            />
-            <Button size="icon" className="h-9 w-9 shrink-0" onClick={sendMessage} disabled={!input.trim()}>
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
+        }
+        onSend={(content) => {
+          const userMsg: ChatMessage = { id: Date.now().toString(), role: 'user', time: '14:12', content }
+          setMessages(prev => [...prev, userMsg])
+        }}
+        onClear={() => setMessages([])}
+      />
 
       {/* ── Prawa: podgląd + HTML ── */}
       <div className="flex-1 flex flex-col overflow-hidden">

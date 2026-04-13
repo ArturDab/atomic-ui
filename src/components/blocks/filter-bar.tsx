@@ -1,5 +1,5 @@
-import { Search, SlidersHorizontal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Search } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 
 interface FilterOption {
@@ -11,10 +11,17 @@ interface FilterBarProps {
   placeholder?: string
   filters?: Array<{ key: string; label: string; options: FilterOption[] }>
   onSearch?: (value: string) => void
+  onFilter?: (key: string, value: string) => void
   className?: string
 }
 
-export function FilterBar({ placeholder = 'Szukaj...', filters, onSearch, className }: FilterBarProps) {
+export function FilterBar({
+  placeholder = 'Szukaj...',
+  filters,
+  onSearch,
+  onFilter,
+  className,
+}: FilterBarProps) {
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <div className='relative flex-1 max-w-xs'>
@@ -23,26 +30,23 @@ export function FilterBar({ placeholder = 'Szukaj...', filters, onSearch, classN
           type='text'
           placeholder={placeholder}
           onChange={e => onSearch?.(e.target.value)}
-          className='w-full pl-8 pr-4 py-2 text-sm border rounded-lg bg-white outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground'
+          className='w-full pl-8 pr-4 h-9 text-sm border rounded-lg bg-background outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/60'
         />
       </div>
 
       {filters?.map(filter => (
-        <select
-          key={filter.key}
-          className='h-9 px-3 text-sm border rounded-lg bg-white text-foreground outline-none focus:ring-1 focus:ring-ring cursor-pointer'
-        >
-          <option value=''>{filter.label}</option>
-          {filter.options.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
+        <Select key={filter.key} onValueChange={val => onFilter?.(filter.key, val)}>
+          <SelectTrigger className='h-9 w-auto min-w-[110px] text-sm bg-background'>
+            <SelectValue placeholder={filter.label} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='all'>{filter.label}: Wszystkie</SelectItem>
+            {filter.options.map(opt => (
+              <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       ))}
-
-      <Button variant='outline' size='sm' className='h-9 gap-1.5 ml-auto'>
-        <SlidersHorizontal className='w-3.5 h-3.5' />
-        Filtry
-      </Button>
     </div>
   )
 }
