@@ -12,6 +12,14 @@ import {
   loadConfig, saveConfig,
 } from '../_gist-storage'
 
+const LS_VALUES = 'zephyr-docs-values'
+function lsLoad(): Record<string, string> {
+  try { return JSON.parse(localStorage.getItem(LS_VALUES) || '{}') } catch { return {} }
+}
+function lsSave(v: Record<string, string>) {
+  localStorage.setItem(LS_VALUES, JSON.stringify(v))
+}
+
 function EditableField({ fieldKey, placeholder, values, onChange }: {
   fieldKey: string; placeholder: string
   values: Record<string, string>; onChange: (k: string, v: string) => void
@@ -114,7 +122,7 @@ const SECTIONS = [
 ]
 
 export default function ZephyrDocsScreen() {
-  const [values, setValues] = useState<Record<string, string>>({})
+  const [values, setValues] = useState<Record<string, string>>(lsLoad)
   const [active, setActive] = useState('wdrozenie')
   const [token, setToken] = useState(getStoredToken)
   const [tokenDraft, setTokenDraft] = useState('')
@@ -134,7 +142,8 @@ export default function ZephyrDocsScreen() {
   const onChange = useCallback(async (key: string, val: string) => {
     const next = { ...values, [key]: val }
     setValues(next)
-    if (!token) return
+    lsSave(next)                          // zawsze lokalnie
+    if (!token) return                    // Gist tylko jeśli token
     setSyncStatus('saving')
     const id = await saveConfig(token, next, gistId || undefined)
     if (id) { setGistId(id); setSyncStatus('saved') }
@@ -147,8 +156,12 @@ export default function ZephyrDocsScreen() {
     setToken(t); setStoredToken(t); setEditingToken(false)
     setSyncStatus('loading')
     const config = await loadConfig(t, gistId)
-    if (config) { setValues(config); setSyncStatus('saved') }
-    else {
+    if (config) {
+      const merged = { ...values, ...config }  // Gist wygrywa w konflikcie
+      setValues(merged)
+      lsSave(merged)
+      setSyncStatus('saved')
+    } else {
       const id = await saveConfig(t, values, undefined)
       if (id) { setGistId(id); setSyncStatus('saved') }
       else setSyncStatus('error')

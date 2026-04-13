@@ -12,6 +12,14 @@ import {
   loadConfig, saveConfig,
 } from '../_gist-storage'
 
+const LS_VALUES = 'lyra-docs-values'
+function lsLoad(): Record<string, string> {
+  try { return JSON.parse(localStorage.getItem(LS_VALUES) || '{}') } catch { return {} }
+}
+function lsSave(v: Record<string, string>) {
+  localStorage.setItem(LS_VALUES, JSON.stringify(v))
+}
+
 // ── Edytowalne pole ───────────────────────────────────────────────────────────
 
 function EditableField({ fieldKey, placeholder, values, onChange }: {
@@ -126,7 +134,7 @@ const SECTIONS = [
 // ── Główny komponent ──────────────────────────────────────────────────────────
 
 export default function ProjectDocsScreen() {
-  const [values, setValues] = useState<Record<string, string>>({})
+  const [values, setValues] = useState<Record<string, string>>(lsLoad)
   const [active, setActive] = useState('wdrozenie')
   const [token, setToken] = useState(getStoredToken)
   const [tokenDraft, setTokenDraft] = useState('')
