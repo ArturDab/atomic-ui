@@ -1,4 +1,4 @@
-export type ThemeId = 'ink' | 'slate' | 'sage' | 'dusk'
+export type ThemeId = 'sky' | 'slate' | 'sage' | 'noir'
 
 export interface Theme {
   id: ThemeId
@@ -9,50 +9,46 @@ export interface Theme {
 }
 
 const BASE = {
-  '--font-sans':    "'DM Sans', system-ui, sans-serif",
-  '--font-display': "'DM Sans', system-ui, sans-serif",
-  '--radius':       '0.5rem',
+  '--font-sans': "'DM Sans', system-ui, sans-serif",
+  '--radius':    '0.5rem',
 }
 
 export const THEMES: Theme[] = [
 
-  // ── Ink & Air – tożsamość Zephyra ────────────────────────────────────────
-  // Głęboki fiolet jako akcent, serif/sans kontrast, duże powietrze
+  // ── Sky – domyślny, niebieski ─────────────────────────────────────────────
   {
-    id: 'ink',
-    name: 'Ink',
-    tagline: 'Ink & Air · Wydawniczy · Precyzyjny',
-    radius: '10px',
+    id: 'sky',
+    name: 'Sky',
+    tagline: 'Czysty · Niebieski · Domyślny',
+    radius: '8px',
     vars: {
-      '--background':           '220 14% 99%',
-      '--foreground':           '222 30% 8%',
-      '--card':                 '220 14% 99%',
-      '--card-foreground':      '222 30% 8%',
-      '--popover':              '220 14% 99%',
-      '--popover-foreground':   '222 30% 8%',
-      '--primary':              '258 52% 38%',
+      '--background':           '0 0% 100%',
+      '--foreground':           '215 25% 9%',
+      '--card':                 '0 0% 100%',
+      '--card-foreground':      '215 25% 9%',
+      '--popover':              '0 0% 100%',
+      '--popover-foreground':   '215 25% 9%',
+      '--primary':              '199 89% 48%',
       '--primary-foreground':   '0 0% 100%',
-      '--secondary':            '220 14% 95%',
-      '--secondary-foreground': '222 22% 14%',
-      '--muted':                '220 14% 96%',
-      '--muted-foreground':     '220 12% 46%',
-      '--accent':               '258 52% 38%',
+      '--secondary':            '210 16% 95%',
+      '--secondary-foreground': '215 20% 15%',
+      '--muted':                '210 16% 95%',
+      '--muted-foreground':     '215 12% 48%',
+      '--accent':               '199 89% 48%',
       '--accent-foreground':    '0 0% 100%',
-      '--destructive':          '0 68% 52%',
+      '--destructive':          '0 70% 52%',
       '--destructive-foreground':'0 0% 100%',
-      '--border':               '220 12% 91%',
-      '--input':                '220 12% 91%',
-      '--ring':                 '258 52% 38%',
-      '--sidebar':              '220 12% 97.5%',
-      '--sidebar-header':       '220 14% 94%',
-      '--card-shadow':          '0 1px 4px rgba(22,18,44,0.06)',
+      '--border':               '215 14% 91%',
+      '--input':                '215 14% 91%',
+      '--ring':                 '199 89% 48%',
+      '--sidebar':              '210 18% 97%',
+      '--sidebar-header':       '210 20% 93%',
+      '--card-shadow':          '0 1px 3px rgba(0,0,0,0.05)',
       ...BASE,
-      '--font-display': "'Lora', Georgia, serif",
-      '--radius':       '0.625rem',
     },
   },
 
-  // ── Slate – minimalistyczny, monochromatyczny ─────────────────────────────
+  // ── Slate – monochromatyczny, minimalny ───────────────────────────────────
   {
     id: 'slate',
     name: 'Slate',
@@ -86,7 +82,7 @@ export const THEMES: Theme[] = [
     },
   },
 
-  // ── Sage – naturalny, stonowany ───────────────────────────────────────────
+  // ── Sage – naturalny, stonowany zieleń ───────────────────────────────────
   {
     id: 'sage',
     name: 'Sage',
@@ -120,38 +116,36 @@ export const THEMES: Theme[] = [
     },
   },
 
-  // ── Dusk – ciemny wariant Ink & Air, z fioletowym podtekstem ─────────────
+  // ── Noir – ciemny ─────────────────────────────────────────────────────────
   {
-    id: 'dusk',
-    name: 'Dusk',
-    tagline: 'Ink & Air · Nocny · Fioletowy mrok',
-    radius: '10px',
+    id: 'noir',
+    name: 'Noir',
+    tagline: 'Nocny · Skupiony · Ciemny',
+    radius: '8px',
     vars: {
-      '--background':           '250 22% 9%',
-      '--foreground':           '240 15% 88%',
-      '--card':                 '250 22% 11%',
-      '--card-foreground':      '240 15% 88%',
-      '--popover':              '250 22% 8%',
-      '--popover-foreground':   '240 15% 88%',
-      '--primary':              '262 60% 65%',
-      '--primary-foreground':   '250 22% 9%',
-      '--secondary':            '250 18% 18%',
-      '--secondary-foreground': '240 12% 72%',
-      '--muted':                '250 18% 18%',
-      '--muted-foreground':     '240 10% 52%',
-      '--accent':               '262 60% 65%',
-      '--accent-foreground':    '250 22% 9%',
+      '--background':           '222 22% 9%',
+      '--foreground':           '210 20% 88%',
+      '--card':                 '222 22% 11%',
+      '--card-foreground':      '210 20% 88%',
+      '--popover':              '222 22% 8%',
+      '--popover-foreground':   '210 20% 88%',
+      '--primary':              '199 80% 60%',
+      '--primary-foreground':   '222 22% 9%',
+      '--secondary':            '222 18% 18%',
+      '--secondary-foreground': '210 15% 72%',
+      '--muted':                '222 18% 18%',
+      '--muted-foreground':     '215 12% 52%',
+      '--accent':               '199 80% 60%',
+      '--accent-foreground':    '222 22% 9%',
       '--destructive':          '0 60% 55%',
       '--destructive-foreground':'0 0% 100%',
-      '--border':               '250 16% 20%',
-      '--input':                '250 16% 20%',
-      '--ring':                 '262 60% 65%',
-      '--sidebar':              '250 28% 7%',
-      '--sidebar-header':       '250 30% 6%',
+      '--border':               '222 15% 20%',
+      '--input':                '222 15% 20%',
+      '--ring':                 '199 80% 60%',
+      '--sidebar':              '222 24% 7%',
+      '--sidebar-header':       '222 26% 6%',
       '--card-shadow':          'none',
       ...BASE,
-      '--font-display': "'Lora', Georgia, serif",
-      '--radius':       '0.625rem',
     },
   },
 ]

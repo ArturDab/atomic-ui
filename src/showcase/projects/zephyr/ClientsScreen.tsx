@@ -27,10 +27,10 @@ interface Client {
 }
 
 const CLIENTS: Client[] = [
-  { id: '1', name: 'Animails',      color: '#4d2e93', newsletterCount: 24, lastSentAt: 'wczoraj',       status: 'active', nextScheduled: 'w piątek' },
+  { id: '1', name: 'Animails',      color: '#0ea5e9', newsletterCount: 24, lastSentAt: 'wczoraj',       status: 'active', nextScheduled: 'w piątek' },
   { id: '2', name: 'Beezu',         color: '#10b981', newsletterCount: 12, lastSentAt: '5 dni temu',    status: 'active' },
-  { id: '3', name: 'Kosmik Studio', color: '#7c3aed', newsletterCount: 7,  lastSentAt: '3 tyg. temu',   status: 'paused' },
-  { id: '4', name: 'Growthers',     color: '#d97706', newsletterCount: 31, lastSentAt: 'dziś, 09:00',   status: 'active', nextScheduled: 'za 2 tyg.' },
+  { id: '3', name: 'Kosmik Studio', color: '#8b5cf6', newsletterCount: 7,  lastSentAt: '3 tyg. temu',   status: 'paused' },
+  { id: '4', name: 'Growthers',     color: '#f59e0b', newsletterCount: 31, lastSentAt: 'dziś, 09:00',   status: 'active', nextScheduled: 'za 2 tyg.' },
 ]
 
 function getInitials(name: string) {
@@ -59,7 +59,7 @@ function ClientCard({ client }: { client: Client }) {
             {getInitials(client.name)}
           </div>
           <div>
-            <p className="font-semibold text-sm" style={{ fontFamily: "'Lora', Georgia, serif" }}>{client.name}</p>
+            <p className="font-semibold text-sm">{client.name}</p>
             <p className="text-xs text-muted-foreground">{client.newsletterCount} newsletterów</p>
           </div>
         </div>
@@ -104,8 +104,8 @@ function ClientCard({ client }: { client: Client }) {
         )}
         {client.nextScheduled && (
           <div className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-primary" />
-            <span className="text-primary font-medium">Następny: {client.nextScheduled}</span>
+            <Calendar className="w-3.5 h-3.5 text-sky-500" />
+            <span className="text-sky-600 font-medium">Następny: {client.nextScheduled}</span>
           </div>
         )}
       </div>
