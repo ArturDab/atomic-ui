@@ -3,7 +3,7 @@
  * Stack: GitHub + Vercel + Railway (PostgreSQL) + Auth.js
  */
 import React, { useState } from 'react'
-import { ClipboardCopy, Check, Pencil, BookOpen, Code2, Sparkles, ExternalLink, Rocket } from 'lucide-react'
+import { ClipboardCopy, Check, Pencil, BookOpen, Code2, Download, Upload, Sparkles, ExternalLink, Rocket } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const STORAGE_KEY = 'lyra-docs-values'
@@ -75,6 +75,67 @@ function CopyButton({ label, getText }: { label: string; getText: () => string }
       {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <ClipboardCopy className="w-3.5 h-3.5" />}
       {copied ? 'Skopiowano!' : label}
     </button>
+  )
+}
+
+
+// ── Pasek konfiguracji ────────────────────────────────────────────────────────
+
+function ConfigToolbar({ values, storageKey, onChange }: {
+  values: Record<string, string>
+  storageKey: string
+  onChange: (key: string, val: string) => void
+}) {
+  const [saved, setSaved] = useState(false)
+
+  const exportConfig = () => {
+    const json = JSON.stringify(values, null, 2)
+    const blob = new Blob([json], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${storageKey}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const importConfig = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json'
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target?.result as string)
+          Object.entries(data).forEach(([k, v]) => onChange(k, v as string))
+          setSaved(true)
+          setTimeout(() => setSaved(false), 2000)
+        } catch { /* ignore */ }
+      }
+      reader.readAsText(file)
+    }
+    input.click()
+  }
+
+  return (
+    <div className="flex items-center gap-2 p-3 bg-muted/40 border rounded-lg">
+      <div className="flex-1 min-w-0">
+        <p className="text-xs font-medium">Konfiguracja</p>
+        <p className="text-[10px] text-muted-foreground">Eksportuj dane do pliku JSON – odporny na czyszczenie cache i zmianę przeglądarki.</p>
+      </div>
+      <button onClick={importConfig}
+        className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-background hover:bg-muted transition-colors shrink-0">
+        <Upload className="w-3 h-3" /> Importuj
+      </button>
+      <button onClick={exportConfig}
+        className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-foreground text-background hover:bg-foreground/90 transition-colors shrink-0">
+        {saved ? <Check className="w-3 h-3" /> : <Download className="w-3 h-3" />}
+        {saved ? 'Zaimportowano!' : 'Eksportuj config'}
+      </button>
+    </div>
   )
 }
 
@@ -236,12 +297,14 @@ https://atomic-ui-sandy.vercel.app/projects/lyra`
         </nav>
         <div className="mt-6 p-3 bg-amber-50 border border-amber-200 rounded-lg">
           <p className="text-xs font-medium text-amber-800 mb-1">Pola edytowalne</p>
-          <p className="text-[10px] text-amber-700 leading-relaxed">Kliknij podświetlone pola żeby wpisać dane. Zapisują się w przeglądarce.</p>
+          <p className="text-[10px] text-amber-700 leading-relaxed">Kliknij podświetlone pola żeby wpisać dane. Eksportuj config żeby nie stracić przy czyszczeniu cache.</p>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-2xl mx-auto px-8 py-8 space-y-6">
+
+          <ConfigToolbar values={values} storageKey="lyra-docs-values" onChange={onChange} />
 
           {active === 'wdrozenie' && (<>
             <div>
