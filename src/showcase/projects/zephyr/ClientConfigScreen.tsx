@@ -35,9 +35,12 @@ const CLIENT_SECTIONS: ClientSection[] = [
 ]
 
 const TYPE_COLOR: Record<SectionType, string> = {
-  header: 'bg-slate-100 text-slate-700', hero: 'bg-blue-100 text-blue-700',
-  cta: 'bg-orange-100 text-orange-700', product: 'bg-green-100 text-green-700',
-  content: 'bg-purple-100 text-purple-700', footer: 'bg-stone-100 text-stone-700',
+  header:  'bg-muted text-foreground/60',
+  hero:    'bg-muted text-foreground/70',
+  cta:     'bg-foreground/[0.07] text-foreground/75',
+  product: 'bg-foreground/[0.07] text-foreground/75',
+  content: 'bg-muted text-foreground/70',
+  footer:  'bg-muted text-foreground/60',
 }
 
 function ColorSwatch({ color, label }: { color: string; label: string }) {
@@ -59,7 +62,7 @@ export default function ClientConfigScreen() {
   return (
     <div className="flex flex-col h-full bg-background">
       <div className="h-14 border-b flex items-center px-6 gap-3 shrink-0">
-        <div className="w-8 h-8 rounded-lg bg-sky-500 flex items-center justify-center text-white text-xs font-bold shrink-0">AN</div>
+        <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center text-background text-xs font-bold shrink-0">AN</div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold leading-none">Animails</p>
           <p className="text-[10px] text-muted-foreground mt-0.5">Konfiguracja klienta</p>
@@ -124,7 +127,7 @@ export default function ClientConfigScreen() {
               <div>
                 <p className="text-sm font-semibold mb-3">Podgląd nagłówka emaila</p>
                 <div className="border rounded-lg overflow-hidden">
-                  <div style={{ backgroundColor: '#0ea5e9', padding: '12px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ backgroundColor: 'hsl(var(--foreground))', padding: '12px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ color: '#fff', fontWeight: 700, fontFamily: 'Inter, sans-serif' }}>Animails</span>
                     <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: 12 }}>Sklep dla pupili</span>
                   </div>

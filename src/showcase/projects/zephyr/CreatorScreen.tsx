@@ -20,9 +20,12 @@ interface UploadedImage { id: string; name: string; cfUrl: string }
 interface UrlEntry { id: string; label: string; url: string }
 
 const TYPE_COLOR: Record<SectionType, string> = {
-  header: 'bg-slate-100 text-slate-700', hero: 'bg-blue-100 text-blue-700',
-  cta: 'bg-orange-100 text-orange-700', product: 'bg-green-100 text-green-700',
-  content: 'bg-purple-100 text-purple-700', footer: 'bg-stone-100 text-stone-700',
+  header:  'bg-muted text-foreground/60',
+  hero:    'bg-muted text-foreground/70',
+  cta:     'bg-foreground/[0.07] text-foreground/75',
+  product: 'bg-foreground/[0.07] text-foreground/75',
+  content: 'bg-muted text-foreground/70',
+  footer:  'bg-muted text-foreground/60',
 }
 
 const AVAILABLE_SECTIONS: SelectedSection[] = [
@@ -65,7 +68,7 @@ export default function CreatorScreen() {
 
           {/* Klient */}
           <div className="flex items-center gap-3 pb-4 border-b">
-            <div className="w-8 h-8 rounded-lg bg-sky-500 flex items-center justify-center text-white text-xs font-bold shrink-0">AN</div>
+            <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center text-background text-xs font-bold shrink-0">AN</div>
             <div>
               <p className="text-xs font-semibold">Animails</p>
               <p className="text-[10px] text-muted-foreground">Instrukcje AI aktywne · Sky design system</p>
@@ -241,9 +244,9 @@ export default function CreatorScreen() {
               </>
             )}
             <Separator />
-            <div className="p-3 bg-sky-50 border border-sky-200 rounded-lg">
-              <p className="text-[10px] font-semibold text-sky-800 mb-1">Gotowe do generacji</p>
-              <p className="text-[10px] text-sky-700 leading-relaxed">
+            <div className="p-3 bg-muted/60 border rounded-lg">
+              <p className="text-[10px] font-semibold mb-1">Gotowe do generacji</p>
+              <p className="text-[10px] text-muted-foreground leading-relaxed">
                 AI użyje instrukcji klienta Animails + brief + {sections.length} sekcji + {images.length} grafik.
               </p>
             </div>

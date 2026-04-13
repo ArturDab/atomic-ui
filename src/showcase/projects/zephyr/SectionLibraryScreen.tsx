@@ -4,13 +4,13 @@
  */
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { EmptyState } from '@/components/blocks/empty-state'
-import { Plus, Search, Eye, Code2, Copy, MoreHorizontal, Trash2, Globe, User, Layers } from 'lucide-react'
+import { FilterBar } from '@/components/blocks/filter-bar'
+import { Plus, Eye, Code2, Copy, MoreHorizontal, Trash2, Globe, User, Layers } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type SectionType = 'header' | 'hero' | 'cta' | 'product' | 'content' | 'divider' | 'footer'
@@ -23,10 +23,13 @@ interface Section {
 }
 
 const TYPE_COLOR: Record<SectionType, string> = {
-  header: 'bg-slate-100 text-slate-700', hero: 'bg-blue-100 text-blue-700',
-  cta: 'bg-orange-100 text-orange-700', product: 'bg-green-100 text-green-700',
-  content: 'bg-purple-100 text-purple-700', divider: 'bg-gray-100 text-gray-600',
-  footer: 'bg-stone-100 text-stone-700',
+  header:  'bg-muted text-foreground/60',
+  hero:    'bg-muted text-foreground/70',
+  cta:     'bg-foreground/[0.07] text-foreground/75',
+  product: 'bg-foreground/[0.07] text-foreground/75',
+  content: 'bg-muted text-foreground/70',
+  divider: 'bg-muted/60 text-foreground/50',
+  footer:  'bg-muted text-foreground/60',
 }
 const TYPE_LABEL: Record<SectionType, string> = {
   header: 'Nagłówek', hero: 'Hero', cta: 'CTA', product: 'Produkt',
@@ -112,21 +115,12 @@ export default function SectionLibraryScreen() {
       </div>
 
       {/* Filtry */}
-      <div className="px-6 py-3 border-b flex items-center gap-3 shrink-0">
-        <div className="relative flex-1 max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input placeholder="Szukaj sekcji..." className="pl-9 h-8 text-sm"
-            value={search} onChange={e => setSearch(e.target.value)} />
-        </div>
-        <div className="flex gap-1.5">
-          {['all', 'header', 'hero', 'cta', 'product', 'content', 'footer'].map(t => (
-            <button key={t} onClick={() => setTypeFilter(t)}
-              className={cn('text-[11px] px-2.5 py-1 rounded-lg border transition-colors',
-                typeFilter === t ? 'bg-foreground text-background border-foreground' : 'border-border hover:bg-muted text-muted-foreground hover:text-foreground')}>
-              {t === 'all' ? 'Wszystkie' : TYPE_LABEL[t as SectionType]}
-            </button>
-          ))}
-        </div>
+      <div className="px-6 py-3 border-b shrink-0">
+        <FilterBar
+          placeholder="Szukaj sekcji..."
+          onSearch={setSearch}
+          filters={[{ key: 'type', label: 'Typ', options: Object.entries(TYPE_LABEL).map(([v, l]) => ({ value: v, label: l })) }]}
+        />
       </div>
 
       {/* ── Tabs z ui/ ── */}
@@ -145,7 +139,7 @@ export default function SectionLibraryScreen() {
         {(['global', 'client'] as SectionScope[]).map(scope => (
           <TabsContent key={scope} value={scope} className="flex-1 overflow-hidden mt-0">
             <ScrollArea className="h-full">
-              <div className="p-6">
+              <div className="p-6 max-w-5xl mx-auto">
                 {filterSections(scope).length === 0 ? (
                   /* ── EmptyState z blocks/ ── */
                   <EmptyState icon={Layers} title="Brak sekcji"

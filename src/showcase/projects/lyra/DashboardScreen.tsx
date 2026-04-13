@@ -271,7 +271,8 @@ export default function DashboardScreen() {
           </DropdownMenu>
       </div>
 
-      <div className="flex-1 overflow-auto px-8 py-6 space-y-6">
+      <div className="flex-1 overflow-auto">
+        <div className="max-w-5xl mx-auto px-8 py-6 space-y-6">
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4">
@@ -365,6 +366,7 @@ export default function DashboardScreen() {
               <p className="text-sm">Brak wyników dla „{search}"</p>
             </div>
           )}
+        </div>
         </div>
       </div>
     </div>

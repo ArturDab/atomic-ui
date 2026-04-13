@@ -332,9 +332,9 @@ export default function ArtifactScreen() {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto bg-slate-100">
+        <div className="flex-1 overflow-auto bg-muted/30">
           {tab === 'preview' ? (
-            <div className="min-h-full flex justify-center py-8 px-4">
+            <div className="min-h-full flex justify-center py-8 px-4 bg-muted/30">
               <div className={cn('bg-white shadow-xl', mobile ? 'rounded-3xl overflow-hidden' : 'rounded-lg overflow-hidden')}>
                 {mobile && (
                   <div className="h-6 bg-slate-800 flex items-center justify-center">

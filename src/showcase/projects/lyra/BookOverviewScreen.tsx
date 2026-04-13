@@ -95,7 +95,7 @@ export default function BookOverviewScreen() {
       </div>
 
       <ScrollArea className="flex-1">
-        <div className="px-8 py-6">
+        <div className="px-8 py-6 max-w-5xl mx-auto">
 
           {/* PRZEGLĄD */}
           {activeTab === 'overview' && (

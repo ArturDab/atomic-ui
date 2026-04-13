@@ -4,13 +4,13 @@
  */
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { StatCard } from '@/components/blocks/stat-card'
+import { FilterBar } from '@/components/blocks/filter-bar'
 import { EmptyState } from '@/components/blocks/empty-state'
-import { Search, Eye, Copy, Download, MoreHorizontal, Trash2, Zap, Mail, Clock, Code2 } from 'lucide-react'
+import { Eye, Copy, Download, MoreHorizontal, Trash2, Zap, Mail, Clock, Code2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type NLStatus = 'draft' | 'generated' | 'exported'
@@ -60,15 +60,16 @@ export default function HistoryScreen() {
       </div>
 
       <div className="px-6 py-3 border-b shrink-0">
-        <div className="relative max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input placeholder="Szukaj newslettera..." className="pl-9 h-8 text-sm"
-            value={search} onChange={e => setSearch(e.target.value)} />
-        </div>
+        <FilterBar
+          placeholder="Szukaj newslettera..."
+          onSearch={setSearch}
+          filters={[{ key: 'status', label: 'Status', options: [{ value: 'draft', label: 'Szkic' }, { value: 'generated', label: 'Wygenerowany' }, { value: 'exported', label: 'Wyeksportowany' }] }]}
+        />
       </div>
 
       <ScrollArea className="flex-1">
-        <div className="px-6 py-4 space-y-2">
+        <div className="px-6 py-4">
+          <div className="max-w-5xl mx-auto space-y-2">
           {filtered.length === 0 ? (
             /* ── EmptyState z blocks/ ── */
             <EmptyState icon={Mail} title="Brak newsletterów"
@@ -112,6 +113,7 @@ export default function HistoryScreen() {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </ScrollArea>
     </div>

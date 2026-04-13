@@ -4,13 +4,13 @@
  */
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { StatCard } from '@/components/blocks/stat-card'
+import { FilterBar } from '@/components/blocks/filter-bar'
 import { EmptyState } from '@/components/blocks/empty-state'
-import { Plus, Search, Settings, Clock, Calendar, Zap, MoreHorizontal, Mail, Pause, Play, Users } from 'lucide-react'
+import { Plus, Settings, Clock, Calendar, Zap, MoreHorizontal, Mail, Pause, Play, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface Client {
@@ -67,7 +67,7 @@ function ClientCard({ client }: { client: Client }) {
       </div>
       <div className="space-y-1.5 mb-4 text-xs text-muted-foreground">
         {client.lastSentAt && <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /><span>Ostatni: {client.lastSentAt}</span></div>}
-        {client.nextScheduled && <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-sky-500" /><span className="text-sky-600 font-medium">Następny: {client.nextScheduled}</span></div>}
+        {client.nextScheduled && <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-muted-foreground" /><span className="text-foreground/80 font-medium">Następny: {client.nextScheduled}</span></div>}
       </div>
       <div className="flex gap-2 pt-3 border-t">
         <Button size="sm" className="flex-1 h-8 text-xs gap-1.5 justify-start">
@@ -104,15 +104,16 @@ export default function ClientsScreen() {
       </div>
 
       <div className="px-6 py-3 border-b shrink-0">
-        <div className="relative max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input placeholder="Szukaj klienta..." className="pl-9 h-8 text-sm"
-            value={search} onChange={e => setSearch(e.target.value)} />
-        </div>
+        <FilterBar
+          placeholder="Szukaj klienta..."
+          onSearch={setSearch}
+          filters={[{ key: 'status', label: 'Status', options: [{ value: 'active', label: 'Aktywni' }, { value: 'paused', label: 'Pauza' }] }]}
+        />
       </div>
 
       <ScrollArea className="flex-1">
         <div className="p-6">
+          <div className="max-w-5xl mx-auto">
           {filtered.length === 0 ? (
             /* ── EmptyState z blocks/ ── */
             <EmptyState icon={Users} title="Brak klientów"
@@ -127,6 +128,7 @@ export default function ClientsScreen() {
               </button>
             </div>
           )}
+          </div>
         </div>
       </ScrollArea>
     </div>
