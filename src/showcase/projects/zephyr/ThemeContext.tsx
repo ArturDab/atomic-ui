@@ -7,7 +7,7 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  themeId: 'sky',
+  themeId: 'ink',
   setThemeId: () => {},
 })
 
@@ -22,7 +22,7 @@ export function ZephyrThemeProvider({
   children: React.ReactNode
   containerRef: React.RefObject<HTMLDivElement>
 }) {
-  const [themeId, setThemeId] = useState<ThemeId>('sky')
+  const [themeId, setThemeId] = useState<ThemeId>('ink')
 
   useEffect(() => {
     const el = containerRef.current

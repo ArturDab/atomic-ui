@@ -65,11 +65,19 @@ const COLOR_TOKENS = [
   { key: '--input',             label: 'Tło inputów',             group: 'Obramowania' },
 ]
 
+const DISPLAY_FONT_OPTIONS = [
+  { value: "'Lora', Georgia, serif",                 label: 'Lora',           preview: 'Animails · Newsletter · Kreator' },
+  { value: "'Source Serif 4', Georgia, serif",       label: 'Source Serif 4', preview: 'Animails · Newsletter · Kreator' },
+  { value: "'Merriweather', Georgia, serif",         label: 'Merriweather',   preview: 'Animails · Newsletter · Kreator' },
+  { value: "Georgia, serif",                         label: 'Georgia',        preview: 'Animails · Newsletter · Kreator' },
+  { value: "'DM Sans', system-ui, sans-serif",       label: 'Bez szeryfów',   preview: 'Animails · Newsletter · Kreator' },
+]
+
 const FONT_OPTIONS = [
-  { value: "'DM Sans', system-ui, sans-serif",       label: 'DM Sans',    preview: 'Newsletter · Klient · Sekcje' },
-  { value: "'Geist', system-ui, sans-serif",         label: 'Geist',      preview: 'Newsletter · Klient · Sekcje' },
-  { value: "'Inter', system-ui, sans-serif",         label: 'Inter',      preview: 'Newsletter · Klient · Sekcje' },
-  { value: "system-ui, -apple-system, sans-serif",   label: 'System UI',  preview: 'Newsletter · Klient · Sekcje' },
+  { value: "'DM Sans', system-ui, sans-serif",       label: 'DM Sans',    preview: 'Klient · Sekcje · Konfiguracja' },
+  { value: "'Geist', system-ui, sans-serif",         label: 'Geist',      preview: 'Klient · Sekcje · Konfiguracja' },
+  { value: "'Inter', system-ui, sans-serif",         label: 'Inter',      preview: 'Klient · Sekcje · Konfiguracja' },
+  { value: "system-ui, -apple-system, sans-serif",   label: 'System UI',  preview: 'Klient · Sekcje · Konfiguracja' },
 ]
 
 const RADIUS_PRESETS = [
@@ -367,23 +375,46 @@ export default function DesignConfigPanel({ themeId, onVarsChange }: DesignConfi
           ))}
 
           {activeTab === 'type' && (
-            <div className="space-y-2">
-              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Font UI</p>
-              <p className="text-[10px] text-muted-foreground mb-3">
-                Używany w nawigacji, przyciskach, formularzach i panelach.
-              </p>
-              {FONT_OPTIONS.map(font => (
-                <button key={font.value} onClick={() => updateVar('--font-sans', font.value)}
-                  className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all',
-                    uiFont === font.value ? 'border-foreground bg-muted/30' : 'border-border hover:border-foreground/30')}>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium" style={{ fontFamily: font.value }}>{font.label}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5" style={{ fontFamily: font.value }}>{font.preview}</p>
-                  </div>
-                  {uiFont === font.value && <Check className="w-4 h-4 text-emerald-500 shrink-0" />}
-                </button>
-              ))}
-            </div>
+            <>
+              <div className="space-y-2">
+                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Font wyświetlania</p>
+                <p className="text-[10px] text-muted-foreground mb-3">
+                  Nazwy klientów, tematy, nagłówki sekcji. Serce tożsamości Ink & Air.
+                </p>
+                {DISPLAY_FONT_OPTIONS.map(font => {
+                  const displayFont = vars['--font-display'] || baseTheme.vars['--font-display'] || ''
+                  return (
+                    <button key={font.value} onClick={() => updateVar('--font-display', font.value)}
+                      className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all',
+                        displayFont === font.value ? 'border-foreground bg-muted/30' : 'border-border hover:border-foreground/30')}>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium" style={{ fontFamily: font.value }}>{font.label}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5" style={{ fontFamily: font.value }}>{font.preview}</p>
+                      </div>
+                      {displayFont === font.value && <Check className="w-4 h-4 text-emerald-500 shrink-0" />}
+                    </button>
+                  )
+                })}
+              </div>
+              <Separator />
+              <div className="space-y-2">
+                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Font UI</p>
+                <p className="text-[10px] text-muted-foreground mb-3">
+                  Nawigacja, przyciski, formularze i panele.
+                </p>
+                {FONT_OPTIONS.map(font => (
+                  <button key={font.value} onClick={() => updateVar('--font-sans', font.value)}
+                    className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all',
+                      uiFont === font.value ? 'border-foreground bg-muted/30' : 'border-border hover:border-foreground/30')}>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium" style={{ fontFamily: font.value }}>{font.label}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5" style={{ fontFamily: font.value }}>{font.preview}</p>
+                    </div>
+                    {uiFont === font.value && <Check className="w-4 h-4 text-emerald-500 shrink-0" />}
+                  </button>
+                ))}
+              </div>
+            </>
           )}
 
           {activeTab === 'spacing' && (

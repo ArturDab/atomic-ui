@@ -17,10 +17,11 @@ function ThemedCreatorPreview({ vars }: { vars: Record<string, string> }) {
   }, [vars])
 
   const hsl = (key: string, fallback = '0 0% 50%') => `hsl(${vars[key] || fallback})`
-  const radius = vars['--radius'] || '0.5rem'
+  const radius = vars['--radius'] || '0.625rem'
   const r = (mult: number) => `calc(${radius} * ${mult})`
   const shadow = vars['--card-shadow'] && vars['--card-shadow'] !== 'none' ? vars['--card-shadow'] : undefined
   const font = vars['--font-sans'] || "'DM Sans', system-ui, sans-serif"
+  const displayFont = vars['--font-display'] || font
 
   const bs = { borderColor: hsl('--border', '215 14% 91%') }
 
@@ -48,10 +49,12 @@ function ThemedCreatorPreview({ vars }: { vars: Record<string, string> }) {
       {/* App header */}
       <div className="h-10 flex items-center px-3 gap-2 shrink-0 border-b" style={{ ...bs, background: hsl('--background') }}>
         <div className="w-5 h-5 flex items-center justify-center shrink-0"
-          style={{ background: hsl('--primary', '199 89% 48%'), borderRadius: r(0.7) }}>
+          style={{ background: hsl('--primary', '258 52% 38%'), borderRadius: r(0.7) }}>
           <Wind className="w-3 h-3" style={{ color: hsl('--primary-foreground', '0 0% 100%') }} />
         </div>
-        <span className="text-[11px] font-semibold flex-1 truncate">Animails · Nowy newsletter</span>
+        <span className="flex-1 truncate" style={{ fontFamily: displayFont, fontSize: '11px', fontWeight: 600 }}>
+          Animails · Nowy newsletter
+        </span>
         <div className="flex items-center gap-1">
           {[Mail, Settings].map((Icon, i) => (
             <div key={i} className="w-6 h-6 flex items-center justify-center"
@@ -76,9 +79,10 @@ function ThemedCreatorPreview({ vars }: { vars: Record<string, string> }) {
               <div className="h-6 px-2 flex items-center text-[10px] border"
                 style={{
                   background: hsl('--background'),
-                  borderColor: hsl('--border', '215 14% 91%'),
+                  borderColor: hsl('--border', '220 12% 91%'),
                   borderRadius: r(0.6),
-                  color: hsl('--foreground', '215 25% 9%'),
+                  color: hsl('--foreground', '222 30% 8%'),
+                  fontFamily: displayFont,
                 }}>
                 Wiosenna promocja – do -40% na karmy!
               </div>
@@ -242,12 +246,12 @@ export default function DesignSystemScreen() {
     setCustomVars({})
   }
 
-  const isNoir = themeId === 'noir'
+  const isDusk = themeId === 'dusk'
 
   return (
-    <div className="flex flex-col h-full" style={{ background: isNoir ? `hsl(222 22% 9%)` : `#fafafa` }}>
+    <div className="flex flex-col h-full" style={{ background: isDusk ? `hsl(250 22% 9%)` : `hsl(220 14% 98%)` }}>
       {/* Header */}
-      <div className={cn('border-b px-6 py-3.5 shrink-0', isNoir ? 'bg-[#13172a]' : 'bg-white')}>
+      <div className={cn('border-b px-6 py-3.5 shrink-0', isDusk ? 'bg-[#100f1e]' : 'bg-white')}>
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-sm font-semibold">Design System</h1>
@@ -264,7 +268,7 @@ export default function DesignSystemScreen() {
                   'flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-sm transition-all',
                   themeId === t.id
                     ? 'border-foreground bg-foreground text-background font-semibold shadow-sm'
-                    : t.id === 'noir'
+                    : t.id === 'dusk'
                       ? 'border-border bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
                       : 'border-border bg-white text-muted-foreground hover:border-foreground/30 hover:text-foreground'
                 )}>
@@ -279,7 +283,10 @@ export default function DesignSystemScreen() {
         <div className="flex items-center gap-5 mt-2 text-xs text-muted-foreground">
           <span className="font-medium text-foreground">{baseTheme.tagline}</span>
           <span>
-            Font: {(activeVars['--font-sans'] || '').split(',')[0].replace(/'/g, '') || 'DM Sans'}
+            Display: {(activeVars['--font-display'] || activeVars['--font-sans'] || '').split(',')[0].replace(/'/g, '') || 'Lora'}
+          </span>
+          <span>
+            UI: {(activeVars['--font-sans'] || '').split(',')[0].replace(/'/g, '') || 'DM Sans'}
           </span>
           <span>Radius: {customVars['--radius'] || baseTheme.radius}</span>
           <div className="flex items-center gap-1">
