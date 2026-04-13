@@ -237,10 +237,9 @@ export default function DashboardScreen() {
   ]
 
   return (
-    <div className="min-h-full bg-background">
+    <div className="flex flex-col h-full bg-background">
       {/* Top bar */}
-      <div className="bg-background/95 border-b backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
+      <div className="h-14 border-b flex items-center px-8 justify-between shrink-0 bg-background">
           <div>
             <h1 className="text-lg font-semibold tracking-tight">Lyra</h1>
             <p className="text-xs text-foreground/65">Twoje treści w jednym miejscu</p>
@@ -270,10 +269,9 @@ export default function DashboardScreen() {
               })}
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-8 py-8 space-y-6">
+      <div className="flex-1 overflow-auto px-8 py-6 space-y-6">
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4">
@@ -356,7 +354,7 @@ export default function DashboardScreen() {
               {filtered.filter(i => !i.starred).map(i => <ItemCard key={i.id} item={i} view="list" />)}
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
               {filtered.map(i => <ItemCard key={i.id} item={i} view="grid" />)}
             </div>
           )}
