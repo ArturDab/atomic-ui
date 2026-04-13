@@ -86,7 +86,7 @@ export default function Home() {
             <div className="w-6 h-6 rounded-md bg-foreground flex items-center justify-center">
               <Layers className="w-3.5 h-3.5 text-background" />
             </div>
-            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Rigel</span>
+            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atomic UI</span>
           </div>
           <h1 className="text-2xl font-bold tracking-tight">Komponent Library</h1>
           <p className="text-sm text-muted-foreground mt-1">
